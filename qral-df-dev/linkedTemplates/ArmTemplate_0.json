@@ -1,0 +1,2316 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "qral-df-dev"
+		},
+		"Azure_Qral_Dev_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure_Qral_Dev'"
+		},
+		"Azure_Qral_Dev_servicePrincipalKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalKey' of 'Azure_Qral_Dev'"
+		},
+		"QralStorageDev_Blob_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'QralStorageDev_Blob'"
+		},
+		"QralStorageDev_FS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'QralStorageDev_FS'"
+		},
+		"Qral_PUF_DEV_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Qral_PUF_DEV'"
+		},
+		"Qral_PUF_PROD_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Qral_PUF_PROD'"
+		},
+		"Azure_Qral_Dev_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "aaf9a90a-09e5-443d-876a-1fe452a2ece3"
+		},
+		"Azure_Qral_Dev_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "4f3ec667-1d15-4cdb-9cf1-e91ccd39101d"
+		},
+		"Qral_PUF_DEV_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "qral-dev.cakklrvslequ.us-east-1.redshift.amazonaws.com"
+		},
+		"Qral_PUF_DEV_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "qral_puf_dev"
+		},
+		"Qral_PUF_DEV_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "dantony"
+		},
+		"Qral_PUF_PROD_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "qral-prod.cakklrvslequ.us-east-1.redshift.amazonaws.com"
+		},
+		"Qral_PUF_PROD_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "qral_puf_prod"
+		},
+		"Qral_PUF_PROD_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "dantony"
+		},
+		"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"type": "string",
+			"defaultValue": "qral-dev.database.windows.net"
+		},
+		"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"type": "string",
+			"defaultValue": "qral_admin"
+		},
+		"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"type": "secureString"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Azure_Qral_Dev')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('Azure_Qral_Dev_connectionString')]",
+					"servicePrincipalId": "[parameters('Azure_Qral_Dev_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalKey": {
+						"type": "SecureString",
+						"value": "[parameters('Azure_Qral_Dev_servicePrincipalKey')]"
+					},
+					"tenant": "[parameters('Azure_Qral_Dev_properties_typeProperties_tenant')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/QralStorageDev_Blob')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('QralStorageDev_Blob_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/QralStorageDev_FS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureFileStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('QralStorageDev_FS_connectionString')]",
+					"fileShare": "qral-puf"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Qral_PUF_DEV')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AmazonRedshift",
+				"typeProperties": {
+					"server": "[parameters('Qral_PUF_DEV_properties_typeProperties_server')]",
+					"database": "[parameters('Qral_PUF_DEV_properties_typeProperties_database')]",
+					"port": 5439,
+					"username": "[parameters('Qral_PUF_DEV_properties_typeProperties_username')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Qral_PUF_DEV_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Qral_PUF_PROD')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AmazonRedshift",
+				"typeProperties": {
+					"server": "[parameters('Qral_PUF_PROD_properties_typeProperties_server')]",
+					"database": "[parameters('Qral_PUF_PROD_properties_typeProperties_database')]",
+					"port": 5439,
+					"username": "[parameters('Qral_PUF_PROD_properties_typeProperties_username')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('Qral_PUF_PROD_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime-TEST')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "East US 2",
+						"nodeSize": "Standard_D8_v3",
+						"numberOfNodes": 1,
+						"maxParallelExecutionsPerNode": 8
+					},
+					"ssisProperties": {
+						"catalogInfo": {
+							"catalogServerEndpoint": "[parameters('integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]",
+							"catalogAdminUserName": "[parameters('integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]",
+							"catalogAdminPassword": {
+								"type": "SecureString",
+								"value": "[parameters('integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
+							},
+							"catalogPricingTier": "S1"
+						},
+						"edition": "Standard",
+						"licenseType": "LicenseIncluded"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime-TEST2')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 16,
+							"timeToLive": 10,
+							"cleanup": true
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime1-Test3')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 16,
+							"timeToLive": 10,
+							"cleanup": true
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/0_ld_nucc_taxonomy_year')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"data_year": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_1_LOAD/NUCC"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "nucc",
+					"table": {
+						"value": "@concat('0_ld_nucc_taxonomy_',dataset().data_year)",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Azure_Qral_Dev_Table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schemaName": {
+						"type": "string"
+					},
+					"tableName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Temp"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schemaName",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/BLOB_XLS_TEST_SQL_LOOP')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "QralStorageDev_Blob",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Test_Loop_SQL.xlsx",
+						"container": "nucc"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "query_number",
+						"type": "String"
+					},
+					{
+						"name": "query",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/QralStorageDev_Blob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_0_raw_cms_nppes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_0_RAW"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "NPI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Entity Type Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Replacement NPI",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Employer Identification Number (EIN)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Organization Name (Legal Business Name)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Last Name (Legal Name)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider First Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Middle Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Name Prefix Text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Name Suffix Text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Credential Text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Other Organization Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Other Organization Name Type Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Other Last Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Other First Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Other Middle Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Other Name Prefix Text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Other Name Suffix Text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Other Credential Text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Other Last Name Type Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider First Line Business Mailing Address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Second Line Business Mailing Address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Mailing Address City Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Mailing Address State Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Mailing Address Postal Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Mailing Address Country Code (If outside U.S.)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Mailing Address Telephone Number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Mailing Address Fax Number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider First Line Business Practice Location Address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Second Line Business Practice Location Address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Practice Location Address City Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Practice Location Address State Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Practice Location Address Postal Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Practice Location Address Country Code (If outside U.S.)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Practice Location Address Telephone Number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Business Practice Location Address Fax Number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Enumeration Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Last Update Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NPI Deactivation Reason Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NPI Deactivation Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "NPI Reactivation Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider Gender Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Authorized Official Last Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Authorized Official First Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Authorized Official Middle Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Authorized Official Title or Position",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Authorized Official Telephone Number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_11",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_11",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_11",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_11",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_12",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_12",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_12",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_12",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_13",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_13",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_13",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_13",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_14",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_14",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_14",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_14",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Code_15",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number_15",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Provider License Number State Code_15",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Primary Taxonomy Switch_15",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_11",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_11",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_11",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_11",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_12",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_12",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_12",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_12",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_13",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_13",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_13",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_13",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_14",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_14",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_14",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_14",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_15",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_15",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_15",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_15",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_16",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_16",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_16",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_16",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_17",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_17",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_17",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_17",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_18",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_18",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_18",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_18",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_19",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_19",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_19",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_19",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_20",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_20",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_20",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_20",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_21",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_21",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_21",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_21",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_22",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_22",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_22",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_22",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_23",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_23",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_23",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_23",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_24",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_24",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_24",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_24",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_25",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_25",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_25",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_25",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_26",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_26",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_26",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_26",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_27",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_27",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_27",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_27",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_28",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_28",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_28",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_28",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_29",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_29",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_29",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_29",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_30",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_30",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_30",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_30",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_31",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_31",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_31",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_31",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_32",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_32",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_32",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_32",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_33",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_33",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_33",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_33",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_34",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_34",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_34",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_34",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_35",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_35",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_35",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_35",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_36",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_36",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_36",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_36",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_37",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_37",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_37",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_37",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_38",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_38",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_38",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_38",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_39",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_39",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_39",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_39",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_40",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_40",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_40",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_40",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_41",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_41",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_41",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_41",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_42",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_42",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_42",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_42",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_43",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_43",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_43",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_43",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_44",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_44",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_44",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_44",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_45",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_45",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_45",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_45",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_46",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_46",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_46",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_46",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_47",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_47",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_47",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_47",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_48",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_48",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_48",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_48",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_49",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_49",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_49",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_49",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier_50",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Type Code_50",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier State_50",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Other Provider Identifier Issuer_50",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Is Sole Proprietor",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Is Organization Subpart",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Parent Organization LBN",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Parent Organization TIN",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Authorized Official Name Prefix Text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Authorized Official Name Suffix Text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Authorized Official Credential Text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_5",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_6",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_7",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_8",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_9",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_10",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_11",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_12",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_13",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_14",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Healthcare Provider Taxonomy Group_15",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Certification Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "0_raw_cms_nppes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_0_raw_country_correction')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_0_RAW"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "data_month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "address_line_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "address_line_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "city",
+						"type": "nvarchar"
+					},
+					{
+						"name": "state",
+						"type": "nvarchar"
+					},
+					{
+						"name": "postal_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "country_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "corrected_country",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "0_raw_country_correction"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_0_raw_state_correction')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_0_RAW"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "data_month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "address_line_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "address_line_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "city",
+						"type": "nvarchar"
+					},
+					{
+						"name": "state",
+						"type": "nvarchar"
+					},
+					{
+						"name": "postal_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "corrected_state",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "0_raw_state_correction"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_1_LD_cms_nppes_provider_taxonomy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_1_LOAD/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "1_ld_cms_nppes_provider_taxonomy"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_1_ld_cms_nppes')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_1_LOAD/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "1_ld_cms_nppes"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_1_ld_cms_nppes_other_provider_identifiers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_1_LOAD/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "1_ld_cms_nppes_other_provider_identifiers"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_2_st_cms_nppes_main')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "replacement npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "employer identification number (ein)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider organization name (legal business name)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider last name (legal name)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider first name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider middle name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider name prefix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider name suffix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider credential text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other organization name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other organization name type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other last name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other first name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other middle name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other name prefix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other name suffix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other credential text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other last name type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider first line business mailing address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider second line business mailing address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address city name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address state name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address postal code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address country code (if outside u.s.) ",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address telephone number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address fax number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider first line business practice location address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider second line business practice location address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address city name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address state name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address postal code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address country code out us",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address telephone number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address fax number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider enumeration date",
+						"type": "date"
+					},
+					{
+						"name": "last update date",
+						"type": "date"
+					},
+					{
+						"name": "npi deactivation reason code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "npi deactivation date",
+						"type": "date"
+					},
+					{
+						"name": "npi reactivation date",
+						"type": "date"
+					},
+					{
+						"name": "provider gender code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official last name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official first name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official middle name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official title or position",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official telephone number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "is sole proprietor",
+						"type": "nvarchar"
+					},
+					{
+						"name": "is organization subpart",
+						"type": "nvarchar"
+					},
+					{
+						"name": "parent organization lbn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "parent organization tin",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official name prefix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official name suffix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official credential text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare provider primary taxonomy code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare provider primary group taxonomy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider primary license number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider primary license number state code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "primary_taxonomy_grouping",
+						"type": "nvarchar"
+					},
+					{
+						"name": "primary_taxonomy_classification",
+						"type": "nvarchar"
+					},
+					{
+						"name": "primary_taxonomy_specialization",
+						"type": "nvarchar"
+					},
+					{
+						"name": "current_flag",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "2_st_cms_nppes_main"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_2_st_cms_nppes_other_provider_identifier')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "data_month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "other provider identifier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other provider identifier issuer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other provider identifier state",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other provider identifier type code",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "2_st_cms_nppes_other_provider_identifiers"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_2a_st_cms_nppes_provider_taxonomy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "position",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare provider primary taxonomy switch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare provider taxonomy code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare provider taxonomy group",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider license number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider license number state code",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "2a_st_cms_nppes_provider_taxonomy"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		}
+	]
+}

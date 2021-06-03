@@ -1,0 +1,200 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "qral-df-dev"
+		},
+		"Azure_Qral_Dev_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure_Qral_Dev'"
+		},
+		"Azure_Qral_Dev_servicePrincipalKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalKey' of 'Azure_Qral_Dev'"
+		},
+		"QralStorageDev_Blob_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'QralStorageDev_Blob'"
+		},
+		"QralStorageDev_FS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'QralStorageDev_FS'"
+		},
+		"Qral_PUF_DEV_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Qral_PUF_DEV'"
+		},
+		"Qral_PUF_PROD_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Qral_PUF_PROD'"
+		},
+		"Azure_Qral_Dev_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "aaf9a90a-09e5-443d-876a-1fe452a2ece3"
+		},
+		"Azure_Qral_Dev_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "4f3ec667-1d15-4cdb-9cf1-e91ccd39101d"
+		},
+		"Qral_PUF_DEV_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "qral-dev.cakklrvslequ.us-east-1.redshift.amazonaws.com"
+		},
+		"Qral_PUF_DEV_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "qral_puf_dev"
+		},
+		"Qral_PUF_DEV_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "dantony"
+		},
+		"Qral_PUF_PROD_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "qral-prod.cakklrvslequ.us-east-1.redshift.amazonaws.com"
+		},
+		"Qral_PUF_PROD_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "qral_puf_prod"
+		},
+		"Qral_PUF_PROD_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "dantony"
+		},
+		"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"type": "string",
+			"defaultValue": "qral-dev.database.windows.net"
+		},
+		"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"type": "string",
+			"defaultValue": "qral_admin"
+		},
+		"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"type": "secureString"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "qral-df-dev_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Azure_Qral_Dev_connectionString": {
+						"value": "[parameters('Azure_Qral_Dev_connectionString')]"
+					},
+					"Azure_Qral_Dev_servicePrincipalKey": {
+						"value": "[parameters('Azure_Qral_Dev_servicePrincipalKey')]"
+					},
+					"QralStorageDev_Blob_connectionString": {
+						"value": "[parameters('QralStorageDev_Blob_connectionString')]"
+					},
+					"QralStorageDev_FS_connectionString": {
+						"value": "[parameters('QralStorageDev_FS_connectionString')]"
+					},
+					"Qral_PUF_DEV_password": {
+						"value": "[parameters('Qral_PUF_DEV_password')]"
+					},
+					"Qral_PUF_PROD_password": {
+						"value": "[parameters('Qral_PUF_PROD_password')]"
+					},
+					"Azure_Qral_Dev_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('Azure_Qral_Dev_properties_typeProperties_servicePrincipalId')]"
+					},
+					"Azure_Qral_Dev_properties_typeProperties_tenant": {
+						"value": "[parameters('Azure_Qral_Dev_properties_typeProperties_tenant')]"
+					},
+					"Qral_PUF_DEV_properties_typeProperties_server": {
+						"value": "[parameters('Qral_PUF_DEV_properties_typeProperties_server')]"
+					},
+					"Qral_PUF_DEV_properties_typeProperties_database": {
+						"value": "[parameters('Qral_PUF_DEV_properties_typeProperties_database')]"
+					},
+					"Qral_PUF_DEV_properties_typeProperties_username": {
+						"value": "[parameters('Qral_PUF_DEV_properties_typeProperties_username')]"
+					},
+					"Qral_PUF_PROD_properties_typeProperties_server": {
+						"value": "[parameters('Qral_PUF_PROD_properties_typeProperties_server')]"
+					},
+					"Qral_PUF_PROD_properties_typeProperties_database": {
+						"value": "[parameters('Qral_PUF_PROD_properties_typeProperties_database')]"
+					},
+					"Qral_PUF_PROD_properties_typeProperties_username": {
+						"value": "[parameters('Qral_PUF_PROD_properties_typeProperties_username')]"
+					},
+					"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+						"value": "[parameters('integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]"
+					},
+					"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+						"value": "[parameters('integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]"
+					},
+					"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+						"value": "[parameters('integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "qral-df-dev_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'qral-df-dev_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "qral-df-dev_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'qral-df-dev_ArmTemplate_1')]"
+			]
+		}
+	]
+}

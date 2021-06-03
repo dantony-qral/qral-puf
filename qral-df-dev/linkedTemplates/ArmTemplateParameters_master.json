@@ -1,0 +1,66 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "qral-df-dev"
+		},
+		"Azure_Qral_Dev_connectionString": {
+			"value": ""
+		},
+		"Azure_Qral_Dev_servicePrincipalKey": {
+			"value": ""
+		},
+		"QralStorageDev_Blob_connectionString": {
+			"value": ""
+		},
+		"QralStorageDev_FS_connectionString": {
+			"value": ""
+		},
+		"Qral_PUF_DEV_password": {
+			"value": ""
+		},
+		"Qral_PUF_PROD_password": {
+			"value": ""
+		},
+		"Azure_Qral_Dev_properties_typeProperties_servicePrincipalId": {
+			"value": "aaf9a90a-09e5-443d-876a-1fe452a2ece3"
+		},
+		"Azure_Qral_Dev_properties_typeProperties_tenant": {
+			"value": "4f3ec667-1d15-4cdb-9cf1-e91ccd39101d"
+		},
+		"Qral_PUF_DEV_properties_typeProperties_server": {
+			"value": "qral-dev.cakklrvslequ.us-east-1.redshift.amazonaws.com"
+		},
+		"Qral_PUF_DEV_properties_typeProperties_database": {
+			"value": "qral_puf_dev"
+		},
+		"Qral_PUF_DEV_properties_typeProperties_username": {
+			"value": "dantony"
+		},
+		"Qral_PUF_PROD_properties_typeProperties_server": {
+			"value": "qral-prod.cakklrvslequ.us-east-1.redshift.amazonaws.com"
+		},
+		"Qral_PUF_PROD_properties_typeProperties_database": {
+			"value": "qral_puf_prod"
+		},
+		"Qral_PUF_PROD_properties_typeProperties_username": {
+			"value": "dantony"
+		},
+		"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"value": "qral-dev.database.windows.net"
+		},
+		"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"value": "qral_admin"
+		},
+		"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"value": ""
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

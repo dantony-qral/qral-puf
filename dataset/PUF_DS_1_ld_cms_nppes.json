@@ -1,0 +1,310 @@
+{
+	"name": "PUF_DS_1_ld_cms_nppes",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/PUF_1_LOAD/NPPES"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "npi",
+				"type": "nvarchar"
+			},
+			{
+				"name": "data_month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "active flag",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "entity type code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "entity type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "replacement npi",
+				"type": "nvarchar"
+			},
+			{
+				"name": "employer identification number (ein)",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider organization name (legal business name)",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider last name (legal name)",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider first name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider middle name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider name prefix text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider name suffix text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider credential text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider other organization name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider other organization name type code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider other last name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider other first name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider other middle name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider other name prefix text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider other name suffix text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider other credential text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider other last name type code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider first line business mailing address",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider second line business mailing address",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business mailing address city name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business mailing address state name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business mailing address postal code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business mailing address country code (if outside u.s.) ",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business mailing address telephone number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business mailing address fax number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider first line business practice location address",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider second line business practice location address",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business practice location address city name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business practice location address state name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business practice location address postal code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business practice location address country code out us",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business practice location address telephone number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider business practice location address fax number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider enumeration date",
+				"type": "date"
+			},
+			{
+				"name": "last update date",
+				"type": "date"
+			},
+			{
+				"name": "npi deactivation reason code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "npi deactivation date",
+				"type": "date"
+			},
+			{
+				"name": "npi reactivation date",
+				"type": "date"
+			},
+			{
+				"name": "provider gender code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "authorized official last name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "authorized official first name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "authorized official middle name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "authorized official title or position",
+				"type": "nvarchar"
+			},
+			{
+				"name": "authorized official telephone number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "is sole proprietor",
+				"type": "nvarchar"
+			},
+			{
+				"name": "is organization subpart",
+				"type": "nvarchar"
+			},
+			{
+				"name": "parent organization lbn",
+				"type": "nvarchar"
+			},
+			{
+				"name": "parent organization tin",
+				"type": "nvarchar"
+			},
+			{
+				"name": "authorized official name prefix text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "authorized official name suffix text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "authorized official credential text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_3",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "nppes",
+			"table": "1_ld_cms_nppes"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,14 @@
+{
+	"name": "Azure_Qral_Dev",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=qral-dev.database.windows.net;initial catalog=dev",
+			"servicePrincipalId": "aaf9a90a-09e5-443d-876a-1fe452a2ece3",
+			"tenant": "4f3ec667-1d15-4cdb-9cf1-e91ccd39101d",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIlFSQUwtREYtREVWX2FlYzg0MTNkLTc0MjYtNGI4YS1iNzY1LWEzMzdmMDIyY2MwNyINCn0="
+		}
+	}
+}

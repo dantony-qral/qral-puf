@@ -1,0 +1,87 @@
+{
+	"name": "PUF_DS_PROD_NUCC_TAXONOMY",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/PUF_PROD"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "code",
+				"type": "varchar"
+			},
+			{
+				"name": "grouping",
+				"type": "varchar"
+			},
+			{
+				"name": "classification",
+				"type": "varchar"
+			},
+			{
+				"name": "specialization",
+				"type": "varchar"
+			},
+			{
+				"name": "definition",
+				"type": "varchar"
+			},
+			{
+				"name": "notes",
+				"type": "varchar"
+			},
+			{
+				"name": "year",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "current_flag",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "effective date",
+				"type": "varchar"
+			},
+			{
+				"name": "deactivation date",
+				"type": "varchar"
+			},
+			{
+				"name": "last modified date",
+				"type": "varchar"
+			},
+			{
+				"name": "display name",
+				"type": "varchar"
+			},
+			{
+				"name": "right_effective date",
+				"type": "varchar"
+			},
+			{
+				"name": "right_deactivation date",
+				"type": "varchar"
+			},
+			{
+				"name": "right_last modified date",
+				"type": "varchar"
+			},
+			{
+				"name": "right_display name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "nucc",
+			"table": "nucc_taxonomy"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

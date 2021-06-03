@@ -1,0 +1,53 @@
+{
+	"name": "PUF_DS_0_raw_state_correction",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/PUF_0_RAW"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "data_month",
+				"type": "nvarchar"
+			},
+			{
+				"name": "npi",
+				"type": "nvarchar"
+			},
+			{
+				"name": "address_line_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "address_line_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "city",
+				"type": "nvarchar"
+			},
+			{
+				"name": "state",
+				"type": "nvarchar"
+			},
+			{
+				"name": "postal_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "corrected_state",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "nppes",
+			"table": "0_raw_state_correction"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

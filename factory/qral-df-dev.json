@@ -1,0 +1,9 @@
+{
+	"name": "qral-df-dev",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "5463f705-219e-4e74-a69e-29e1be562bae",
+		"tenantId": "4f3ec667-1d15-4cdb-9cf1-e91ccd39101d"
+	}
+}

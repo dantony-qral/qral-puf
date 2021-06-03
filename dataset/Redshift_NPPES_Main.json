@@ -1,0 +1,20 @@
+{
+	"name": "Redshift_NPPES_Main",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Qral_PUF_PROD",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_REDSHIFT_PUF/Temp_To_Be_Removed"
+		},
+		"annotations": [],
+		"type": "AmazonRedshiftTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "cms",
+			"table": "nppes_main"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

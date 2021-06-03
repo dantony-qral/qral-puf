@@ -1,0 +1,67 @@
+{
+	"name": "TEST_SQL_LOOP_OUT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "QralStorageDev_Blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DA_Test"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "nucc"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Code",
+				"type": "String"
+			},
+			{
+				"name": "Grouping",
+				"type": "String"
+			},
+			{
+				"name": "Classification",
+				"type": "String"
+			},
+			{
+				"name": "Specialization",
+				"type": "String"
+			},
+			{
+				"name": "Definition",
+				"type": "String"
+			},
+			{
+				"name": "Effective Date",
+				"type": "String"
+			},
+			{
+				"name": "Deactivation Date",
+				"type": "String"
+			},
+			{
+				"name": "Last Modified Date",
+				"type": "String"
+			},
+			{
+				"name": "Notes",
+				"type": "String"
+			},
+			{
+				"name": "Display Name",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,35 @@
+{
+	"name": "A0_Initial_Load_NUCC_Taxonomy",
+	"properties": {
+		"folder": {
+			"name": "PUF_1_Load_NPPES"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "nucc_taxonomy",
+						"type": "DatasetReference"
+					},
+					"name": "ReadinRawNUCCTaxonomy"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "0_ld_nucc_taxonomy_year",
+						"type": "DatasetReference"
+					},
+					"name": "LoadToSQL"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AddYear"
+				}
+			],
+			"script": "parameters{\n\tnucc_year_raw_file_suffix as string,\n\tdata_year as string\n}\nsource(output(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as date 'MM/dd/yyyy',\n\t\t{Deactivation Date} as date 'MM/dd/yyyy',\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\twildcardPaths:[(concat('nucc_taxonomy_',$nucc_year_raw_file_suffix,'.csv'))]) ~> ReadinRawNUCCTaxonomy\nReadinRawNUCCTaxonomy derive(year = $data_year) ~> AddYear\nAddYear sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> LoadToSQL"
+		}
+	}
+}

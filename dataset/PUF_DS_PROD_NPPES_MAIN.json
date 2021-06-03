@@ -1,0 +1,282 @@
+{
+	"name": "PUF_DS_PROD_NPPES_MAIN",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/PUF_PROD"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "current_flag",
+				"type": "varchar"
+			},
+			{
+				"name": "data_month",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "npi",
+				"type": "varchar"
+			},
+			{
+				"name": "entity type code",
+				"type": "varchar"
+			},
+			{
+				"name": "entity type",
+				"type": "varchar"
+			},
+			{
+				"name": "replacement npi",
+				"type": "varchar"
+			},
+			{
+				"name": "employer identification number (ein)",
+				"type": "varchar"
+			},
+			{
+				"name": "provider organization name (legal business name)",
+				"type": "varchar"
+			},
+			{
+				"name": "provider last name (legal name)",
+				"type": "varchar"
+			},
+			{
+				"name": "provider first name",
+				"type": "varchar"
+			},
+			{
+				"name": "provider middle name",
+				"type": "varchar"
+			},
+			{
+				"name": "provider name prefix text",
+				"type": "varchar"
+			},
+			{
+				"name": "provider name suffix text",
+				"type": "varchar"
+			},
+			{
+				"name": "provider credential text",
+				"type": "varchar"
+			},
+			{
+				"name": "provider other organization name",
+				"type": "varchar"
+			},
+			{
+				"name": "provider other organization name type code",
+				"type": "varchar"
+			},
+			{
+				"name": "provider other last name",
+				"type": "varchar"
+			},
+			{
+				"name": "provider other first name",
+				"type": "varchar"
+			},
+			{
+				"name": "provider other middle name",
+				"type": "varchar"
+			},
+			{
+				"name": "provider other name prefix text",
+				"type": "varchar"
+			},
+			{
+				"name": "provider other name suffix text",
+				"type": "varchar"
+			},
+			{
+				"name": "provider other credential text",
+				"type": "varchar"
+			},
+			{
+				"name": "provider other last name type code",
+				"type": "varchar"
+			},
+			{
+				"name": "provider first line business mailing address",
+				"type": "varchar"
+			},
+			{
+				"name": "provider second line business mailing address",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business mailing address city name",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business mailing address state name",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business mailing address postal code",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business mailing address country code (if outside u.s.)",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business mailing address telephone number",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business mailing address fax number",
+				"type": "varchar"
+			},
+			{
+				"name": "provider first line business practice location address",
+				"type": "varchar"
+			},
+			{
+				"name": "provider second line business practice location address",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business practice location address city name",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business practice location address state name",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business practice location address postal code",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business practice location address country code out us",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business practice location address telephone number",
+				"type": "varchar"
+			},
+			{
+				"name": "provider business practice location address fax number",
+				"type": "varchar"
+			},
+			{
+				"name": "provider enumeration date",
+				"type": "date"
+			},
+			{
+				"name": "last update date",
+				"type": "date"
+			},
+			{
+				"name": "npi deactivation reason code",
+				"type": "varchar"
+			},
+			{
+				"name": "npi deactivation date",
+				"type": "date"
+			},
+			{
+				"name": "npi reactivation date",
+				"type": "date"
+			},
+			{
+				"name": "active flag",
+				"type": "varchar"
+			},
+			{
+				"name": "provider gender code",
+				"type": "varchar"
+			},
+			{
+				"name": "authorized official last name",
+				"type": "varchar"
+			},
+			{
+				"name": "authorized official first name",
+				"type": "varchar"
+			},
+			{
+				"name": "authorized official middle name",
+				"type": "varchar"
+			},
+			{
+				"name": "authorized official title or position",
+				"type": "varchar"
+			},
+			{
+				"name": "authorized official telephone number",
+				"type": "varchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy code",
+				"type": "varchar"
+			},
+			{
+				"name": "primary_taxonomy_grouping",
+				"type": "varchar"
+			},
+			{
+				"name": "primary_taxonomy_classification",
+				"type": "varchar"
+			},
+			{
+				"name": "primary_taxonomy_specialization",
+				"type": "varchar"
+			},
+			{
+				"name": "provider primary license number",
+				"type": "varchar"
+			},
+			{
+				"name": "provider primary license number state code",
+				"type": "varchar"
+			},
+			{
+				"name": "healthcare provider primary group taxonomy",
+				"type": "varchar"
+			},
+			{
+				"name": "is sole proprietor",
+				"type": "varchar"
+			},
+			{
+				"name": "is organization subpart",
+				"type": "varchar"
+			},
+			{
+				"name": "parent organization lbn",
+				"type": "varchar"
+			},
+			{
+				"name": "parent organization tin",
+				"type": "varchar"
+			},
+			{
+				"name": "authorized official name prefix text",
+				"type": "varchar"
+			},
+			{
+				"name": "authorized official name suffix text",
+				"type": "varchar"
+			},
+			{
+				"name": "authorized official credential text",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "cms",
+			"table": "nppes_main"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

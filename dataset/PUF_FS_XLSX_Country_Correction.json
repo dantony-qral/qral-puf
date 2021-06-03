@@ -1,0 +1,33 @@
+{
+	"name": "PUF_FS_XLSX_Country_Correction",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "QralStorageDev_FS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Data_Month": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/FileStorage"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Country_Mismatch",
+			"location": {
+				"type": "AzureFileStorageLocation",
+				"fileName": {
+					"value": "@concat('Country_State_Correction_',dataset().Data_Month,'.xlsx')",
+					"type": "Expression"
+				},
+				"folderPath": "Data Sources/CMS/NPPES/2021/"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,67 @@
+{
+	"name": "nucc_taxonomy_fs",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "QralStorageDev_FS",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/FileStorage"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureFileStorageLocation",
+				"folderPath": "Data Sources/NUCC"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Code",
+				"type": "String"
+			},
+			{
+				"name": "Grouping",
+				"type": "String"
+			},
+			{
+				"name": "Classification",
+				"type": "String"
+			},
+			{
+				"name": "Specialization",
+				"type": "String"
+			},
+			{
+				"name": "Definition",
+				"type": "String"
+			},
+			{
+				"name": "Effective Date",
+				"type": "String"
+			},
+			{
+				"name": "Deactivation Date",
+				"type": "String"
+			},
+			{
+				"name": "Last Modified Date",
+				"type": "String"
+			},
+			{
+				"name": "Notes",
+				"type": "String"
+			},
+			{
+				"name": "Display Name",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

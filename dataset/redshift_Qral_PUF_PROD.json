@@ -1,0 +1,34 @@
+{
+	"name": "redshift_Qral_PUF_PROD",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Qral_PUF_PROD",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"schemaName": {
+				"type": "string"
+			},
+			"tableName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "QRAL_REDSHIFT_PUF/QRAL_PUF_PROD"
+		},
+		"annotations": [],
+		"type": "AmazonRedshiftTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schemaName",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tableName",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

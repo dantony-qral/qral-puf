@@ -17,12 +17,12 @@
 			},
 			{
 				"name": "data_month",
-				"type": "nvarchar"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "active flag",
-				"type": "int",
-				"precision": 10
+				"type": "nvarchar"
 			},
 			{
 				"name": "entity type code",

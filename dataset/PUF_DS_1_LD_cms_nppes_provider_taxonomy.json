@@ -10,7 +10,329 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "npi",
+				"type": "nvarchar"
+			},
+			{
+				"name": "data_month",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "active flag",
+				"type": "nvarchar"
+			},
+			{
+				"name": "entity type code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "entity type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_11",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_11",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_11",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_11",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_12",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_12",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_12",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_12",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_13",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_13",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_13",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_13",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_14",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_14",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_14",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_14",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy code_15",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number_15",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider license number state code_15",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider primary taxonomy switch_15",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_11",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_12",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_13",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_14",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare provider taxonomy group_15",
+				"type": "nvarchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "nppes",
 			"table": "1_ld_cms_nppes_provider_taxonomy"

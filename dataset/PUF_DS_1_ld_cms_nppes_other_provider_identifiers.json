@@ -10,7 +10,829 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "npi",
+				"type": "nvarchar"
+			},
+			{
+				"name": "data_month",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "active flag",
+				"type": "nvarchar"
+			},
+			{
+				"name": "entity type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "entity type code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_5",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_6",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_7",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_8",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_9",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_10",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_11",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_11",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_11",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_11",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_12",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_12",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_12",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_12",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_13",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_13",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_13",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_13",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_14",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_14",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_14",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_14",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_15",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_15",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_15",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_15",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_16",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_16",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_16",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_16",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_17",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_17",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_17",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_17",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_18",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_18",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_18",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_18",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_19",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_19",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_19",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_19",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_20",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_20",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_20",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_20",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_21",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_21",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_21",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_21",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_22",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_22",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_22",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_22",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_23",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_23",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_23",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_23",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_24",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_24",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_24",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_24",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_25",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_25",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_25",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_25",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_26",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_26",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_26",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_26",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_27",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_27",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_27",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_27",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_28",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_28",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_28",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_28",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_29",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_29",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_29",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_29",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_30",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_30",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_30",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_30",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_31",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_31",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_31",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_31",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_32",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_32",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_32",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_32",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_33",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_33",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_33",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_33",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_34",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_34",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_34",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_34",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_35",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_35",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_35",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_35",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_36",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_36",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_36",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_36",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_37",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_37",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_37",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_37",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_38",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_38",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_38",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_38",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_39",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_39",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_39",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_39",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_40",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_40",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_40",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_40",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_41",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_41",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_41",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_41",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_42",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_42",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_42",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_42",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_43",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_43",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_43",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_43",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_44",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_44",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_44",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_44",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_45",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_45",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_45",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_45",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_46",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_46",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_46",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_46",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_47",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_47",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_47",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_47",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_48",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_48",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_48",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_48",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_49",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_49",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_49",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_49",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier_50",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code_50",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier state_50",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier issuer_50",
+				"type": "nvarchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "nppes",
 			"table": "1_ld_cms_nppes_other_provider_identifiers"

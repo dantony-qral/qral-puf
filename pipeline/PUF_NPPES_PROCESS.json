@@ -27,7 +27,44 @@
 				}
 			},
 			{
-				"name": "PUF_DF_2b_Stage_NPPES_copy1",
+				"name": "PUF_DF_3_Stage_NPPES",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "PUF_DF_2b_Stage_NPPES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "PUF_DF_3_Stage_NPPES",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"SinkNPPESMain": {
+								"schema_name": "nppes",
+								"table_name": "3_st_cms_nppes_main"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "PUF_DF_2b_Stage_NPPES",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -50,9 +87,9 @@
 						"referenceName": "PUF_DF_2b_Stage_NPPES",
 						"type": "DataFlowReference"
 					},
-					"integrationRuntime": {
-						"referenceName": "integrationRuntime-TEST2",
-						"type": "IntegrationRuntimeReference"
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
 					},
 					"traceLevel": "Fine"
 				}

@@ -29,8 +29,7 @@
 				"schema": [
 					{
 						"name": "current_flag",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "data_month",

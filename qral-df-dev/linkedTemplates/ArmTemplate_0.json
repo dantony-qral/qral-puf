@@ -3332,6 +3332,10 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
 						"name": "npi",
 						"type": "nvarchar"
 					},
@@ -3587,11 +3591,6 @@
 					{
 						"name": "primary_taxonomy_specialization",
 						"type": "nvarchar"
-					},
-					{
-						"name": "current_flag",
-						"type": "int",
-						"precision": 10
 					}
 				],
 				"typeProperties": {
@@ -3620,8 +3619,7 @@
 				"schema": [
 					{
 						"name": "current_flag",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "data_month",
@@ -3687,8 +3685,7 @@
 				"schema": [
 					{
 						"name": "current_flag",
-						"type": "int",
-						"precision": 10
+						"type": "nvarchar"
 					},
 					{
 						"name": "data_month",

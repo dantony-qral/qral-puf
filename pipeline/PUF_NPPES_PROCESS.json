@@ -48,13 +48,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "PUF_DF_3_Stage_NPPES_Main",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"SinkNPPESMain": {
-								"schema_name": "nppes",
-								"table_name": "3_st_cms_nppes_main"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
 						"referenceName": "integrationRuntime-TEST2",
@@ -96,7 +90,7 @@
 				}
 			},
 			{
-				"name": "PUF_DF_3_Stage_NPPES_copy1",
+				"name": "PUF_DF_3_Stage_NPPES_Other_Provider_ID",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -116,12 +110,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "PUF_DF_3_Stage_NPPES_Main",
+						"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"SinkNPPESMain": {
+							"sink1": {
 								"schema_name": "nppes",
-								"table_name": "3_st_cms_nppes_main"
+								"table_name": "3_st_cms_nppes_other_provider_identifiers"
 							}
 						}
 					},

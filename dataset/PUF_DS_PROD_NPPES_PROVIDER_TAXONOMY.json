@@ -37,19 +37,35 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "other_provider_identifier",
+				"name": "healthcare_provider_taxonomy_code",
 				"type": "nvarchar"
 			},
 			{
-				"name": "other_provider_identifier_type_code",
+				"name": "taxonomy_grouping",
 				"type": "nvarchar"
 			},
 			{
-				"name": "other_provider_identifier_state",
+				"name": "taxonomy_classification",
 				"type": "nvarchar"
 			},
 			{
-				"name": "other_provider_identifier_issuer",
+				"name": "taxonomy_specialization",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider_license_number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "provider_license_number_state_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare_provider_primary_taxonomy_switch",
+				"type": "nvarchar"
+			},
+			{
+				"name": "healthcare_provider_group_taxonomy",
 				"type": "nvarchar"
 			}
 		],

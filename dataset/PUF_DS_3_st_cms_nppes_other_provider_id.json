@@ -1,0 +1,62 @@
+{
+	"name": "PUF_DS_3_st_cms_nppes_other_provider_id",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "current_flag",
+				"type": "nvarchar"
+			},
+			{
+				"name": "data_month",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "npi",
+				"type": "nvarchar"
+			},
+			{
+				"name": "entity type code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "entity type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "active flag",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other_provider_identifier",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other_provider_identifier_type_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other_provider_identifier_state",
+				"type": "nvarchar"
+			},
+			{
+				"name": "other_provider_identifier_issuer",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "nppes",
+			"table": "3_st_cms_nppes_other_provider_identifiers"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

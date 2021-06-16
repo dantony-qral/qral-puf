@@ -97,6 +97,290 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_main')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "active flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "replacement npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "employer identification number (ein)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider organization name (legal business name)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider last name (legal name)",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider first name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider middle name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider name prefix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider name suffix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider credential text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other organization name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other organization name type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other last name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other first name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other middle name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other name prefix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other name suffix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other credential text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider other last name type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider first line business mailing address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider second line business mailing address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address city name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address state name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address postal code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address telephone number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address fax number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider first line business practice location address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider second line business practice location address",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address city name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address state name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address postal code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address country code out us",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address telephone number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business practice location address fax number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider enumeration date",
+						"type": "date"
+					},
+					{
+						"name": "last update date",
+						"type": "date"
+					},
+					{
+						"name": "npi deactivation reason code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "npi deactivation date",
+						"type": "date"
+					},
+					{
+						"name": "npi reactivation date",
+						"type": "date"
+					},
+					{
+						"name": "provider gender code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official last name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official first name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official middle name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official title or position",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official telephone number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "is sole proprietor",
+						"type": "nvarchar"
+					},
+					{
+						"name": "is organization subpart",
+						"type": "nvarchar"
+					},
+					{
+						"name": "parent organization lbn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "parent organization tin",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official name prefix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official name suffix text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "authorized official credential text",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare provider primary taxonomy code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare provider primary group taxonomy",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider primary license number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider primary license number state code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "primary_taxonomy_grouping",
+						"type": "nvarchar"
+					},
+					{
+						"name": "primary_taxonomy_classification",
+						"type": "nvarchar"
+					},
+					{
+						"name": "primary_taxonomy_specialization",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider business mailing address country code (if outside u.s.)",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "3_st_cms_nppes_main"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_MAIN')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -376,6 +660,70 @@
 				"typeProperties": {
 					"schema": "cms",
 					"table": "nppes_main"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_OTHER_PROVIDER_ID')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_PROD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier_type_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier_state",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier_issuer",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "cms",
+					"table": "nppes_other_provider_identifiers"
 				}
 			},
 			"dependsOn": []
@@ -2189,7 +2537,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_OTHER_PROVIDER_ID')]",
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_other_provider_id')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2198,7 +2546,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "QRAL_AZURE_PUF/PUF_PROD"
+					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
@@ -2246,292 +2594,8 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "cms",
-					"table": "nppes_other_provider_identifiers"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_main')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "current_flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "npi",
-						"type": "nvarchar"
-					},
-					{
-						"name": "data_month",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "active flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "replacement npi",
-						"type": "nvarchar"
-					},
-					{
-						"name": "employer identification number (ein)",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider organization name (legal business name)",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider last name (legal name)",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider first name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider middle name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider name prefix text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider name suffix text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider credential text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider other organization name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider other organization name type code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider other last name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider other first name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider other middle name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider other name prefix text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider other name suffix text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider other credential text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider other last name type code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider first line business mailing address",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider second line business mailing address",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business mailing address city name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business mailing address state name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business mailing address postal code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business mailing address telephone number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business mailing address fax number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider first line business practice location address",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider second line business practice location address",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business practice location address city name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business practice location address state name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business practice location address postal code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business practice location address country code out us",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business practice location address telephone number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business practice location address fax number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider enumeration date",
-						"type": "date"
-					},
-					{
-						"name": "last update date",
-						"type": "date"
-					},
-					{
-						"name": "npi deactivation reason code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "npi deactivation date",
-						"type": "date"
-					},
-					{
-						"name": "npi reactivation date",
-						"type": "date"
-					},
-					{
-						"name": "provider gender code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "authorized official last name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "authorized official first name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "authorized official middle name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "authorized official title or position",
-						"type": "nvarchar"
-					},
-					{
-						"name": "authorized official telephone number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "is sole proprietor",
-						"type": "nvarchar"
-					},
-					{
-						"name": "is organization subpart",
-						"type": "nvarchar"
-					},
-					{
-						"name": "parent organization lbn",
-						"type": "nvarchar"
-					},
-					{
-						"name": "parent organization tin",
-						"type": "nvarchar"
-					},
-					{
-						"name": "authorized official name prefix text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "authorized official name suffix text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "authorized official credential text",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare provider primary taxonomy code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare provider primary group taxonomy",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider primary license number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider primary license number state code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "primary_taxonomy_grouping",
-						"type": "nvarchar"
-					},
-					{
-						"name": "primary_taxonomy_classification",
-						"type": "nvarchar"
-					},
-					{
-						"name": "primary_taxonomy_specialization",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider business mailing address country code (if outside u.s.)",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
 					"schema": "nppes",
-					"table": "3_st_cms_nppes_main"
+					"table": "3_st_cms_nppes_other_provider_identifiers"
 				}
 			},
 			"dependsOn": []
@@ -2966,83 +3030,49 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/A0_Initial_Load_NUCC_Taxonomy')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
+			"name": "[concat(parameters('factoryName'), '/test_email_custom')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"folder": {
-					"name": "PUF_1_Load_NPPES"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "nucc_taxonomy",
-								"type": "DatasetReference"
+				"activities": [
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-19.eastus2.logic.azure.com:443/workflows/c0dbe0ef6af14d8389b9723475d9d61d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GXLOylKVKZwbhRg4sascQL6I6efKXy_yK-CSbN6lF8Y",
+							"connectVia": {
+								"referenceName": "integrationRuntime1-Test3",
+								"type": "IntegrationRuntimeReference"
 							},
-							"name": "ReadinRawNUCCTaxonomy"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "0_ld_nucc_taxonomy_year",
-								"type": "DatasetReference"
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE RUN FINISHED!\",\n\"message\": \"DEMO-PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n\"color\": \"Green\",\n\"dataFactoryName\":\"@{pipeline().DataFactory}\",\n\"pipelineName\":\"@{pipeline().Pipeline}\",\n\"pipelineRunId\":\"@{pipeline().RunId}\",\n\"time\":\"@{utcnow()}\"\n}",
+								"type": "Expression"
 							},
-							"name": "LoadToSQL"
+							"datasets": [
+								{
+									"referenceName": "PUF_DS_PROD_NUCC_TAXONOMY",
+									"type": "DatasetReference",
+									"parameters": {}
+								}
+							]
 						}
-					],
-					"transformations": [
-						{
-							"name": "AddYear"
-						}
-					],
-					"script": "parameters{\n\tnucc_year_raw_file_suffix as string,\n\tdata_year as string\n}\nsource(output(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as date 'MM/dd/yyyy',\n\t\t{Deactivation Date} as date 'MM/dd/yyyy',\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\twildcardPaths:[(concat('nucc_taxonomy_',$nucc_year_raw_file_suffix,'.csv'))]) ~> ReadinRawNUCCTaxonomy\nReadinRawNUCCTaxonomy derive(year = $data_year) ~> AddYear\nAddYear sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> LoadToSQL"
-				}
+					}
+				],
+				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/nucc_taxonomy')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DA_TEST_Execute_SQL_Query')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "DA_Test"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "0_ld_nucc_taxonomy_year",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "TEST_SQL_LOOP_OUT",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "TestQuery"
-						}
-					],
-					"script": "parameters{\n\tsql_query as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($sql_query),\n\tformat: 'query') ~> source1\nsource1 derive(test_query = $sql_query) ~> TestQuery\nTestQuery sink(input(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as string,\n\t\t{Deactivation Date} as string,\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['test_loop_sql_out.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/TEST_SQL_LOOP_OUT')]"
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NUCC_TAXONOMY')]"
 			]
 		}
 	]

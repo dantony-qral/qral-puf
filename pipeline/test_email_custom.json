@@ -55,7 +55,13 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sink1": {
+								"schema_name": "nppes",
+								"table_name": "3_st_cms_nppes_provider_taxonomy"
+							}
+						}
 					},
 					"integrationRuntime": {
 						"referenceName": "integrationRuntime-TEST2",

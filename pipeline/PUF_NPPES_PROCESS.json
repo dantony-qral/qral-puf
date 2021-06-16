@@ -17,20 +17,13 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"sink1": {
-								"schema_name": "nppes",
-								"table_name": "3_st_cms_nppes_other_provider_identifiers"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
 						"referenceName": "integrationRuntime-TEST2",
 						"type": "IntegrationRuntimeReference"
 					},
-					"traceLevel": "Fine",
-					"runConcurrently": false
+					"traceLevel": "Fine"
 				}
 			}
 		],

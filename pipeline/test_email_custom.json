@@ -57,9 +57,9 @@
 						"referenceName": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
 						"type": "DataFlowReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "integrationRuntime-TEST2",
+						"type": "IntegrationRuntimeReference"
 					},
 					"traceLevel": "Fine"
 				}

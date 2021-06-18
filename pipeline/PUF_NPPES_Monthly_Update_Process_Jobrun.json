@@ -20,7 +20,7 @@
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
-						"referenceName": "integrationRuntime-TEST2",
+						"referenceName": "integrationRuntime1-Test4-16cores",
 						"type": "IntegrationRuntimeReference"
 					},
 					"traceLevel": "Fine"
@@ -51,7 +51,7 @@
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
-						"referenceName": "integrationRuntime-TEST2",
+						"referenceName": "integrationRuntime1-Test4-16cores",
 						"type": "IntegrationRuntimeReference"
 					},
 					"traceLevel": "Fine"
@@ -82,7 +82,7 @@
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
-						"referenceName": "integrationRuntime-TEST2",
+						"referenceName": "integrationRuntime1-Test4-16cores",
 						"type": "IntegrationRuntimeReference"
 					},
 					"traceLevel": "Fine"
@@ -113,7 +113,7 @@
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
-						"referenceName": "integrationRuntime-TEST2",
+						"referenceName": "integrationRuntime1-Test4-16cores",
 						"type": "IntegrationRuntimeReference"
 					},
 					"traceLevel": "Fine"
@@ -144,7 +144,7 @@
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
-						"referenceName": "integrationRuntime-TEST2",
+						"referenceName": "integrationRuntime1-Test4-16cores",
 						"type": "IntegrationRuntimeReference"
 					},
 					"traceLevel": "Fine"
@@ -174,9 +174,9 @@
 						"referenceName": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
 						"type": "DataFlowReference"
 					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
+					"integrationRuntime": {
+						"referenceName": "integrationRuntime1-Test4-16cores",
+						"type": "IntegrationRuntimeReference"
 					},
 					"traceLevel": "Fine"
 				}

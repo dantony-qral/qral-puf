@@ -236,6 +236,26 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime1-Test4-16cores')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 32,
+							"timeToLive": 10,
+							"cleanup": false
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/0_ld_nucc_taxonomy_year')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -3662,80 +3682,6 @@
 				"typeProperties": {
 					"schema": "nppes",
 					"table": "2_st_cms_nppes_other_provider_identifiers"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_2a_st_cms_nppes_provider_taxonomy')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "current_flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "data_month",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "npi",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "active flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "position",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare provider primary taxonomy switch",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare provider taxonomy code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare provider taxonomy group",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider license number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider license number state code",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "nppes",
-					"table": "2a_st_cms_nppes_provider_taxonomy"
 				}
 			},
 			"dependsOn": [

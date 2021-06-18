@@ -13,6 +13,78 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_2a_st_cms_nppes_provider_taxonomy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "position",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare provider primary taxonomy switch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare provider taxonomy code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare provider taxonomy group",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider license number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider license number state code",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "2a_st_cms_nppes_provider_taxonomy"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_2b_st_cms_nppes_provider_taxonomy')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2986,111 +3058,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PUF_FS_CSV')]",
-				"[concat(variables('factoryId'), '/datasets/QRAL_AZURE_SQL_DEV')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_State_Correction')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Readin_State_Correction",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureFileStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": {
-									"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_state,']')}",
-									"type": "Expression"
-								},
-								"tableOption": "autoCreate",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "PUF_FS_XLSX_State_Correction",
-								"type": "DatasetReference",
-								"parameters": {
-									"Data_Month": {
-										"value": "@pipeline().parameters.data_month",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "QRAL_AZURE_SQL_DEV",
-								"type": "DatasetReference",
-								"parameters": {
-									"schema_name": {
-										"value": "@pipeline().parameters.out_schema",
-										"type": "Expression"
-									},
-									"table_name": {
-										"value": "@pipeline().parameters.out_table_state",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					}
-				],
-				"parameters": {
-					"out_schema": {
-						"type": "string",
-						"defaultValue": "nppes"
-					},
-					"out_table_country": {
-						"type": "string",
-						"defaultValue": "0_raw_country_correction"
-					},
-					"out_table_state": {
-						"type": "string",
-						"defaultValue": "0_raw_state_correction"
-					},
-					"data_month": {
-						"type": "string",
-						"defaultValue": "202103"
-					}
-				},
-				"folder": {
-					"name": "PUF_NPPES"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-05-19T06:44:50Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/PUF_FS_XLSX_State_Correction')]",
 				"[concat(variables('factoryId'), '/datasets/QRAL_AZURE_SQL_DEV')]"
 			]
 		}

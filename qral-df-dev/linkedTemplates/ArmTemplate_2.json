@@ -13,6 +13,108 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_State_Correction')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Readin_State_Correction",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": {
+									"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_state,']')}",
+									"type": "Expression"
+								},
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PUF_FS_XLSX_State_Correction",
+								"type": "DatasetReference",
+								"parameters": {
+									"Data_Month": {
+										"value": "@pipeline().parameters.data_month",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "QRAL_AZURE_SQL_DEV",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": {
+										"value": "@pipeline().parameters.out_schema",
+										"type": "Expression"
+									},
+									"table_name": {
+										"value": "@pipeline().parameters.out_table_state",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"parameters": {
+					"out_schema": {
+						"type": "string",
+						"defaultValue": "nppes"
+					},
+					"out_table_country": {
+						"type": "string",
+						"defaultValue": "0_raw_country_correction"
+					},
+					"out_table_state": {
+						"type": "string",
+						"defaultValue": "0_raw_state_correction"
+					},
+					"data_month": {
+						"type": "string",
+						"defaultValue": "202103"
+					}
+				},
+				"folder": {
+					"name": "PUF_NPPES"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-19T06:44:50Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Qral_PUF_PROD_Redshift_to AzureSQL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1024,7 +1126,7 @@
 							},
 							"staging": {},
 							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
+								"referenceName": "integrationRuntime1-Test4-16cores",
 								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
@@ -1063,7 +1165,7 @@
 							},
 							"staging": {},
 							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
+								"referenceName": "integrationRuntime1-Test4-16cores",
 								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
@@ -1105,7 +1207,7 @@
 							},
 							"staging": {},
 							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
+								"referenceName": "integrationRuntime1-Test4-16cores",
 								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
@@ -1143,7 +1245,7 @@
 							},
 							"staging": {},
 							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
+								"referenceName": "integrationRuntime1-Test4-16cores",
 								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
@@ -1182,7 +1284,7 @@
 							},
 							"staging": {},
 							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
+								"referenceName": "integrationRuntime1-Test4-16cores",
 								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
@@ -1220,9 +1322,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}

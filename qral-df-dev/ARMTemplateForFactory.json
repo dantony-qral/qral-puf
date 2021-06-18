@@ -551,7 +551,7 @@
 							},
 							"staging": {},
 							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
+								"referenceName": "integrationRuntime1-Test4-16cores",
 								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
@@ -590,7 +590,7 @@
 							},
 							"staging": {},
 							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
+								"referenceName": "integrationRuntime1-Test4-16cores",
 								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
@@ -632,7 +632,7 @@
 							},
 							"staging": {},
 							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
+								"referenceName": "integrationRuntime1-Test4-16cores",
 								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
@@ -670,7 +670,7 @@
 							},
 							"staging": {},
 							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
+								"referenceName": "integrationRuntime1-Test4-16cores",
 								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
@@ -709,7 +709,7 @@
 							},
 							"staging": {},
 							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
+								"referenceName": "integrationRuntime1-Test4-16cores",
 								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
@@ -747,9 +747,9 @@
 								}
 							},
 							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
 							},
 							"traceLevel": "Fine"
 						}
@@ -762,7 +762,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_1_Load_NPPES_Month')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-TEST2')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1-Test4-16cores')]",
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_2a_Stage_NPPES')]",
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_2b_Stage_NPPES')]",
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Main')]",
@@ -8315,6 +8315,26 @@
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_2b_st_cms_nppes_provider_taxonomy')]",
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_3_st_cms_nppes_provider_taxonomy')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime1-Test4-16cores')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 32,
+							"timeToLive": 10,
+							"cleanup": false
+						}
+					}
+				}
+			},
+			"dependsOn": []
 		}
 	]
 }

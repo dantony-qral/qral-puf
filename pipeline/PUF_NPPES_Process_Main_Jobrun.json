@@ -1,5 +1,5 @@
 {
-	"name": "PUF_NPPES_Process_Main",
+	"name": "PUF_NPPES_Process_Main_Jobrun",
 	"properties": {
 		"activities": [
 			{
@@ -85,13 +85,16 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PUF_NPPES_Monthly_Update_Process",
+						"referenceName": "PUF_NPPES_Monthly_Update_Process_Jobrun",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
 				}
 			}
 		],
+		"folder": {
+			"name": "PUF_NPPES"
+		},
 		"annotations": []
 	}
 }

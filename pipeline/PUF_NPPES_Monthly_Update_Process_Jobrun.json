@@ -1,5 +1,5 @@
 {
-	"name": "PUF_NPPES_Monthly_Update_Process",
+	"name": "PUF_NPPES_Monthly_Update_Process_Jobrun",
 	"properties": {
 		"activities": [
 			{
@@ -182,6 +182,9 @@
 				}
 			}
 		],
+		"folder": {
+			"name": "PUF_NPPES"
+		},
 		"annotations": []
 	}
 }

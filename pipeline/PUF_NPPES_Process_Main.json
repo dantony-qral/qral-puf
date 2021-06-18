@@ -7,7 +7,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+						"activity": "Execute PUF NPPES Monthly Update Process",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -41,35 +41,11 @@
 				}
 			},
 			{
-				"name": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "1.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
-						"type": "DataFlowReference"
-					},
-					"integrationRuntime": {
-						"referenceName": "integrationRuntime-TEST2",
-						"type": "IntegrationRuntimeReference"
-					},
-					"traceLevel": "Fine"
-				}
-			},
-			{
 				"name": "Email_Fail_Pipeline",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+						"activity": "Execute PUF NPPES Monthly Update Process",
 						"dependencyConditions": [
 							"Failed"
 						]
@@ -100,6 +76,19 @@
 							"type": "DatasetReference"
 						}
 					]
+				}
+			},
+			{
+				"name": "Execute PUF NPPES Monthly Update Process",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PUF_NPPES_Monthly_Update_Process",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
 				}
 			}
 		],

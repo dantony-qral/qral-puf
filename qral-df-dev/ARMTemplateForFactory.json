@@ -520,56 +520,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_PROCESS')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "PUF_DF_3_Stage_NPPES_Other_Provider_ID",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"StCmsNppesMain": {},
-									"ProdCmsNppesOtherProviderID": {},
-									"StCMSNPPESOtherProvID": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"folder": {
-					"name": "PUF_NPPES"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-06-02T03:56:29Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Other_Provider_Identifier')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-TEST2')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Qral_PUF_PROD_Redshift_to AzureSQL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -4746,6 +4696,72 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_other_provider_id')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier_type_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier_state",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier_issuer",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "3_st_cms_nppes_other_provider_identifiers"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_MAIN')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -5091,6 +5107,88 @@
 				"typeProperties": {
 					"schema": "cms",
 					"table": "nppes_other_provider_identifiers"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_PROD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_grouping",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_classification",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_specialization",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider_license_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider_license_number_state_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_group_taxonomy",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "cms",
+					"table": "nppes_provider_taxonomy"
 				}
 			},
 			"dependsOn": [
@@ -7902,154 +8000,6 @@
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY')]",
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_2b_st_cms_nppes_provider_taxonomy')]",
 				"[concat(variables('factoryId'), '/datasets/QRAL_AZURE_SQL_DEV')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_other_provider_id')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "current_flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "data_month",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "npi",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "active flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier_type_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier_state",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier_issuer",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "nppes",
-					"table": "3_st_cms_nppes_other_provider_identifiers"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/PUF_PROD"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "current_flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "data_month",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "npi",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "active flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare_provider_taxonomy_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "taxonomy_grouping",
-						"type": "nvarchar"
-					},
-					{
-						"name": "taxonomy_classification",
-						"type": "nvarchar"
-					},
-					{
-						"name": "taxonomy_specialization",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider_license_number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider_license_number_state_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare_provider_primary_taxonomy_switch",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare_provider_group_taxonomy",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "cms",
-					"table": "nppes_provider_taxonomy"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
 			]
 		}
 	]

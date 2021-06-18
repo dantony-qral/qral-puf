@@ -993,76 +993,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Readin_NUCC_Taxonomy')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Initial_Load_NUCC_Taxonomy",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "A0_Initial_Load_NUCC_Taxonomy",
-								"type": "DataFlowReference",
-								"parameters": {
-									"nucc_year_raw_file_suffix": {
-										"value": "'@{pipeline().parameters.nucc_year_raw_file_suffix}'",
-										"type": "Expression"
-									},
-									"data_year": {
-										"value": "'@{pipeline().parameters.data_year}'",
-										"type": "Expression"
-									}
-								},
-								"datasetParameters": {
-									"ReadinRawNUCCTaxonomy": {},
-									"LoadToSQL": {
-										"data_year": {
-											"value": "@pipeline().parameters.data_year",
-											"type": "Expression"
-										}
-									}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "integrationRuntime1-Test3",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"parameters": {
-					"nucc_year_raw_file_suffix": {
-						"type": "string"
-					},
-					"data_year": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "PUF_NUCC"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-05-19T03:20:52Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/A0_Initial_Load_NUCC_Taxonomy')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Monthly_Update_Process')]",
+			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Monthly_Update_Process_Jobrun')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1297,6 +1228,9 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "PUF_NPPES"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -1309,7 +1243,76 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Process_Main')]",
+			"name": "[concat(parameters('factoryName'), '/Readin_NUCC_Taxonomy')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Initial_Load_NUCC_Taxonomy",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "A0_Initial_Load_NUCC_Taxonomy",
+								"type": "DataFlowReference",
+								"parameters": {
+									"nucc_year_raw_file_suffix": {
+										"value": "'@{pipeline().parameters.nucc_year_raw_file_suffix}'",
+										"type": "Expression"
+									},
+									"data_year": {
+										"value": "'@{pipeline().parameters.data_year}'",
+										"type": "Expression"
+									}
+								},
+								"datasetParameters": {
+									"ReadinRawNUCCTaxonomy": {},
+									"LoadToSQL": {
+										"data_year": {
+											"value": "@pipeline().parameters.data_year",
+											"type": "Expression"
+										}
+									}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test3",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"parameters": {
+					"nucc_year_raw_file_suffix": {
+						"type": "string"
+					},
+					"data_year": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "PUF_NUCC"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-19T03:20:52Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/A0_Initial_Load_NUCC_Taxonomy')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Process_Main_Jobrun')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1401,7 +1404,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "PUF_NPPES_Monthly_Update_Process",
+								"referenceName": "PUF_NPPES_Monthly_Update_Process_Jobrun",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -1409,10 +1412,13 @@
 						}
 					}
 				],
+				"folder": {
+					"name": "PUF_NPPES"
+				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Monthly_Update_Process')]"
+				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Monthly_Update_Process_Jobrun')]"
 			]
 		}
 	]

@@ -686,7 +686,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/test_email_custom')]",
+			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Process_Main')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -696,7 +696,7 @@
 						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+								"activity": "Execute PUF NPPES Monthly Update Process",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -732,46 +732,11 @@
 						}
 					},
 					{
-						"name": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"StCmsNppesMain": {},
-									"ProdCmsNppesProvTaxonomy": {},
-									"StCMSNPPESProvTaxonomy": {},
-									"sink1": {
-										"schema_name": "nppes",
-										"table_name": "3_st_cms_nppes_provider_taxonomy"
-									}
-								}
-							},
-							"staging": {},
-							"integrationRuntime": {
-								"referenceName": "integrationRuntime-TEST2",
-								"type": "IntegrationRuntimeReference"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
 						"name": "Email_Fail_Pipeline",
 						"type": "WebActivity",
 						"dependsOn": [
 							{
-								"activity": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+								"activity": "Execute PUF NPPES Monthly Update Process",
 								"dependencyConditions": [
 									"Failed"
 								]
@@ -805,6 +770,20 @@
 								}
 							]
 						}
+					},
+					{
+						"name": "Execute PUF NPPES Monthly Update Process",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PUF_NPPES_Monthly_Update_Process",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"annotations": []
@@ -812,8 +791,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NUCC_TAXONOMY')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1-Test3')]",
-				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Provider_Taxonomy')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-TEST2')]"
+				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Monthly_Update_Process')]"
 			]
 		},
 		{
@@ -7830,7 +7808,7 @@
 							"name": "Select8"
 						}
 					],
-					"script": "source(output(\n\t\tcurrent_flag as string,\n\t\tnpi as string,\n\t\tdata_month as integer,\n\t\t{active flag} as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{replacement npi} as string,\n\t\t{employer identification number (ein)} as string,\n\t\t{provider organization name (legal business name)} as string,\n\t\t{provider last name (legal name)} as string,\n\t\t{provider first name} as string,\n\t\t{provider middle name} as string,\n\t\t{provider name prefix text} as string,\n\t\t{provider name suffix text} as string,\n\t\t{provider credential text} as string,\n\t\t{provider other organization name} as string,\n\t\t{provider other organization name type code} as string,\n\t\t{provider other last name} as string,\n\t\t{provider other first name} as string,\n\t\t{provider other middle name} as string,\n\t\t{provider other name prefix text} as string,\n\t\t{provider other name suffix text} as string,\n\t\t{provider other credential text} as string,\n\t\t{provider other last name type code} as string,\n\t\t{provider first line business mailing address} as string,\n\t\t{provider second line business mailing address} as string,\n\t\t{provider business mailing address city name} as string,\n\t\t{provider business mailing address state name} as string,\n\t\t{provider business mailing address postal code} as string,\n\t\t{provider business mailing address country code (if outside u.s.) } as string,\n\t\t{provider business mailing address telephone number} as string,\n\t\t{provider business mailing address fax number} as string,\n\t\t{provider first line business practice location address} as string,\n\t\t{provider second line business practice location address} as string,\n\t\t{provider business practice location address city name} as string,\n\t\t{provider business practice location address state name} as string,\n\t\t{provider business practice location address postal code} as string,\n\t\t{provider business practice location address country code out us} as string,\n\t\t{provider business practice location address telephone number} as string,\n\t\t{provider business practice location address fax number} as string,\n\t\t{provider enumeration date} as date,\n\t\t{last update date} as date,\n\t\t{npi deactivation reason code} as string,\n\t\t{npi deactivation date} as date,\n\t\t{npi reactivation date} as date,\n\t\t{provider gender code} as string,\n\t\t{authorized official last name} as string,\n\t\t{authorized official first name} as string,\n\t\t{authorized official middle name} as string,\n\t\t{authorized official title or position} as string,\n\t\t{authorized official telephone number} as string,\n\t\t{is sole proprietor} as string,\n\t\t{is organization subpart} as string,\n\t\t{parent organization lbn} as string,\n\t\t{parent organization tin} as string,\n\t\t{authorized official name prefix text} as string,\n\t\t{authorized official name suffix text} as string,\n\t\t{authorized official credential text} as string,\n\t\t{healthcare provider primary taxonomy code} as string,\n\t\t{healthcare provider primary group taxonomy} as string,\n\t\t{provider primary license number} as string,\n\t\t{provider primary license number state code} as string,\n\t\tprimary_taxonomy_grouping as string,\n\t\tprimary_taxonomy_classification as string,\n\t\tprimary_taxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCmsNppesMain\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tother_provider_identifier as string,\n\t\tother_provider_identifier_type_code as string,\n\t\tother_provider_identifier_state as string,\n\t\tother_provider_identifier_issuer as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProdCmsNppesOtherProviderID\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\t{other provider identifier} as string,\n\t\t{other provider identifier issuer} as string,\n\t\t{other provider identifier state} as string,\n\t\t{other provider identifier type code} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCMSNPPESOtherProvID\nProdCmsNppesOtherProviderID filter(current_flag=='1') ~> ProdNPPESOtherProvIDCurrent\nStCmsNppesMain filter({active flag}=='1') ~> StNPPESMainActive\nStNPPESMainActive aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate1\nAggregate1 select(mapColumn(\n\t\teach(match(in([('npi')],name)))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StNPPESMainActiveNPI\nStCMSNPPESOtherProvIDFixColumnName aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate2\nAggregate2 select(mapColumn(\n\t\ttemp_npi = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, Select2 join(temp_npi == npi_prod,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join1\nProdNPPESOtherProvIDCurrent aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate3\nAggregate3 select(mapColumn(\n\t\tnpi_prod = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nJoin1 split(isNull(npi_prod),\n\ttemp_npi==npi_prod,\n\tdisjoint: true) ~> ConditionalSplit1@(NewNPI, InBoth, OldNPI)\nSelect3, StCMSNPPESOtherProvIDFixColumnName lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup\nConditionalSplit1@NewNPI select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nConditionalSplit1@InBoth select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nConditionalSplit1@OldNPI select(mapColumn(\n\t\ttemp_npi = npi_prod\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nLookup select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NewNPIProviderOtherIDFinal\nSelect4, StCMSNPPESOtherProvIDFixColumnName lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> InBothStOtherProvID\nSelect4, ProdNPPESOtherProvIDCurrent lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> InBothProdOtherProvID\nStCMSNPPESOtherProvID select(mapColumn(\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier = {other provider identifier},\n\t\tother_provider_identifier_issuer = {other provider identifier issuer},\n\t\tother_provider_identifier_state = {other provider identifier state},\n\t\tother_provider_identifier_type_code = {other provider identifier type code}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StCMSNPPESOtherProvIDFixColumnName\nSelect8, InBothProdOtherProvID exists(Select8@npi == temp_npi\n\t&& Select8@{entity type code} == ProdCmsNppesOtherProviderID@{entity type code}\n\t&& Select8@{active flag} == ProdCmsNppesOtherProviderID@{active flag}\n\t&& Select8@other_provider_identifier == ProdCmsNppesOtherProviderID@other_provider_identifier\n\t&& Select8@other_provider_identifier_type_code == ProdCmsNppesOtherProviderID@other_provider_identifier_type_code\n\t&& Select8@other_provider_identifier_state == ProdCmsNppesOtherProviderID@other_provider_identifier_state\n\t&& Select8@other_provider_identifier_issuer == ProdCmsNppesOtherProviderID@other_provider_identifier_issuer,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothNewData\nNPIInBothNewData select(mapColumn(\n\t\tnpi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothNewDataFinal\nSelect7, InBothStOtherProvID exists(Select7@npi == temp_npi\n\t&& Select7@{entity type code} == StCMSNPPESOtherProvIDFixColumnName@{entity type code}\n\t&& Select7@{active flag} == StCMSNPPESOtherProvIDFixColumnName@{active flag}\n\t&& Select7@other_provider_identifier == StCMSNPPESOtherProvIDFixColumnName@other_provider_identifier\n\t&& Select7@other_provider_identifier_type_code == StCMSNPPESOtherProvIDFixColumnName@other_provider_identifier_type_code\n\t&& Select7@other_provider_identifier_state == StCMSNPPESOtherProvIDFixColumnName@other_provider_identifier_state\n\t&& Select7@other_provider_identifier_issuer == StCMSNPPESOtherProvIDFixColumnName@other_provider_identifier_issuer,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothOldData\nDerivedColumn1 select(mapColumn(\n\t\tnpi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_type_code,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_issuer\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothOldDataFinal\nNPIInBothOldData derive(current_flag = '0') ~> DerivedColumn1\nSelect5, StNPPESMainActiveNPI exists(temp_npi == npi,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists1\nExists1, StCMSNPPESOtherProvIDFixColumnName lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup1\nLookup1 filter({active flag}=='1') ~> Filter1\nFilter1 derive({active flag} = '0') ~> SetOldDataToActiveFlag0\nFilter1 derive(current_flag = '0') ~> SetOldDataToCurrentFlag0\nSetOldDataToActiveFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataActiveFlag0Final\nSetOldDataToCurrentFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataCurrentFlag0Final\nNewNPIProviderOtherIDFinal, NPIInBothNewDataFinal, NPIInBothOldDataFinal, NPIOldDataActiveFlag0Final, NPIOldDataCurrentFlag0Final union(byName: true)~> NewChangeDataFinal\nNewChangeDataFinal select(mapColumn(\n\t\teach(match(name!='current_flag'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nProdCmsNppesOtherProviderID, Select6 exists(ProdCmsNppesOtherProviderID@data_month == Select6@data_month\n\t&& ProdCmsNppesOtherProviderID@npi == Select6@npi\n\t&& ProdCmsNppesOtherProviderID@{entity type code} == Select6@{entity type code}\n\t&& ProdCmsNppesOtherProviderID@{active flag} == Select6@{active flag}\n\t&& ProdCmsNppesOtherProviderID@other_provider_identifier == Select6@other_provider_identifier\n\t&& ProdCmsNppesOtherProviderID@other_provider_identifier_type_code == Select6@other_provider_identifier_type_code\n\t&& ProdCmsNppesOtherProviderID@other_provider_identifier_state == Select6@other_provider_identifier_state\n\t&& ProdCmsNppesOtherProviderID@other_provider_identifier_issuer == Select6@other_provider_identifier_issuer,\n\tnegate:true,\n\tbroadcast: 'auto')~> KeepOldDataFinal\nKeepOldDataFinal, NewChangeDataFinal union(byName: true)~> FinalData\nInBothProdOtherProvID select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_type_code,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_issuer\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nInBothStOtherProvID select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nFinalData sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tother_provider_identifier as string,\n\t\tother_provider_identifier_type_code as string,\n\t\tother_provider_identifier_state as string,\n\t\tother_provider_identifier_issuer as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+					"script": "source(output(\n\t\tcurrent_flag as string,\n\t\tnpi as string,\n\t\tdata_month as integer,\n\t\t{active flag} as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{replacement npi} as string,\n\t\t{employer identification number (ein)} as string,\n\t\t{provider organization name (legal business name)} as string,\n\t\t{provider last name (legal name)} as string,\n\t\t{provider first name} as string,\n\t\t{provider middle name} as string,\n\t\t{provider name prefix text} as string,\n\t\t{provider name suffix text} as string,\n\t\t{provider credential text} as string,\n\t\t{provider other organization name} as string,\n\t\t{provider other organization name type code} as string,\n\t\t{provider other last name} as string,\n\t\t{provider other first name} as string,\n\t\t{provider other middle name} as string,\n\t\t{provider other name prefix text} as string,\n\t\t{provider other name suffix text} as string,\n\t\t{provider other credential text} as string,\n\t\t{provider other last name type code} as string,\n\t\t{provider first line business mailing address} as string,\n\t\t{provider second line business mailing address} as string,\n\t\t{provider business mailing address city name} as string,\n\t\t{provider business mailing address state name} as string,\n\t\t{provider business mailing address postal code} as string,\n\t\t{provider business mailing address country code (if outside u.s.) } as string,\n\t\t{provider business mailing address telephone number} as string,\n\t\t{provider business mailing address fax number} as string,\n\t\t{provider first line business practice location address} as string,\n\t\t{provider second line business practice location address} as string,\n\t\t{provider business practice location address city name} as string,\n\t\t{provider business practice location address state name} as string,\n\t\t{provider business practice location address postal code} as string,\n\t\t{provider business practice location address country code out us} as string,\n\t\t{provider business practice location address telephone number} as string,\n\t\t{provider business practice location address fax number} as string,\n\t\t{provider enumeration date} as date,\n\t\t{last update date} as date,\n\t\t{npi deactivation reason code} as string,\n\t\t{npi deactivation date} as date,\n\t\t{npi reactivation date} as date,\n\t\t{provider gender code} as string,\n\t\t{authorized official last name} as string,\n\t\t{authorized official first name} as string,\n\t\t{authorized official middle name} as string,\n\t\t{authorized official title or position} as string,\n\t\t{authorized official telephone number} as string,\n\t\t{is sole proprietor} as string,\n\t\t{is organization subpart} as string,\n\t\t{parent organization lbn} as string,\n\t\t{parent organization tin} as string,\n\t\t{authorized official name prefix text} as string,\n\t\t{authorized official name suffix text} as string,\n\t\t{authorized official credential text} as string,\n\t\t{healthcare provider primary taxonomy code} as string,\n\t\t{healthcare provider primary group taxonomy} as string,\n\t\t{provider primary license number} as string,\n\t\t{provider primary license number state code} as string,\n\t\tprimary_taxonomy_grouping as string,\n\t\tprimary_taxonomy_classification as string,\n\t\tprimary_taxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCmsNppesMain\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tother_provider_identifier as string,\n\t\tother_provider_identifier_type_code as string,\n\t\tother_provider_identifier_state as string,\n\t\tother_provider_identifier_issuer as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProdCmsNppesOtherProviderID\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\t{other provider identifier} as string,\n\t\t{other provider identifier issuer} as string,\n\t\t{other provider identifier state} as string,\n\t\t{other provider identifier type code} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCMSNPPESOtherProvID\nProdCmsNppesOtherProviderID filter(current_flag=='1') ~> ProdNPPESOtherProvIDCurrent\nStCmsNppesMain filter({active flag}=='1') ~> StNPPESMainActive\nStNPPESMainActive aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate1\nAggregate1 select(mapColumn(\n\t\teach(match(in([('npi')],name)))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StNPPESMainActiveNPI\nStCMSNPPESOtherProvIDFixColumnName aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate2\nAggregate2 select(mapColumn(\n\t\ttemp_npi = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, Select2 join(temp_npi == npi_prod,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join1\nProdNPPESOtherProvIDCurrent aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate3\nAggregate3 select(mapColumn(\n\t\tnpi_prod = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nJoin1 split(isNull(npi_prod),\n\ttemp_npi==npi_prod,\n\tdisjoint: true) ~> ConditionalSplit1@(NewNPI, InBoth, OldNPI)\nSelect3, StCMSNPPESOtherProvIDFixColumnName lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup\nConditionalSplit1@NewNPI select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nConditionalSplit1@InBoth select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nConditionalSplit1@OldNPI select(mapColumn(\n\t\ttemp_npi = npi_prod\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nLookup select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NewNPIProviderOtherIDFinal\nSelect4, StCMSNPPESOtherProvIDFixColumnName lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> InBothStOtherProvID\nSelect4, ProdNPPESOtherProvIDCurrent lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> InBothProdOtherProvID\nStCMSNPPESOtherProvID select(mapColumn(\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier = {other provider identifier},\n\t\tother_provider_identifier_issuer = {other provider identifier issuer},\n\t\tother_provider_identifier_state = {other provider identifier state},\n\t\tother_provider_identifier_type_code = {other provider identifier type code}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StCMSNPPESOtherProvIDFixColumnName\nSelect8, InBothProdOtherProvID exists(Select8@npi == temp_npi\n\t&& Select8@{entity type code} == ProdCmsNppesOtherProviderID@{entity type code}\n\t&& Select8@{active flag} == ProdCmsNppesOtherProviderID@{active flag}\n\t&& Select8@other_provider_identifier == ProdCmsNppesOtherProviderID@other_provider_identifier\n\t&& Select8@other_provider_identifier_type_code == ProdCmsNppesOtherProviderID@other_provider_identifier_type_code\n\t&& Select8@other_provider_identifier_state == ProdCmsNppesOtherProviderID@other_provider_identifier_state\n\t&& Select8@other_provider_identifier_issuer == ProdCmsNppesOtherProviderID@other_provider_identifier_issuer,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothNewData\nNPIInBothNewData select(mapColumn(\n\t\tnpi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothNewDataFinal\nSelect7, InBothStOtherProvID exists(Select7@npi == temp_npi\n\t&& Select7@{entity type code} == StCMSNPPESOtherProvIDFixColumnName@{entity type code}\n\t&& Select7@{active flag} == StCMSNPPESOtherProvIDFixColumnName@{active flag}\n\t&& Select7@other_provider_identifier == StCMSNPPESOtherProvIDFixColumnName@other_provider_identifier\n\t&& Select7@other_provider_identifier_type_code == StCMSNPPESOtherProvIDFixColumnName@other_provider_identifier_type_code\n\t&& Select7@other_provider_identifier_state == StCMSNPPESOtherProvIDFixColumnName@other_provider_identifier_state\n\t&& Select7@other_provider_identifier_issuer == StCMSNPPESOtherProvIDFixColumnName@other_provider_identifier_issuer,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothOldData\nDerivedColumn1 select(mapColumn(\n\t\tnpi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_type_code,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_issuer\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothOldDataFinal\nNPIInBothOldData derive(current_flag = '0') ~> DerivedColumn1\nSelect5, StNPPESMainActiveNPI exists(temp_npi == npi,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists1\nExists1, StCMSNPPESOtherProvIDFixColumnName lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup1\nLookup1 filter({active flag}=='1') ~> Filter1\nFilter1 derive({active flag} = '0') ~> SetOldDataToActiveFlag0\nFilter1 derive(current_flag = '0') ~> SetOldDataToCurrentFlag0\nSetOldDataToActiveFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataActiveFlag0Final\nSetOldDataToCurrentFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataCurrentFlag0Final\nNewNPIProviderOtherIDFinal, NPIInBothNewDataFinal, NPIInBothOldDataFinal, NPIOldDataActiveFlag0Final, NPIOldDataCurrentFlag0Final union(byName: true)~> NewChangeDataFinal\nNewChangeDataFinal select(mapColumn(\n\t\teach(match(name!='current_flag'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nProdCmsNppesOtherProviderID, Select6 exists(ProdCmsNppesOtherProviderID@data_month == Select6@data_month\n\t&& ProdCmsNppesOtherProviderID@npi == Select6@npi\n\t&& ProdCmsNppesOtherProviderID@{entity type code} == Select6@{entity type code}\n\t&& ProdCmsNppesOtherProviderID@{active flag} == Select6@{active flag}\n\t&& ProdCmsNppesOtherProviderID@other_provider_identifier == Select6@other_provider_identifier\n\t&& ProdCmsNppesOtherProviderID@other_provider_identifier_type_code == Select6@other_provider_identifier_type_code\n\t&& ProdCmsNppesOtherProviderID@other_provider_identifier_state == Select6@other_provider_identifier_state\n\t&& ProdCmsNppesOtherProviderID@other_provider_identifier_issuer == Select6@other_provider_identifier_issuer,\n\tnegate:true,\n\tbroadcast: 'auto')~> KeepOldDataFinal\nKeepOldDataFinal, NewChangeDataFinal union(byName: true)~> FinalData\nInBothProdOtherProvID select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_type_code,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_issuer\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nInBothStOtherProvID select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nFinalData sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tother_provider_identifier as string,\n\t\tother_provider_identifier_type_code as string,\n\t\tother_provider_identifier_state as string,\n\t\tother_provider_identifier_issuer as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 				}
 			},
 			"dependsOn": [
@@ -7876,7 +7854,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "QRAL_AZURE_SQL_DEV",
+								"referenceName": "PUF_DS_3_st_cms_nppes_provider_taxonomy",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -7992,14 +7970,344 @@
 							"name": "Select8"
 						}
 					],
-					"script": "source(output(\n\t\tcurrent_flag as string,\n\t\tnpi as string,\n\t\tdata_month as integer,\n\t\t{active flag} as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{replacement npi} as string,\n\t\t{employer identification number (ein)} as string,\n\t\t{provider organization name (legal business name)} as string,\n\t\t{provider last name (legal name)} as string,\n\t\t{provider first name} as string,\n\t\t{provider middle name} as string,\n\t\t{provider name prefix text} as string,\n\t\t{provider name suffix text} as string,\n\t\t{provider credential text} as string,\n\t\t{provider other organization name} as string,\n\t\t{provider other organization name type code} as string,\n\t\t{provider other last name} as string,\n\t\t{provider other first name} as string,\n\t\t{provider other middle name} as string,\n\t\t{provider other name prefix text} as string,\n\t\t{provider other name suffix text} as string,\n\t\t{provider other credential text} as string,\n\t\t{provider other last name type code} as string,\n\t\t{provider first line business mailing address} as string,\n\t\t{provider second line business mailing address} as string,\n\t\t{provider business mailing address city name} as string,\n\t\t{provider business mailing address state name} as string,\n\t\t{provider business mailing address postal code} as string,\n\t\t{provider business mailing address country code (if outside u.s.) } as string,\n\t\t{provider business mailing address telephone number} as string,\n\t\t{provider business mailing address fax number} as string,\n\t\t{provider first line business practice location address} as string,\n\t\t{provider second line business practice location address} as string,\n\t\t{provider business practice location address city name} as string,\n\t\t{provider business practice location address state name} as string,\n\t\t{provider business practice location address postal code} as string,\n\t\t{provider business practice location address country code out us} as string,\n\t\t{provider business practice location address telephone number} as string,\n\t\t{provider business practice location address fax number} as string,\n\t\t{provider enumeration date} as date,\n\t\t{last update date} as date,\n\t\t{npi deactivation reason code} as string,\n\t\t{npi deactivation date} as date,\n\t\t{npi reactivation date} as date,\n\t\t{provider gender code} as string,\n\t\t{authorized official last name} as string,\n\t\t{authorized official first name} as string,\n\t\t{authorized official middle name} as string,\n\t\t{authorized official title or position} as string,\n\t\t{authorized official telephone number} as string,\n\t\t{is sole proprietor} as string,\n\t\t{is organization subpart} as string,\n\t\t{parent organization lbn} as string,\n\t\t{parent organization tin} as string,\n\t\t{authorized official name prefix text} as string,\n\t\t{authorized official name suffix text} as string,\n\t\t{authorized official credential text} as string,\n\t\t{healthcare provider primary taxonomy code} as string,\n\t\t{healthcare provider primary group taxonomy} as string,\n\t\t{provider primary license number} as string,\n\t\t{provider primary license number state code} as string,\n\t\tprimary_taxonomy_grouping as string,\n\t\tprimary_taxonomy_classification as string,\n\t\tprimary_taxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCmsNppesMain\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_group_taxonomy as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProdCmsNppesProvTaxonomy\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tposition as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\thealthcare_provider_group_taxonomy as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCMSNPPESProvTaxonomy\nProdCmsNppesProvTaxonomy filter(current_flag=='1') ~> ProdNPPESProvTaxonomyCurrent\nStCmsNppesMain filter({active flag}=='1') ~> StNPPESMainActive\nStNPPESMainActive aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate1\nAggregate1 select(mapColumn(\n\t\teach(match(in([('npi')],name)))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StNPPESMainActiveNPI\nStCMSNPPESProvTaxonomySelect aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate2\nAggregate2 select(mapColumn(\n\t\ttemp_npi = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, Select2 join(temp_npi == npi_prod,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join1\nProdNPPESProvTaxonomyCurrent aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate3\nAggregate3 select(mapColumn(\n\t\tnpi_prod = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nJoin1 split(isNull(npi_prod),\n\ttemp_npi==npi_prod,\n\tdisjoint: true) ~> ConditionalSplit1@(NewNPI, InBoth, OldNPI)\nSelect3, StCMSNPPESProvTaxonomySelect lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup\nConditionalSplit1@NewNPI select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nConditionalSplit1@InBoth select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nConditionalSplit1@OldNPI select(mapColumn(\n\t\ttemp_npi = npi_prod\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nLookup select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NewNPIProvTaxonomyFinal\nSelect4, StCMSNPPESProvTaxonomySelect lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> InBothStOtherProvID\nSelect4, ProdNPPESProvTaxonomyCurrent lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> InBothProdOtherProvID\nStCMSNPPESProvTaxonomy select(mapColumn(\n\t\teach(match(upper(name)!='POSITION'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StCMSNPPESProvTaxonomySelect\nSelect8, InBothProdOtherProvID exists(Select8@npi == temp_npi\n\t&& Select8@{entity type code} == ProdCmsNppesProvTaxonomy@{entity type code}\n\t&& Select8@{active flag} == ProdCmsNppesProvTaxonomy@{active flag}\n\t&& Select8@healthcare_provider_taxonomy_code == ProdCmsNppesProvTaxonomy@healthcare_provider_taxonomy_code\n\t&& Select8@taxonomy_grouping == ProdCmsNppesProvTaxonomy@taxonomy_grouping\n\t&& Select8@taxonomy_classification == ProdCmsNppesProvTaxonomy@taxonomy_classification\n\t&& Select8@taxonomy_specialization == ProdCmsNppesProvTaxonomy@taxonomy_specialization\n\t&& Select8@provider_license_number == ProdCmsNppesProvTaxonomy@provider_license_number\n\t&& Select8@provider_license_number_state_code == ProdCmsNppesProvTaxonomy@provider_license_number_state_code\n\t&& Select8@healthcare_provider_primary_taxonomy_switch == ProdCmsNppesProvTaxonomy@healthcare_provider_primary_taxonomy_switch\n\t&& Select8@healthcare_provider_group_taxonomy == ProdCmsNppesProvTaxonomy@healthcare_provider_group_taxonomy,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothNewData\nNPIInBothNewData select(mapColumn(\n\t\tnpi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothNewDataFinal\nSelect7, InBothStOtherProvID exists(Select7@npi == temp_npi\n\t&& Select7@{entity type code} == StCMSNPPESProvTaxonomySelect@{entity type code}\n\t&& Select7@{active flag} == StCMSNPPESProvTaxonomySelect@{active flag}\n\t&& Select7@healthcare_provider_taxonomy_code == StCMSNPPESProvTaxonomySelect@healthcare_provider_taxonomy_code\n\t&& Select7@taxonomy_grouping == StCMSNPPESProvTaxonomySelect@taxonomy_grouping\n\t&& Select7@taxonomy_classification == StCMSNPPESProvTaxonomySelect@taxonomy_classification\n\t&& Select7@taxonomy_specialization == StCMSNPPESProvTaxonomySelect@taxonomy_specialization\n\t&& Select7@provider_license_number == StCMSNPPESProvTaxonomySelect@provider_license_number\n\t&& Select7@provider_license_number_state_code == StCMSNPPESProvTaxonomySelect@provider_license_number_state_code\n\t&& Select7@healthcare_provider_primary_taxonomy_switch == StCMSNPPESProvTaxonomySelect@healthcare_provider_primary_taxonomy_switch\n\t&& Select7@healthcare_provider_group_taxonomy == StCMSNPPESProvTaxonomySelect@healthcare_provider_group_taxonomy,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothOldData\nDerivedColumn1 select(mapColumn(\n\t\tnpi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_taxonomy_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_group_taxonomy\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothOldDataFinal\nNPIInBothOldData derive(current_flag = '0') ~> DerivedColumn1\nSelect5, StNPPESMainActiveNPI exists(temp_npi == npi,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists1\nExists1, StCMSNPPESProvTaxonomySelect lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup1\nLookup1 filter({active flag}=='1') ~> Filter1\nFilter1 derive({active flag} = '0') ~> SetOldDataToActiveFlag0\nFilter1 derive(current_flag = '0') ~> SetOldDataToCurrentFlag0\nSetOldDataToActiveFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataActiveFlag0Final\nSetOldDataToCurrentFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataCurrentFlag0Final\nNewNPIProvTaxonomyFinal, NPIInBothNewDataFinal, NPIInBothOldDataFinal, NPIOldDataActiveFlag0Final, NPIOldDataCurrentFlag0Final union(byName: true)~> NewChangeDataFinal\nNewChangeDataFinal select(mapColumn(\n\t\teach(match(name!='current_flag'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nProdCmsNppesProvTaxonomy, Select6 exists(ProdCmsNppesProvTaxonomy@data_month == Select6@data_month\n\t&& ProdCmsNppesProvTaxonomy@npi == Select6@npi\n\t&& ProdCmsNppesProvTaxonomy@{entity type code} == Select6@{entity type code}\n\t&& ProdCmsNppesProvTaxonomy@{active flag} == Select6@{active flag}\n\t&& ProdCmsNppesProvTaxonomy@healthcare_provider_taxonomy_code == Select6@healthcare_provider_taxonomy_code\n\t&& ProdCmsNppesProvTaxonomy@taxonomy_grouping == Select6@taxonomy_grouping\n\t&& ProdCmsNppesProvTaxonomy@taxonomy_classification == Select6@taxonomy_classification\n\t&& ProdCmsNppesProvTaxonomy@taxonomy_specialization == Select6@taxonomy_specialization\n\t&& ProdCmsNppesProvTaxonomy@provider_license_number == Select6@provider_license_number\n\t&& ProdCmsNppesProvTaxonomy@provider_license_number_state_code == Select6@provider_license_number_state_code\n\t&& ProdCmsNppesProvTaxonomy@healthcare_provider_primary_taxonomy_switch == Select6@healthcare_provider_primary_taxonomy_switch\n\t&& ProdCmsNppesProvTaxonomy@healthcare_provider_group_taxonomy == Select6@healthcare_provider_group_taxonomy,\n\tnegate:true,\n\tbroadcast: 'auto')~> KeepOldDataFinal\nKeepOldDataFinal, NewChangeDataFinal union(byName: true)~> FinalData\nInBothProdOtherProvID select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_taxonomy_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_group_taxonomy\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nInBothStOtherProvID select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nFinalData sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+					"script": "source(output(\n\t\tcurrent_flag as string,\n\t\tnpi as string,\n\t\tdata_month as integer,\n\t\t{active flag} as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{replacement npi} as string,\n\t\t{employer identification number (ein)} as string,\n\t\t{provider organization name (legal business name)} as string,\n\t\t{provider last name (legal name)} as string,\n\t\t{provider first name} as string,\n\t\t{provider middle name} as string,\n\t\t{provider name prefix text} as string,\n\t\t{provider name suffix text} as string,\n\t\t{provider credential text} as string,\n\t\t{provider other organization name} as string,\n\t\t{provider other organization name type code} as string,\n\t\t{provider other last name} as string,\n\t\t{provider other first name} as string,\n\t\t{provider other middle name} as string,\n\t\t{provider other name prefix text} as string,\n\t\t{provider other name suffix text} as string,\n\t\t{provider other credential text} as string,\n\t\t{provider other last name type code} as string,\n\t\t{provider first line business mailing address} as string,\n\t\t{provider second line business mailing address} as string,\n\t\t{provider business mailing address city name} as string,\n\t\t{provider business mailing address state name} as string,\n\t\t{provider business mailing address postal code} as string,\n\t\t{provider business mailing address country code (if outside u.s.) } as string,\n\t\t{provider business mailing address telephone number} as string,\n\t\t{provider business mailing address fax number} as string,\n\t\t{provider first line business practice location address} as string,\n\t\t{provider second line business practice location address} as string,\n\t\t{provider business practice location address city name} as string,\n\t\t{provider business practice location address state name} as string,\n\t\t{provider business practice location address postal code} as string,\n\t\t{provider business practice location address country code out us} as string,\n\t\t{provider business practice location address telephone number} as string,\n\t\t{provider business practice location address fax number} as string,\n\t\t{provider enumeration date} as date,\n\t\t{last update date} as date,\n\t\t{npi deactivation reason code} as string,\n\t\t{npi deactivation date} as date,\n\t\t{npi reactivation date} as date,\n\t\t{provider gender code} as string,\n\t\t{authorized official last name} as string,\n\t\t{authorized official first name} as string,\n\t\t{authorized official middle name} as string,\n\t\t{authorized official title or position} as string,\n\t\t{authorized official telephone number} as string,\n\t\t{is sole proprietor} as string,\n\t\t{is organization subpart} as string,\n\t\t{parent organization lbn} as string,\n\t\t{parent organization tin} as string,\n\t\t{authorized official name prefix text} as string,\n\t\t{authorized official name suffix text} as string,\n\t\t{authorized official credential text} as string,\n\t\t{healthcare provider primary taxonomy code} as string,\n\t\t{healthcare provider primary group taxonomy} as string,\n\t\t{provider primary license number} as string,\n\t\t{provider primary license number state code} as string,\n\t\tprimary_taxonomy_grouping as string,\n\t\tprimary_taxonomy_classification as string,\n\t\tprimary_taxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCmsNppesMain\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_group_taxonomy as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProdCmsNppesProvTaxonomy\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tposition as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\thealthcare_provider_group_taxonomy as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCMSNPPESProvTaxonomy\nProdCmsNppesProvTaxonomy filter(current_flag=='1') ~> ProdNPPESProvTaxonomyCurrent\nStCmsNppesMain filter({active flag}=='1') ~> StNPPESMainActive\nStNPPESMainActive aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate1\nAggregate1 select(mapColumn(\n\t\teach(match(in([('npi')],name)))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StNPPESMainActiveNPI\nStCMSNPPESProvTaxonomySelect aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate2\nAggregate2 select(mapColumn(\n\t\ttemp_npi = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, Select2 join(temp_npi == npi_prod,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join1\nProdNPPESProvTaxonomyCurrent aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate3\nAggregate3 select(mapColumn(\n\t\tnpi_prod = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nJoin1 split(isNull(npi_prod),\n\ttemp_npi==npi_prod,\n\tdisjoint: true) ~> ConditionalSplit1@(NewNPI, InBoth, OldNPI)\nSelect3, StCMSNPPESProvTaxonomySelect lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup\nConditionalSplit1@NewNPI select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nConditionalSplit1@InBoth select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nConditionalSplit1@OldNPI select(mapColumn(\n\t\ttemp_npi = npi_prod\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nLookup select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NewNPIProvTaxonomyFinal\nSelect4, StCMSNPPESProvTaxonomySelect lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> InBothStOtherProvID\nSelect4, ProdNPPESProvTaxonomyCurrent lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> InBothProdOtherProvID\nStCMSNPPESProvTaxonomy select(mapColumn(\n\t\teach(match(upper(name)!='POSITION'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StCMSNPPESProvTaxonomySelect\nSelect8, InBothProdOtherProvID exists(Select8@npi == temp_npi\n\t&& Select8@{entity type code} == ProdCmsNppesProvTaxonomy@{entity type code}\n\t&& Select8@{active flag} == ProdCmsNppesProvTaxonomy@{active flag}\n\t&& Select8@healthcare_provider_taxonomy_code == ProdCmsNppesProvTaxonomy@healthcare_provider_taxonomy_code\n\t&& Select8@taxonomy_grouping == ProdCmsNppesProvTaxonomy@taxonomy_grouping\n\t&& Select8@taxonomy_classification == ProdCmsNppesProvTaxonomy@taxonomy_classification\n\t&& Select8@taxonomy_specialization == ProdCmsNppesProvTaxonomy@taxonomy_specialization\n\t&& Select8@provider_license_number == ProdCmsNppesProvTaxonomy@provider_license_number\n\t&& Select8@provider_license_number_state_code == ProdCmsNppesProvTaxonomy@provider_license_number_state_code\n\t&& Select8@healthcare_provider_primary_taxonomy_switch == ProdCmsNppesProvTaxonomy@healthcare_provider_primary_taxonomy_switch\n\t&& Select8@healthcare_provider_group_taxonomy == ProdCmsNppesProvTaxonomy@healthcare_provider_group_taxonomy,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothNewData\nNPIInBothNewData select(mapColumn(\n\t\tnpi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothNewDataFinal\nSelect7, InBothStOtherProvID exists(Select7@npi == temp_npi\n\t&& Select7@{entity type code} == StCMSNPPESProvTaxonomySelect@{entity type code}\n\t&& Select7@{active flag} == StCMSNPPESProvTaxonomySelect@{active flag}\n\t&& Select7@healthcare_provider_taxonomy_code == StCMSNPPESProvTaxonomySelect@healthcare_provider_taxonomy_code\n\t&& Select7@taxonomy_grouping == StCMSNPPESProvTaxonomySelect@taxonomy_grouping\n\t&& Select7@taxonomy_classification == StCMSNPPESProvTaxonomySelect@taxonomy_classification\n\t&& Select7@taxonomy_specialization == StCMSNPPESProvTaxonomySelect@taxonomy_specialization\n\t&& Select7@provider_license_number == StCMSNPPESProvTaxonomySelect@provider_license_number\n\t&& Select7@provider_license_number_state_code == StCMSNPPESProvTaxonomySelect@provider_license_number_state_code\n\t&& Select7@healthcare_provider_primary_taxonomy_switch == StCMSNPPESProvTaxonomySelect@healthcare_provider_primary_taxonomy_switch\n\t&& Select7@healthcare_provider_group_taxonomy == StCMSNPPESProvTaxonomySelect@healthcare_provider_group_taxonomy,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothOldData\nDerivedColumn1 select(mapColumn(\n\t\tnpi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_taxonomy_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_group_taxonomy\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothOldDataFinal\nNPIInBothOldData derive(current_flag = '0') ~> DerivedColumn1\nSelect5, StNPPESMainActiveNPI exists(temp_npi == npi,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists1\nExists1, StCMSNPPESProvTaxonomySelect lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup1\nLookup1 filter({active flag}=='1') ~> Filter1\nFilter1 derive({active flag} = '0') ~> SetOldDataToActiveFlag0\nFilter1 derive(current_flag = '0') ~> SetOldDataToCurrentFlag0\nSetOldDataToActiveFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataActiveFlag0Final\nSetOldDataToCurrentFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataCurrentFlag0Final\nNewNPIProvTaxonomyFinal, NPIInBothNewDataFinal, NPIInBothOldDataFinal, NPIOldDataActiveFlag0Final, NPIOldDataCurrentFlag0Final union(byName: true)~> NewChangeDataFinal\nNewChangeDataFinal select(mapColumn(\n\t\teach(match(name!='current_flag'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nProdCmsNppesProvTaxonomy, Select6 exists(ProdCmsNppesProvTaxonomy@data_month == Select6@data_month\n\t&& ProdCmsNppesProvTaxonomy@npi == Select6@npi\n\t&& ProdCmsNppesProvTaxonomy@{entity type code} == Select6@{entity type code}\n\t&& ProdCmsNppesProvTaxonomy@{active flag} == Select6@{active flag}\n\t&& ProdCmsNppesProvTaxonomy@healthcare_provider_taxonomy_code == Select6@healthcare_provider_taxonomy_code\n\t&& ProdCmsNppesProvTaxonomy@taxonomy_grouping == Select6@taxonomy_grouping\n\t&& ProdCmsNppesProvTaxonomy@taxonomy_classification == Select6@taxonomy_classification\n\t&& ProdCmsNppesProvTaxonomy@taxonomy_specialization == Select6@taxonomy_specialization\n\t&& ProdCmsNppesProvTaxonomy@provider_license_number == Select6@provider_license_number\n\t&& ProdCmsNppesProvTaxonomy@provider_license_number_state_code == Select6@provider_license_number_state_code\n\t&& ProdCmsNppesProvTaxonomy@healthcare_provider_primary_taxonomy_switch == Select6@healthcare_provider_primary_taxonomy_switch\n\t&& ProdCmsNppesProvTaxonomy@healthcare_provider_group_taxonomy == Select6@healthcare_provider_group_taxonomy,\n\tnegate:true,\n\tbroadcast: 'auto')~> KeepOldDataFinal\nKeepOldDataFinal, NewChangeDataFinal union(byName: true)~> FinalData\nInBothProdOtherProvID select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_taxonomy_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_group_taxonomy\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nInBothStOtherProvID select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nFinalData sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_group_taxonomy as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_2_st_cms_nppes_main')]",
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY')]",
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_2b_st_cms_nppes_provider_taxonomy')]",
-				"[concat(variables('factoryId'), '/datasets/QRAL_AZURE_SQL_DEV')]"
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_3_st_cms_nppes_provider_taxonomy')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Monthly_Update_Process')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PUF_DF_1_Load_NPPES_Month",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_1_Load_NPPES_Month",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"RawCMSNPPESMonth": {},
+									"sinkNPPESMain": {},
+									"sinkNPPESOtherProvider": {},
+									"sinkProviderTaxonomy": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime-TEST2",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_2a_Stage_NPPES",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_1_Load_NPPES_Month",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_2a_Stage_NPPES",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ProviderTaxonomyMonth": {},
+									"ProviderOtherIdentifiers": {},
+									"sink1": {},
+									"sink2": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime-TEST2",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_2b_Stage_NPPES",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2a_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_2b_Stage_NPPES",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StageProviderTaxonomy": {},
+									"NUCCTaxonomy": {},
+									"NPPESProviderMain": {},
+									"InputStateCorrection": {},
+									"InputCountryCorrection": {},
+									"sink1": {},
+									"LoadNPPESMainStage2a": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime-TEST2",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_3_Stage_NPPES_Main",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2b_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_3_Stage_NPPES_Main",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain": {},
+									"ProdCmsNppesMain": {},
+									"SinkNPPESMain": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime-TEST2",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2b_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain": {},
+									"ProdCmsNppesOtherProviderID": {},
+									"StCMSNPPESOtherProvID": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime-TEST2",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2b_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain": {},
+									"ProdCmsNppesProvTaxonomy": {},
+									"StCMSNPPESProvTaxonomy": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_1_Load_NPPES_Month')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-TEST2')]",
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_2a_Stage_NPPES')]",
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_2b_Stage_NPPES')]",
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Main')]",
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Other_Provider_Identifier')]",
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Provider_Taxonomy')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_provider_taxonomy')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_grouping",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_classification",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_specialization",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider_license_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider_license_number_state_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_group_taxonomy",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "3_st_cms_nppes_provider_taxonomy"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
 			]
 		}
 	]

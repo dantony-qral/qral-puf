@@ -7486,9 +7486,15 @@
 						"value": "[parameters('Azure_Qral_Dev_servicePrincipalKey')]"
 					},
 					"tenant": "[parameters('Azure_Qral_Dev_properties_typeProperties_tenant')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1-Test4-16cores",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1-Test4-16cores')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/QralStorageDev_Blob')]",
@@ -8499,6 +8505,188 @@
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY')]",
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_2b_st_cms_nppes_provider_taxonomy')]",
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_3_st_cms_nppes_provider_taxonomy')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "DA_Test"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "PUF_temp",
+								"type": "DatasetReference"
+							},
+							"name": "Redshift"
+						},
+						{
+							"dataset": {
+								"referenceName": "PUF_DS_2b_st_cms_nppes_provider_taxonomy",
+								"type": "DatasetReference"
+							},
+							"name": "Azure"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Exists1"
+						}
+					],
+					"script": "source(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_group_taxonomy as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Redshift\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tposition as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\thealthcare_provider_group_taxonomy as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Azure\nRedshift, Azure exists(Redshift@npi == Azure@npi\n\t&& Redshift@{entity type code} == Azure@{entity type code}\n\t&& Redshift@healthcare_provider_taxonomy_code == Azure@healthcare_provider_taxonomy_code\n\t&& Redshift@provider_license_number == Azure@provider_license_number\n\t&& Redshift@provider_license_number_state_code == Azure@provider_license_number_state_code\n\t&& Redshift@healthcare_provider_primary_taxonomy_switch == Azure@healthcare_provider_primary_taxonomy_switch,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists1\nExists1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PUF_temp')]",
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_2b_st_cms_nppes_provider_taxonomy')]",
+				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_temp')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_grouping",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_classification",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_specialization",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider_license_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider_license_number_state_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_group_taxonomy",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "temp",
+					"table": "st_cms_nppes_provider_taxonomy_202104"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Redshift": {},
+									"Azure": {},
+									"sink1": {
+										"schemaName": "temp",
+										"tableName": "compare_prov_taxonomy"
+									}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1-Test4-16cores')]"
 			]
 		}
 	]

@@ -101,12 +101,6 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"Azure_Qral_Dev_connectionString": {
-						"value": "[parameters('Azure_Qral_Dev_connectionString')]"
-					},
-					"Azure_Qral_Dev_servicePrincipalKey": {
-						"value": "[parameters('Azure_Qral_Dev_servicePrincipalKey')]"
-					},
 					"QralStorageDev_Blob_connectionString": {
 						"value": "[parameters('QralStorageDev_Blob_connectionString')]"
 					},
@@ -119,11 +113,11 @@
 					"Qral_PUF_PROD_password": {
 						"value": "[parameters('Qral_PUF_PROD_password')]"
 					},
-					"Azure_Qral_Dev_properties_typeProperties_servicePrincipalId": {
-						"value": "[parameters('Azure_Qral_Dev_properties_typeProperties_servicePrincipalId')]"
+					"Azure_Qral_Dev_connectionString": {
+						"value": "[parameters('Azure_Qral_Dev_connectionString')]"
 					},
-					"Azure_Qral_Dev_properties_typeProperties_tenant": {
-						"value": "[parameters('Azure_Qral_Dev_properties_typeProperties_tenant')]"
+					"Azure_Qral_Dev_servicePrincipalKey": {
+						"value": "[parameters('Azure_Qral_Dev_servicePrincipalKey')]"
 					},
 					"Qral_PUF_DEV_properties_typeProperties_server": {
 						"value": "[parameters('Qral_PUF_DEV_properties_typeProperties_server')]"
@@ -151,6 +145,12 @@
 					},
 					"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
 						"value": "[parameters('integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
+					},
+					"Azure_Qral_Dev_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('Azure_Qral_Dev_properties_typeProperties_servicePrincipalId')]"
+					},
+					"Azure_Qral_Dev_properties_typeProperties_tenant": {
+						"value": "[parameters('Azure_Qral_Dev_properties_typeProperties_tenant')]"
 					}
 				}
 			},
@@ -194,6 +194,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'qral-df-dev_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "qral-df-dev_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'qral-df-dev_ArmTemplate_2')]"
 			]
 		}
 	]

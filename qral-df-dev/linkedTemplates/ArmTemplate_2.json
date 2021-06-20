@@ -13,6 +13,108 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_Country_Correction')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Readin_Country_Correction",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": {
+									"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_state,']')}",
+									"type": "Expression"
+								},
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PUF_FS_XLSX_Country_Correction",
+								"type": "DatasetReference",
+								"parameters": {
+									"Data_Month": {
+										"value": "@pipeline().parameters.data_month",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "QRAL_AZURE_SQL_DEV",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": {
+										"value": "@pipeline().parameters.out_schema",
+										"type": "Expression"
+									},
+									"table_name": {
+										"value": "@pipeline().parameters.out_table_country",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"parameters": {
+					"out_schema": {
+						"type": "string",
+						"defaultValue": "nppes"
+					},
+					"out_table_country": {
+						"type": "string",
+						"defaultValue": "0_raw_country_correction"
+					},
+					"out_table_state": {
+						"type": "string",
+						"defaultValue": "0_raw_state_correction"
+					},
+					"data_month": {
+						"type": "string",
+						"defaultValue": "202103"
+					}
+				},
+				"folder": {
+					"name": "PUF_NPPES"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-19T06:44:50Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_Raw_NPPES')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1204,6 +1306,51 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "DA_Test"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "PUF_temp",
+								"type": "DatasetReference"
+							},
+							"name": "Redshift"
+						},
+						{
+							"dataset": {
+								"referenceName": "PUF_DS_2b_st_cms_nppes_provider_taxonomy",
+								"type": "DatasetReference"
+							},
+							"name": "Azure"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Exists1"
+						}
+					],
+					"script": "source(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_group_taxonomy as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Redshift\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tposition as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\thealthcare_provider_group_taxonomy as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Azure\nRedshift, Azure exists(Redshift@npi == Azure@npi\n\t&& Redshift@{entity type code} == Azure@{entity type code}\n\t&& Redshift@healthcare_provider_taxonomy_code == Azure@healthcare_provider_taxonomy_code\n\t&& Redshift@provider_license_number == Azure@provider_license_number\n\t&& Redshift@provider_license_number_state_code == Azure@provider_license_number_state_code\n\t&& Redshift@healthcare_provider_primary_taxonomy_switch == Azure@healthcare_provider_primary_taxonomy_switch,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists1\nExists1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DA_Test_Loop_SQL_Query')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1628,6 +1775,56 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Redshift": {},
+									"Azure": {},
+									"sink1": {
+										"schemaName": "temp",
+										"tableName": "compare_prov_taxonomy"
+									}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Process_Main_Jobrun')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1735,37 +1932,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Monthly_Update_Process_Jobrun')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/NPPES_Trigger_Test')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "PUF_NPPES_Process_Main_Jobrun",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 60,
-						"startTime": "2021-06-18T15:45:00",
-						"endTime": "2021-06-18T15:50:00",
-						"timeZone": "Central Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Process_Main_Jobrun')]"
 			]
 		}
 	]

@@ -8404,6 +8404,102 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Qral_PUF_DEV')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Qral_PUF_DEV_Redshift_to AzureSQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Redshift_to_AzureSQL_Qral_PUF_Prod",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AmazonRedshiftSource"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "redshift_Qral_PUF_DEV",
+								"type": "DatasetReference",
+								"parameters": {
+									"schemaName": {
+										"value": "@pipeline().parameters.inp_schemaName",
+										"type": "Expression"
+									},
+									"tableName": {
+										"value": "@pipeline().parameters.inp_tableName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference",
+								"parameters": {
+									"schemaName": {
+										"value": "@pipeline().parameters.out_schemaName",
+										"type": "Expression"
+									},
+									"tableName": {
+										"value": "@pipeline().parameters.out_tableName",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"parameters": {
+					"inp_schemaName": {
+						"type": "string"
+					},
+					"inp_tableName": {
+						"type": "string"
+					},
+					"out_schemaName": {
+						"type": "string"
+					},
+					"out_tableName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "0_Redshift to Azure SQL - Initial Load"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-20T03:37:20Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/redshift_Qral_PUF_DEV')]",
+				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]"
+			]
 		}
 	]
 }

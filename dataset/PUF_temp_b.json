@@ -12,12 +12,12 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "temp_int",
+				"name": "temp_int_b",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "temp_var",
+				"name": "temp_var_b",
 				"type": "varchar"
 			}
 		],

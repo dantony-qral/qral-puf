@@ -14,7 +14,7 @@
 			}
 		},
 		"folder": {
-			"name": "QRAL_REDSHIFT_PUF/QRAL_PUF_PROD"
+			"name": "QRAL_REDSHIFT_PUF/QRAL_PUF"
 		},
 		"annotations": [],
 		"type": "AmazonRedshiftTable",

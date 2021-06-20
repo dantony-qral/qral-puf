@@ -883,6 +883,102 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Qral_PUF_DEV_Redshift_to AzureSQL')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Redshift_to_AzureSQL_Qral_PUF_Dev",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AmazonRedshiftSource"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "redshift_Qral_PUF_DEV",
+								"type": "DatasetReference",
+								"parameters": {
+									"schemaName": {
+										"value": "@pipeline().parameters.inp_schemaName",
+										"type": "Expression"
+									},
+									"tableName": {
+										"value": "@pipeline().parameters.inp_tableName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference",
+								"parameters": {
+									"schemaName": {
+										"value": "@pipeline().parameters.out_schemaName",
+										"type": "Expression"
+									},
+									"tableName": {
+										"value": "@pipeline().parameters.out_tableName",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"parameters": {
+					"inp_schemaName": {
+						"type": "string"
+					},
+					"inp_tableName": {
+						"type": "string"
+					},
+					"out_schemaName": {
+						"type": "string"
+					},
+					"out_tableName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "0_Redshift to Azure SQL - Initial Load"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-20T03:37:20Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/redshift_Qral_PUF_DEV')]",
+				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Qral_PUF_PROD_Redshift_to AzureSQL')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -7300,6 +7396,44 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/redshift_Qral_PUF_DEV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Qral_PUF_DEV",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schemaName": {
+						"type": "string"
+					},
+					"tableName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "QRAL_REDSHIFT_PUF/QRAL_PUF"
+				},
+				"annotations": [],
+				"type": "AmazonRedshiftTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schemaName",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Qral_PUF_DEV')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/redshift_Qral_PUF_PROD')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -7424,6 +7558,37 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/NPPES_Trigger_Test')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PUF_NPPES_Process_Main_Jobrun",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Minute",
+						"interval": 60,
+						"startTime": "2021-06-18T15:45:00",
+						"endTime": "2021-06-18T15:50:00",
+						"timeZone": "Central Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Process_Main_Jobrun')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime-TEST')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
@@ -7487,6 +7652,26 @@
 							"coreCount": 16,
 							"timeToLive": 10,
 							"cleanup": true
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime1-Test4-16cores')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 32,
+							"timeToLive": 10,
+							"cleanup": false
 						}
 					}
 				}
@@ -8314,191 +8499,6 @@
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY')]",
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_2b_st_cms_nppes_provider_taxonomy')]",
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_3_st_cms_nppes_provider_taxonomy')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/integrationRuntime1-Test4-16cores')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "Managed",
-				"typeProperties": {
-					"computeProperties": {
-						"location": "AutoResolve",
-						"dataFlowProperties": {
-							"computeType": "General",
-							"coreCount": 32,
-							"timeToLive": 10,
-							"cleanup": false
-						}
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/NPPES_Trigger_Test')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "PUF_NPPES_Process_Main_Jobrun",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Minute",
-						"interval": 60,
-						"startTime": "2021-06-18T15:45:00",
-						"endTime": "2021-06-18T15:50:00",
-						"timeZone": "Central Standard Time"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Process_Main_Jobrun')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/redshift_Qral_PUF_DEV')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Qral_PUF_DEV",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"schemaName": {
-						"type": "string"
-					},
-					"tableName": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "QRAL_REDSHIFT_PUF/QRAL_PUF"
-				},
-				"annotations": [],
-				"type": "AmazonRedshiftTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().schemaName",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().tableName",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Qral_PUF_DEV')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Qral_PUF_DEV_Redshift_to AzureSQL')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Redshift_to_AzureSQL_Qral_PUF_Prod",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AmazonRedshiftSource"
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"tableOption": "autoCreate",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "redshift_Qral_PUF_DEV",
-								"type": "DatasetReference",
-								"parameters": {
-									"schemaName": {
-										"value": "@pipeline().parameters.inp_schemaName",
-										"type": "Expression"
-									},
-									"tableName": {
-										"value": "@pipeline().parameters.inp_tableName",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Azure_Qral_Dev_Table",
-								"type": "DatasetReference",
-								"parameters": {
-									"schemaName": {
-										"value": "@pipeline().parameters.out_schemaName",
-										"type": "Expression"
-									},
-									"tableName": {
-										"value": "@pipeline().parameters.out_tableName",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					}
-				],
-				"parameters": {
-					"inp_schemaName": {
-						"type": "string"
-					},
-					"inp_tableName": {
-						"type": "string"
-					},
-					"out_schemaName": {
-						"type": "string"
-					},
-					"out_tableName": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "0_Redshift to Azure SQL - Initial Load"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-05-20T03:37:20Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/redshift_Qral_PUF_DEV')]",
-				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]"
 			]
 		}
 	]

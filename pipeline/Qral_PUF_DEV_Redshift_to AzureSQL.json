@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Redshift_to_AzureSQL_Qral_PUF_Prod",
+				"name": "Redshift_to_AzureSQL_Qral_PUF_Dev",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {

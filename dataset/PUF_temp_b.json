@@ -1,0 +1,30 @@
+{
+	"name": "PUF_temp_b",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "DA_Test"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "temp_int",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "temp_var",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "temp",
+			"table": "b"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

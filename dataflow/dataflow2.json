@@ -36,7 +36,7 @@
 					"name": "Join1"
 				}
 			],
-			"script": "source(output(\n\t\ttemp_int as integer,\n\t\ttemp_var as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tempa\nsource(output(\n\t\ttemp_int_b as integer,\n\t\ttemp_var_b as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tempb\ntempa, tempb join(temp_int == temp_int_b,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join1\nJoin1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+			"script": "source(output(\n\t\ttemp_int as integer,\n\t\ttemp_var as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tempa\nsource(output(\n\t\ttemp_int_b as integer,\n\t\ttemp_var_b as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tempb\ntempa, tempb join(temp_int == temp_int_b,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join1\nJoin1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }

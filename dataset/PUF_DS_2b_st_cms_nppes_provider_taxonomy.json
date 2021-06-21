@@ -37,10 +37,6 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "position",
-				"type": "nvarchar"
-			},
-			{
 				"name": "healthcare_provider_primary_taxonomy_switch",
 				"type": "nvarchar"
 			},

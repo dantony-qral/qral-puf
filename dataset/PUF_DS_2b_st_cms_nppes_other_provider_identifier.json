@@ -47,6 +47,10 @@
 			{
 				"name": "other provider identifier issuer",
 				"type": "nvarchar"
+			},
+			{
+				"name": "other provider identifier type code",
+				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {

@@ -13,6 +13,251 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Monthly_Update_Process_Jobrun')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PUF_DF_1_Load_NPPES_Month",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_1_Load_NPPES_Month",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"RawCMSNPPESMonth": {},
+									"sinkNPPESMain": {},
+									"sinkNPPESOtherProvider": {},
+									"sinkProviderTaxonomy": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_2a_Stage_NPPES",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_1_Load_NPPES_Month",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_2a_Stage_NPPES",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ProviderTaxonomyMonth": {},
+									"ProviderOtherIdentifiers": {},
+									"sink1": {},
+									"sink2": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_2b_Stage_NPPES",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2a_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_2b_Stage_NPPES",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StageProviderTaxonomy": {},
+									"NUCCTaxonomy": {},
+									"NPPESProviderMain": {},
+									"InputStateCorrection": {},
+									"InputCountryCorrection": {},
+									"StageOtherProvID": {},
+									"sink1": {},
+									"LoadNPPESMainStage2a": {},
+									"sinkStNPPESProvOtherID": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_3_Stage_NPPES_Main",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2b_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_3_Stage_NPPES_Main",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain": {},
+									"ProdCmsNppesMain": {},
+									"SinkNPPESMain": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2b_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain": {},
+									"ProdCmsNppesOtherProviderID": {},
+									"StCMSNPPESOtherProvID": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2b_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain": {},
+									"ProdCmsNppesProvTaxonomy": {},
+									"StCMSNPPESProvTaxonomy": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"folder": {
+					"name": "PUF_NPPES"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Readin_NUCC_Taxonomy')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -326,7 +571,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Monthly_Update_Process_Jobrun')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/NPPES_Trigger_Test')]",

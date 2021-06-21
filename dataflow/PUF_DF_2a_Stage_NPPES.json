@@ -32,7 +32,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "PUF_DS_2_st_cms_nppes_other_provider_identifier",
+						"referenceName": "PUF_DS_2a_st_cms_nppes_other_provider_identifier",
 						"type": "DatasetReference"
 					},
 					"name": "sink2"

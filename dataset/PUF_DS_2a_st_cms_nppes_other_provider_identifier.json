@@ -1,5 +1,5 @@
 {
-	"name": "PUF_DS_2_st_cms_nppes_other_provider_identifier",
+	"name": "PUF_DS_2a_st_cms_nppes_other_provider_identifier",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Azure_Qral_Dev",
@@ -55,7 +55,7 @@
 		],
 		"typeProperties": {
 			"schema": "nppes",
-			"table": "2_st_cms_nppes_other_provider_identifiers"
+			"table": "2a_st_cms_nppes_other_provider_identifiers"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"

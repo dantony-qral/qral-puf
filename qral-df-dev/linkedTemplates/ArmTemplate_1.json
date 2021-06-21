@@ -3294,7 +3294,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_2_st_cms_nppes_other_provider_identifier')]",
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_2a_st_cms_nppes_other_provider_identifier')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -3352,7 +3352,7 @@
 				],
 				"typeProperties": {
 					"schema": "nppes",
-					"table": "2_st_cms_nppes_other_provider_identifiers"
+					"table": "2a_st_cms_nppes_other_provider_identifiers"
 				}
 			},
 			"dependsOn": []
@@ -3467,10 +3467,6 @@
 					},
 					{
 						"name": "active flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "position",
 						"type": "nvarchar"
 					},
 					{

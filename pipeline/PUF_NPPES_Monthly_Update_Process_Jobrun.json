@@ -79,7 +79,13 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "PUF_DF_2b_Stage_NPPES",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sink2": {
+								"schemaName": "nppes",
+								"tableName": "2b_st_cms_nppes_other_provider_identifiers"
+							}
+						}
 					},
 					"integrationRuntime": {
 						"referenceName": "integrationRuntime1-Test4-16cores",

@@ -5,7 +5,14 @@
 			{
 				"name": "PUF_DF_3_Stage_NPPES_Main",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "PUF_DF_2b_Stage_NPPES",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "1.00:00:00",
 					"retry": 0,
@@ -17,6 +24,30 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "PUF_DF_3_Stage_NPPES_Main",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "PUF_DF_2b_Stage_NPPES",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "PUF_DF_2b_Stage_NPPES",
 						"type": "DataFlowReference"
 					},
 					"compute": {

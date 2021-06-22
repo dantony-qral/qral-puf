@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "PUF_DF_3_Stage_NPPES_Main",
+				"name": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "PUF_DF_3_Stage_NPPES_Main",
+						"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {

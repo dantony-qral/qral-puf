@@ -1,0 +1,217 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "qral-df-dev"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_Country_Correction')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Readin_Country_Correction",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": {
+									"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_country,']')}",
+									"type": "Expression"
+								},
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PUF_FS_XLSX_Country_Correction",
+								"type": "DatasetReference",
+								"parameters": {
+									"Data_Month": {
+										"value": "@pipeline().parameters.data_month",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "QRAL_AZURE_SQL_DEV",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": {
+										"value": "@pipeline().parameters.out_schema",
+										"type": "Expression"
+									},
+									"table_name": {
+										"value": "@pipeline().parameters.out_table_country",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"parameters": {
+					"out_schema": {
+						"type": "string",
+						"defaultValue": "nppes"
+					},
+					"out_table_country": {
+						"type": "string",
+						"defaultValue": "0_raw_country_correction"
+					},
+					"out_table_state": {
+						"type": "string",
+						"defaultValue": "0_raw_state_correction"
+					},
+					"data_month": {
+						"type": "string",
+						"defaultValue": "202104"
+					}
+				},
+				"folder": {
+					"name": "PUF_NPPES"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-19T06:44:50Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_State_Correction')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Readin_State_Correction",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_state,']')}",
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PUF_FS_XLSX_State_Correction",
+								"type": "DatasetReference",
+								"parameters": {
+									"Data_Month": {
+										"value": "@pipeline().parameters.data_month",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "QRAL_AZURE_SQL_DEV",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": {
+										"value": "@pipeline().parameters.out_schema",
+										"type": "Expression"
+									},
+									"table_name": {
+										"value": "@pipeline().parameters.out_table_state",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"parameters": {
+					"out_schema": {
+						"type": "string",
+						"defaultValue": "nppes"
+					},
+					"out_table_country": {
+						"type": "string",
+						"defaultValue": "0_raw_country_correction"
+					},
+					"out_table_state": {
+						"type": "string",
+						"defaultValue": "0_raw_state_correction"
+					},
+					"data_month": {
+						"type": "string",
+						"defaultValue": "202104"
+					}
+				},
+				"folder": {
+					"name": "PUF_NPPES"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-19T06:44:50Z"
+			},
+			"dependsOn": []
+		}
+	]
+}

@@ -215,7 +215,7 @@
 							"sink": {
 								"type": "AzureSqlSink",
 								"preCopyScript": {
-									"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_state,']')}",
+									"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_country,']')}",
 									"type": "Expression"
 								},
 								"tableOption": "autoCreate",
@@ -276,7 +276,7 @@
 					},
 					"data_month": {
 						"type": "string",
-						"defaultValue": "202103"
+						"defaultValue": "202104"
 					}
 				},
 				"folder": {
@@ -443,10 +443,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": {
-									"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_state,']')}",
-									"type": "Expression"
-								},
+								"preCopyScript": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_state,']')}",
 								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
@@ -505,7 +502,7 @@
 					},
 					"data_month": {
 						"type": "string",
-						"defaultValue": "202103"
+						"defaultValue": "202104"
 					}
 				},
 				"folder": {

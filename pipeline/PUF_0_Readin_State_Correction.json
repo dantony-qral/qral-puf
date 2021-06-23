@@ -25,10 +25,6 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": {
-							"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_state,']')}",
-							"type": "Expression"
-						},
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},

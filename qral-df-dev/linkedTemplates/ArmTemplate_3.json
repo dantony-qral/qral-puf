@@ -679,8 +679,8 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 60,
-						"startTime": "2021-06-18T15:45:00",
-						"endTime": "2021-06-18T15:50:00",
+						"startTime": "2021-06-24T02:05:00",
+						"endTime": "2021-06-24T02:15:00",
 						"timeZone": "Central Standard Time"
 					}
 				}

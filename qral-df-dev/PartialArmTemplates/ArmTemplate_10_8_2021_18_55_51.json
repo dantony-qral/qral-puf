@@ -1,0 +1,136 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "qral-df-dev"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_Raw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Readin_Raw_to_SQL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"additionalColumns": [
+									{
+										"name": "data_month",
+										"value": {
+											"value": "@pipeline().parameters.data_month_year",
+											"type": "Expression"
+										}
+									}
+								],
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": {
+										"value": "@pipeline().parameters.inp_file_path",
+										"type": "Expression"
+									},
+									"wildcardFileName": {
+										"value": "@pipeline().parameters.inp_file_name",
+										"type": "Expression"
+									},
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": {
+									"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table,']')}",
+									"type": "Expression"
+								},
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PUF_FS_CSV",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "QRAL_AZURE_SQL_DEV",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": {
+										"value": "@pipeline().parameters.out_schema",
+										"type": "Expression"
+									},
+									"table_name": {
+										"value": "@pipeline().parameters.out_table",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"parameters": {
+					"inp_file_path": {
+						"type": "string",
+						"defaultValue": "Data Sources/CMS/NPPES/2021/"
+					},
+					"inp_file_name": {
+						"type": "string",
+						"defaultValue": "npidata_pfile_20050523-20210411.csv"
+					},
+					"out_schema": {
+						"type": "string",
+						"defaultValue": "nppes"
+					},
+					"out_table": {
+						"type": "string",
+						"defaultValue": "0_raw_cms_nppes"
+					},
+					"data_month_year": {
+						"type": "string",
+						"defaultValue": "202104"
+					}
+				},
+				"folder": {
+					"name": "PUF_General"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-19T06:44:50Z"
+			},
+			"dependsOn": []
+		}
+	]
+}

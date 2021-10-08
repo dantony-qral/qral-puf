@@ -188,6 +188,10 @@
 						]
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"parameters": {
 					"out_schema": {
 						"type": "string",
@@ -208,6 +212,133 @@
 				},
 				"folder": {
 					"name": "PUF_NPPES"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-19T06:44:50Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/QRAL_AZURE_SQL_DEV')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_Raw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Readin_Raw_to_SQL",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"additionalColumns": [
+									{
+										"name": "data_month",
+										"value": {
+											"value": "@pipeline().parameters.data_month_year",
+											"type": "Expression"
+										}
+									}
+								],
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": {
+										"value": "@pipeline().parameters.inp_file_path",
+										"type": "Expression"
+									},
+									"wildcardFileName": {
+										"value": "@pipeline().parameters.inp_file_name",
+										"type": "Expression"
+									},
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": {
+									"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table,']')}",
+									"type": "Expression"
+								},
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PUF_FS_CSV",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "QRAL_AZURE_SQL_DEV",
+								"type": "DatasetReference",
+								"parameters": {
+									"schema_name": {
+										"value": "@pipeline().parameters.out_schema",
+										"type": "Expression"
+									},
+									"table_name": {
+										"value": "@pipeline().parameters.out_table",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"inp_file_path": {
+						"type": "string",
+						"defaultValue": "Data Sources/CMS/NPPES/2021/"
+					},
+					"inp_file_name": {
+						"type": "string",
+						"defaultValue": "npidata_pfile_20050523-20210411.csv"
+					},
+					"out_schema": {
+						"type": "string",
+						"defaultValue": "nppes"
+					},
+					"out_table": {
+						"type": "string",
+						"defaultValue": "0_raw_cms_nppes"
+					},
+					"data_month_year": {
+						"type": "string",
+						"defaultValue": "202104"
+					}
+				},
+				"folder": {
+					"name": "PUF_General"
 				},
 				"annotations": [],
 				"lastPublishTime": "2021-05-19T06:44:50Z"
@@ -307,6 +438,10 @@
 						]
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"parameters": {
 					"inp_file_path": {
 						"type": "string",
@@ -415,6 +550,10 @@
 						]
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"parameters": {
 					"out_schema": {
 						"type": "string",
@@ -514,6 +653,10 @@
 						]
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"parameters": {
 					"inp_schemaName": {
 						"type": "string"
@@ -607,6 +750,10 @@
 						]
 					}
 				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
 				"parameters": {
 					"inp_schemaName": {
 						"type": "string"
@@ -1567,111 +1714,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PUF_temp_a')]",
 				"[concat(variables('factoryId'), '/datasets/PUF_temp_b')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DA_Test_Loop_SQL_Query')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Lookup1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Lookup1').output.value",
-								"type": "Expression"
-							},
-							"isSequential": false,
-							"activities": [
-								{
-									"name": "dataflow1",
-									"type": "ExecuteDataFlow",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataflow": {
-											"referenceName": "DA_TEST_Execute_SQL_Query",
-											"type": "DataFlowReference",
-											"parameters": {
-												"sql_query": {
-													"value": "'@{item().query}'",
-													"type": "Expression"
-												}
-											},
-											"datasetParameters": {
-												"source1": {
-													"data_year": "2021"
-												},
-												"sink1": {}
-											}
-										},
-										"staging": {},
-										"compute": {
-											"coreCount": 8,
-											"computeType": "General"
-										},
-										"traceLevel": "Fine"
-									}
-								}
-							]
-						}
-					},
-					{
-						"name": "Lookup1",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": false,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"dataset": {
-								"referenceName": "BLOB_XLS_TEST_SQL_LOOP",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					}
-				],
-				"folder": {
-					"name": "DA_Test"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-05-14T17:49:00Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/DA_TEST_Execute_SQL_Query')]"
 			]
 		}
 	]

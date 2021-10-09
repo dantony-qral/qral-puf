@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "PUF_DF_1_Load_NPPES_Month",
+				"name": "PUF_DF_2a_Stage_NPPES",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "PUF_DF_1_Load_NPPES_Month",
+						"referenceName": "PUF_DF_2a_Stage_NPPES",
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {

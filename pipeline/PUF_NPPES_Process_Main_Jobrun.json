@@ -95,6 +95,8 @@
 		"folder": {
 			"name": "PUF_NPPES"
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2021-06-18T01:28:04Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }

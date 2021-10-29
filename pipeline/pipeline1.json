@@ -36,6 +36,8 @@
 		"folder": {
 			"name": "DA_Test"
 		},
-		"annotations": []
-	}
+		"annotations": [],
+		"lastPublishTime": "2021-06-20T22:40:53Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
 }

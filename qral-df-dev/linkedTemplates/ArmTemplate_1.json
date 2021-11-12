@@ -29,6 +29,42 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/redshift_Qral_PUF_DEV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Qral_PUF_DEV",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schemaName": {
+						"type": "string"
+					},
+					"tableName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "QRAL_REDSHIFT_PUF/QRAL_PUF"
+				},
+				"annotations": [],
+				"type": "AmazonRedshiftTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schemaName",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/redshift_Qral_PUF_PROD')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -4418,72 +4454,6 @@
 				"typeProperties": {
 					"schema": "cms",
 					"table": "nppes_main"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_OTHER_PROVIDER_ID')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/PUF_PROD"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "current_flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "data_month",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "npi",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "active flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier_type_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier_state",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier_issuer",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "cms",
-					"table": "nppes_other_provider_identifiers"
 				}
 			},
 			"dependsOn": [

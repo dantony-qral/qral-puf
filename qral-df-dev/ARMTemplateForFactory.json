@@ -80,6 +80,34 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Am_Test_Pipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 10
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "AM_Test"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-10-29T14:46:02Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DA_Test_Loop_SQL_Query')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -291,7 +319,7 @@
 					"name": "PUF_NPPES"
 				},
 				"annotations": [],
-				"lastPublishTime": "2021-05-19T06:44:50Z"
+				"lastPublishTime": "2021-06-23T05:51:15Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PUF_FS_XLSX_Country_Correction')]",
@@ -419,7 +447,7 @@
 					"name": "PUF_General"
 				},
 				"annotations": [],
-				"lastPublishTime": "2021-05-19T06:44:50Z"
+				"lastPublishTime": "2021-10-08T23:55:48Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PUF_FS_CSV')]",
@@ -656,7 +684,7 @@
 					"name": "PUF_NPPES"
 				},
 				"annotations": [],
-				"lastPublishTime": "2021-05-19T06:44:50Z"
+				"lastPublishTime": "2021-06-23T05:51:15Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PUF_FS_XLSX_State_Correction')]",
@@ -709,7 +737,8 @@
 				"folder": {
 					"name": "PUF_NPPES"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2021-10-09T15:09:38Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_2a_Stage_NPPES')]",
@@ -961,7 +990,8 @@
 				"folder": {
 					"name": "PUF_NPPES"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2021-06-21T03:52:53Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_1_Load_NPPES_Month')]",
@@ -1081,7 +1111,8 @@
 				"folder": {
 					"name": "PUF_NPPES"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2021-06-18T01:28:04Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NUCC_TAXONOMY')]",
@@ -1182,7 +1213,7 @@
 					"name": "0_Redshift to Azure SQL - Initial Load"
 				},
 				"annotations": [],
-				"lastPublishTime": "2021-05-20T03:37:20Z"
+				"lastPublishTime": "2021-06-20T21:55:13Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/redshift_Qral_PUF_DEV')]",
@@ -1411,7 +1442,8 @@
 				"folder": {
 					"name": "DA_Test"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2021-06-20T22:40:53Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
@@ -1466,7 +1498,8 @@
 				"folder": {
 					"name": "DA_Test"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2021-06-20T23:17:20Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dataflow2')]",
@@ -1601,7 +1634,8 @@
 				"folder": {
 					"name": "DA_Test"
 				},
-				"annotations": []
+				"annotations": [],
+				"lastPublishTime": "2021-06-24T23:19:13Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Other_Provider_Identifier')]",
@@ -1609,6 +1643,337 @@
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Main')]",
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_2b_Stage_NPPES')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_load_to_stage_zip_master')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "df_copy_landing_to_staging",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_load_to_stage",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"landingTableSource": {
+										"tableName": {
+											"value": "@pipeline().parameters.landingTableName",
+											"type": "Expression"
+										},
+										"schemaName": {
+											"value": "@pipeline().parameters.landingSchemaName",
+											"type": "Expression"
+										}
+									},
+									"writeDataToStage": {
+										"tableName": {
+											"value": "@pipeline().parameters.stageTableName",
+											"type": "Expression"
+										},
+										"schemaName": {
+											"value": "@pipeline().parameters.stageSchemaName",
+											"type": "Expression"
+										}
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "deleteSourceZipFile",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "df_copy_landing_to_staging",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "ds_read_raw_file",
+								"type": "DatasetReference",
+								"parameters": {
+									"containerName": {
+										"value": "@pipeline().parameters.sourceFileContainerName",
+										"type": "Expression"
+									},
+									"fileName": {
+										"value": "@pipeline().parameters.sourceFileName",
+										"type": "Expression"
+									}
+								}
+							},
+							"logStorageSettings": {
+								"linkedServiceName": {
+									"referenceName": "QralStorageDev_Blob",
+									"type": "LinkedServiceReference"
+								},
+								"path": "logs"
+							},
+							"enableLogging": true,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
+					},
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFileName": "*",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink"
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ZipCode",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "zipcode",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "City",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "city",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "State",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "state",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Latitude",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "latitude",
+											"type": "Single",
+											"physicalType": "real"
+										}
+									},
+									{
+										"source": {
+											"name": "Longitude",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "longitude",
+											"type": "Single",
+											"physicalType": "real"
+										}
+									},
+									{
+										"source": {
+											"name": "Classification",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "classification",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Population",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "population",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_read_raw_file",
+								"type": "DatasetReference",
+								"parameters": {
+									"containerName": {
+										"value": "@pipeline().parameters.sourceFileContainerName",
+										"type": "Expression"
+									},
+									"fileName": {
+										"value": "@pipeline().parameters.sourceFileName",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference",
+								"parameters": {
+									"schemaName": {
+										"value": "@pipeline().parameters.landingSchemaName",
+										"type": "Expression"
+									},
+									"tableName": {
+										"value": "@pipeline().parameters.landingTableName",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"stageSchemaName": {
+						"type": "string"
+					},
+					"stageTableName": {
+						"type": "string"
+					},
+					"sourceFileContainerName": {
+						"type": "string"
+					},
+					"sourceFileName": {
+						"type": "string"
+					},
+					"landingTableName": {
+						"type": "string"
+					},
+					"landingSchemaName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "AM_Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/df_load_to_stage')]",
+				"[concat(variables('factoryId'), '/datasets/ds_read_raw_file')]",
+				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]",
+				"[concat(variables('factoryId'), '/linkedServices/QralStorageDev_Blob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pl_test')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Wait1",
+						"type": "Wait",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"waitTimeInSeconds": 1
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "AM_Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/0_ld_nucc_taxonomy_year')]",
@@ -7932,6 +8297,112 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_azure_sql_dev')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tableName": {
+						"type": "string"
+					},
+					"schemaName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schemaName",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_read_raw_file')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "QralStorageDev_Blob",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"containerName": {
+						"type": "string"
+					},
+					"fileName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": {
+							"value": "@dataset().fileName",
+							"type": "Expression"
+						},
+						"container": {
+							"value": "@dataset().containerName",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ZipCode",
+						"type": "String"
+					},
+					{
+						"name": "City",
+						"type": "String"
+					},
+					{
+						"name": "State",
+						"type": "String"
+					},
+					{
+						"name": "Latitude",
+						"type": "String"
+					},
+					{
+						"name": "Longitude",
+						"type": "String"
+					},
+					{
+						"name": "Classification",
+						"type": "String"
+					},
+					{
+						"name": "Population",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/QralStorageDev_Blob')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/nucc_taxonomy')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -9348,6 +9819,46 @@
 				"[concat(variables('factoryId'), '/datasets/PUF_temp_a')]",
 				"[concat(variables('factoryId'), '/datasets/PUF_temp_b')]",
 				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_load_to_stage')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "AM_test"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_azure_sql_dev",
+								"type": "DatasetReference"
+							},
+							"name": "landingTableSource"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_azure_sql_dev",
+								"type": "DatasetReference"
+							},
+							"name": "writeDataToStage"
+						}
+					],
+					"transformations": [
+						{
+							"name": "addLoaddate"
+						}
+					],
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> landingTableSource\nlandingTableSource derive(load_date = currentTimestamp(),\n\t\tcurrent_flag = 1) ~> addLoaddate\naddLoaddate sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> writeDataToStage"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_azure_sql_dev')]"
 			]
 		}
 	]

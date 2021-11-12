@@ -13,6 +13,255 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_PROD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_grouping",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_classification",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_specialization",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider_license_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider_license_number_state_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_group_taxonomy",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "cms",
+					"table": "nppes_provider_taxonomy"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NUCC_TAXONOMY')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_PROD"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "code",
+						"type": "varchar"
+					},
+					{
+						"name": "grouping",
+						"type": "varchar"
+					},
+					{
+						"name": "classification",
+						"type": "varchar"
+					},
+					{
+						"name": "specialization",
+						"type": "varchar"
+					},
+					{
+						"name": "definition",
+						"type": "varchar"
+					},
+					{
+						"name": "notes",
+						"type": "varchar"
+					},
+					{
+						"name": "year",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "current_flag",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "effective date",
+						"type": "varchar"
+					},
+					{
+						"name": "deactivation date",
+						"type": "varchar"
+					},
+					{
+						"name": "last modified date",
+						"type": "varchar"
+					},
+					{
+						"name": "display name",
+						"type": "varchar"
+					},
+					{
+						"name": "right_effective date",
+						"type": "varchar"
+					},
+					{
+						"name": "right_deactivation date",
+						"type": "varchar"
+					},
+					{
+						"name": "right_last modified date",
+						"type": "varchar"
+					},
+					{
+						"name": "right_display name",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nucc",
+					"table": "nucc_taxonomy"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_temp')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_taxonomy_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_grouping",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_classification",
+						"type": "nvarchar"
+					},
+					{
+						"name": "taxonomy_specialization",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider_license_number",
+						"type": "nvarchar"
+					},
+					{
+						"name": "provider_license_number_state_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_primary_taxonomy_switch",
+						"type": "nvarchar"
+					},
+					{
+						"name": "healthcare_provider_group_taxonomy",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "temp",
+					"table": "st_cms_nppes_provider_taxonomy_202104"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PUF_temp_a')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -106,6 +355,39 @@
 					},
 					"table": {
 						"value": "@dataset().table_name",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_azure_sql_dev')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tableName": {
+						"type": "string"
+					},
+					"schemaName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schemaName",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tableName",
 						"type": "Expression"
 					}
 				}
@@ -214,7 +496,7 @@
 					"name": "PUF_NPPES"
 				},
 				"annotations": [],
-				"lastPublishTime": "2021-05-19T06:44:50Z"
+				"lastPublishTime": "2021-06-23T05:51:15Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/QRAL_AZURE_SQL_DEV')]"
@@ -341,7 +623,7 @@
 					"name": "PUF_General"
 				},
 				"annotations": [],
-				"lastPublishTime": "2021-05-19T06:44:50Z"
+				"lastPublishTime": "2021-10-08T23:55:48Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/QRAL_AZURE_SQL_DEV')]"
@@ -576,7 +858,7 @@
 					"name": "PUF_NPPES"
 				},
 				"annotations": [],
-				"lastPublishTime": "2021-05-19T06:44:50Z"
+				"lastPublishTime": "2021-06-23T05:51:15Z"
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/QRAL_AZURE_SQL_DEV')]"
@@ -675,7 +957,7 @@
 					"name": "0_Redshift to Azure SQL - Initial Load"
 				},
 				"annotations": [],
-				"lastPublishTime": "2021-05-20T03:37:20Z"
+				"lastPublishTime": "2021-06-20T21:55:13Z"
 			},
 			"dependsOn": []
 		},
@@ -1196,7 +1478,9 @@
 					"script": "source(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tposition as string,\n\t\t{healthcare provider primary taxonomy switch} as string,\n\t\t{healthcare provider taxonomy code} as string,\n\t\t{healthcare provider taxonomy group} as string,\n\t\t{provider license number} as string,\n\t\t{provider license number state code} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StageProviderTaxonomy\nsource(output(\n\t\tcode as string,\n\t\tgrouping as string,\n\t\tclassification as string,\n\t\tspecialization as string,\n\t\tdefinition as string,\n\t\tnotes as string,\n\t\tyear as integer,\n\t\tcurrent_flag as integer,\n\t\t{effective date} as string,\n\t\t{deactivation date} as string,\n\t\t{last modified date} as string,\n\t\t{display name} as string,\n\t\t{right_effective date} as string,\n\t\t{right_deactivation date} as string,\n\t\t{right_last modified date} as string,\n\t\t{right_display name} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> NUCCTaxonomy\nsource(output(\n\t\tnpi as string,\n\t\tdata_month as integer,\n\t\t{active flag} as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{replacement npi} as string,\n\t\t{employer identification number (ein)} as string,\n\t\t{provider organization name (legal business name)} as string,\n\t\t{provider last name (legal name)} as string,\n\t\t{provider first name} as string,\n\t\t{provider middle name} as string,\n\t\t{provider name prefix text} as string,\n\t\t{provider name suffix text} as string,\n\t\t{provider credential text} as string,\n\t\t{provider other organization name} as string,\n\t\t{provider other organization name type code} as string,\n\t\t{provider other last name} as string,\n\t\t{provider other first name} as string,\n\t\t{provider other middle name} as string,\n\t\t{provider other name prefix text} as string,\n\t\t{provider other name suffix text} as string,\n\t\t{provider other credential text} as string,\n\t\t{provider other last name type code} as string,\n\t\t{provider first line business mailing address} as string,\n\t\t{provider second line business mailing address} as string,\n\t\t{provider business mailing address city name} as string,\n\t\t{provider business mailing address state name} as string,\n\t\t{provider business mailing address postal code} as string,\n\t\t{provider business mailing address country code (if outside u.s.) } as string,\n\t\t{provider business mailing address telephone number} as string,\n\t\t{provider business mailing address fax number} as string,\n\t\t{provider first line business practice location address} as string,\n\t\t{provider second line business practice location address} as string,\n\t\t{provider business practice location address city name} as string,\n\t\t{provider business practice location address state name} as string,\n\t\t{provider business practice location address postal code} as string,\n\t\t{provider business practice location address country code out us} as string,\n\t\t{provider business practice location address telephone number} as string,\n\t\t{provider business practice location address fax number} as string,\n\t\t{provider enumeration date} as date,\n\t\t{last update date} as date,\n\t\t{npi deactivation reason code} as string,\n\t\t{npi deactivation date} as date,\n\t\t{npi reactivation date} as date,\n\t\t{provider gender code} as string,\n\t\t{authorized official last name} as string,\n\t\t{authorized official first name} as string,\n\t\t{authorized official middle name} as string,\n\t\t{authorized official title or position} as string,\n\t\t{authorized official telephone number} as string,\n\t\t{healthcare provider taxonomy code_1} as string,\n\t\t{provider license number_1} as string,\n\t\t{provider license number state code_1} as string,\n\t\t{healthcare provider primary taxonomy switch_1} as string,\n\t\t{healthcare provider taxonomy code_2} as string,\n\t\t{provider license number_2} as string,\n\t\t{provider license number state code_2} as string,\n\t\t{healthcare provider primary taxonomy switch_2} as string,\n\t\t{healthcare provider taxonomy code_3} as string,\n\t\t{provider license number_3} as string,\n\t\t{provider license number state code_3} as string,\n\t\t{healthcare provider primary taxonomy switch_3} as string,\n\t\t{is sole proprietor} as string,\n\t\t{is organization subpart} as string,\n\t\t{parent organization lbn} as string,\n\t\t{parent organization tin} as string,\n\t\t{authorized official name prefix text} as string,\n\t\t{authorized official name suffix text} as string,\n\t\t{authorized official credential text} as string,\n\t\t{healthcare provider taxonomy group_1} as string,\n\t\t{healthcare provider taxonomy group_2} as string,\n\t\t{healthcare provider taxonomy group_3} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> NPPESProviderMain\nsource(output(\n\t\tdata_month as string,\n\t\tnpi as string,\n\t\taddress_line_1 as string,\n\t\taddress_line_2 as string,\n\t\tcity as string,\n\t\tstate as string,\n\t\tpostal_code as string,\n\t\tcorrected_state as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> InputStateCorrection\nsource(output(\n\t\tdata_month as string,\n\t\tnpi as string,\n\t\taddress_line_1 as string,\n\t\taddress_line_2 as string,\n\t\tcity as string,\n\t\tstate as string,\n\t\tpostal_code as string,\n\t\tcountry_code as string,\n\t\tcorrected_country as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> InputCountryCorrection\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\t{other provider identifier} as string,\n\t\t{other provider identifier issuer} as string,\n\t\t{other provider identifier state} as string,\n\t\t{other provider identifier type code} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StageOtherProvID\nAggregate1, NUCCTaxonomy join({healthcare provider taxonomy code} == code,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> JoinTaxonomyCW\nJoinTaxonomyCW select(mapColumn(\n\t\tcurrent_flag = Aggregate1@current_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch = {healthcare provider primary taxonomy switch},\n\t\thealthcare_provider_taxonomy_code = {healthcare provider taxonomy code},\n\t\thealthcare_provider_group_taxonomy = {healthcare provider taxonomy group},\n\t\tprovider_license_number = {provider license number},\n\t\tprovider_license_number_state_code = {provider license number state code},\n\t\ttaxonomy_grouping = grouping,\n\t\ttaxonomy_classification = classification,\n\t\ttaxonomy_specialization = specialization,\n\t\tposition\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Select1\nSelect1 filter(healthcare_provider_primary_taxonomy_switch=='Y') ~> KeepPrimaryTaxonomy\nSortbyNPITaxonomy aggregate(groupBy(npi),\n\teach(match(name!='npi'), $$ = first($$))) ~> IdentifyPrimaryTaxonomy\nKeepPrimaryTaxonomy sort(asc(npi, true),\n\tasc(position, true)) ~> SortbyNPITaxonomy\nSelect9, Select3 join(npi == temp_npi,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> AppendPrimaryTaxonomy\nSelect4 derive(current_flag = '1',\n\t\t{provider business practice location address state name} = iif({provider business practice location address state name}=='ALASKA','AK',\niif({provider business practice location address state name}=='ALABAMA','AL',\niif({provider business practice location address state name}=='ARKANSAS','AR',\niif({provider business practice location address state name}=='AMERICAN SAMOA','AS',\niif({provider business practice location address state name}=='ARIZONA','AZ',\niif({provider business practice location address state name}=='CA- CALIFORNIA','CA',\niif({provider business practice location address state name}=='CALIFORNIA','CA',\niif({provider business practice location address state name}=='LOS ANGELES','CA',\niif({provider business practice location address state name}=='COLORADO','CO',\niif({provider business practice location address state name}=='CONNECTICUT','CT',\niif({provider business practice location address state name}=='DISTRICT OF COLUMBIA','DC',\niif({provider business practice location address state name}=='DELAWARE','DE',\niif({provider business practice location address state name}=='FL - FLORIDA','FL',\niif({provider business practice location address state name}=='FLA','FL',\niif({provider business practice location address state name}=='FLORIDA','FL',\niif({provider business practice location address state name}=='MICRONESIA, FEDERATED STATES OF','FM',\niif({provider business practice location address state name}=='GEORGIA','GA',\niif({provider business practice location address state name}=='GUAM','GU',\niif({provider business practice location address state name}=='HAWAII','HI',\niif({provider business practice location address state name}=='IOWA','IA',\niif({provider business practice location address state name}=='IDAHO','ID',\niif({provider business practice location address state name}=='IL - ILLINOIS','IL',\niif({provider business practice location address state name}=='ILLINOIS','IL',\niif({provider business practice location address state name}=='INDIANA','IN',\niif({provider business practice location address state name}=='KANSAS','KS',\niif({provider business practice location address state name}=='KENTUCKY','KY',\niif({provider business practice location address state name}=='LOUISIANA','LA',\niif({provider business practice location address state name}=='NEW ORLEANS','LA',\niif({provider business practice location address state name}=='MA- MASSACHUSETTS','MA',\niif({provider business practice location address state name}=='MASSACHUSETTS','MA',\niif({provider business practice location address state name}=='MARYLAND','MD',\niif({provider business practice location address state name}=='MAINE','ME',\niif({provider business practice location address state name}=='MARSHALL ISLANDS','MH',\niif({provider business practice location address state name}=='MICHIGAN','MI',\niif({provider business practice location address state name}=='MINNESOTA','MN',\niif({provider business practice location address state name}=='MISSOURI','MO',\niif({provider business practice location address state name}=='MARIANA ISLANDS, NORTHERN','MP',\niif({provider business practice location address state name}=='MISSISSIPPI','MS',\niif({provider business practice location address state name}=='MS- MISSISSIPPI','MS',\niif({provider business practice location address state name}=='MONTANA','MT',\niif({provider business practice location address state name}=='N.C.','NC',\niif({provider business practice location address state name}=='NC - NORTH CAROLINA','NC',\niif({provider business practice location address state name}=='NORTH CAROLINA','NC',\niif({provider business practice location address state name}=='NORTH CAROLINA (NC)','NC',\niif({provider business practice location address state name}=='NORTH DAKOTA','ND',\niif({provider business practice location address state name}=='NEBRASKA','NE',\niif({provider business practice location address state name}=='NEW HAMPSHIRE','NH',\niif({provider business practice location address state name}=='NEW JERSEY','NJ',\niif({provider business practice location address state name}=='NJ - NEW JERSEY','NJ',\niif({provider business practice location address state name}=='NEW MEXICO','NM',\niif({provider business practice location address state name}=='NEVADA','NV',\niif({provider business practice location address state name}=='N.Y.','NY',\niif({provider business practice location address state name}=='NY - NEW YORK','NY',\niif({provider business practice location address state name}=='NY- NEW YORK','NY',\niif({provider business practice location address state name}=='NEW YORK','NY',\niif({provider business practice location address state name}=='OHIO','OH',\niif({provider business practice location address state name}=='OHIO (OH)','OH',\niif({provider business practice location address state name}=='OKLAHOMA','OK',\niif({provider business practice location address state name}=='OR OREGON','OR',\niif({provider business practice location address state name}=='OREGON','OR',\niif({provider business practice location address state name}=='PENNSYLVANIA','PA',\niif({provider business practice location address state name}=='P. R.','PR',\niif({provider business practice location address state name}=='P.R','PR',\niif({provider business practice location address state name}=='P.R.','PR',\niif({provider business practice location address state name}=='P.R. PUERTO RICO','PR',\niif({provider business practice location address state name}=='PR - PUERTO RICO','PR',\niif({provider business practice location address state name}=='PUERTO RICO','PR',\niif({provider business practice location address state name}=='PUERTORICO','PR',\niif({provider business practice location address state name}=='PALAU','PW',\niif({provider business practice location address state name}=='RHODE ISLAND','RI',\niif({provider business practice location address state name}=='SOUTH CAROLINA','SC',\niif({provider business practice location address state name}=='SOUTH DAKOTA','SD',\niif({provider business practice location address state name}=='TENNESSEE','TN',\niif({provider business practice location address state name}=='TEXAS','TX',\niif({provider business practice location address state name}=='TX-TEXAS','TX',\niif({provider business practice location address state name}=='U.T','UT',\niif({provider business practice location address state name}=='UTAH','UT',\niif({provider business practice location address state name}=='VIRGINIA','VA',\niif({provider business practice location address state name}=='VIRGIN ISLANDS','VI',\niif({provider business practice location address state name}=='VERMONT','VT',\niif({provider business practice location address state name}=='WASHINGTON','WA',\niif({provider business practice location address state name}=='WISCONSIN','WI',\niif({provider business practice location address state name}=='WEST VIRGINIA','WV',\niif({provider business practice location address state name}=='WYOMING','WY',\n{provider business practice location address state name}\n)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))),\n\t\t{provider business mailing address state name} = iif({provider business mailing address state name}=='ALASKA','AK',\niif({provider business mailing address state name}=='ALABAMA','AL',\niif({provider business mailing address state name}=='ARKANSAS','AR',\niif({provider business mailing address state name}=='AMERICAN SAMOA','AS',\niif({provider business mailing address state name}=='ARIZONA','AZ',\niif({provider business mailing address state name}=='CA- CALIFORNIA','CA',\niif({provider business mailing address state name}=='CALIFORNIA','CA',\niif({provider business mailing address state name}=='LOS ANGELES','CA',\niif({provider business mailing address state name}=='COLORADO','CO',\niif({provider business mailing address state name}=='CONNECTICUT','CT',\niif({provider business mailing address state name}=='DISTRICT OF COLUMBIA','DC',\niif({provider business mailing address state name}=='DELAWARE','DE',\niif({provider business mailing address state name}=='FL - FLORIDA','FL',\niif({provider business mailing address state name}=='FLA','FL',\niif({provider business mailing address state name}=='FLORIDA','FL',\niif({provider business mailing address state name}=='MICRONESIA, FEDERATED STATES OF','FM',\niif({provider business mailing address state name}=='GEORGIA','GA',\niif({provider business mailing address state name}=='GUAM','GU',\niif({provider business mailing address state name}=='HAWAII','HI',\niif({provider business mailing address state name}=='IOWA','IA',\niif({provider business mailing address state name}=='IDAHO','ID',\niif({provider business mailing address state name}=='IL - ILLINOIS','IL',\niif({provider business mailing address state name}=='ILLINOIS','IL',\niif({provider business mailing address state name}=='INDIANA','IN',\niif({provider business mailing address state name}=='KANSAS','KS',\niif({provider business mailing address state name}=='KENTUCKY','KY',\niif({provider business mailing address state name}=='LOUISIANA','LA',\niif({provider business mailing address state name}=='NEW ORLEANS','LA',\niif({provider business mailing address state name}=='MA- MASSACHUSETTS','MA',\niif({provider business mailing address state name}=='MASSACHUSETTS','MA',\niif({provider business mailing address state name}=='MARYLAND','MD',\niif({provider business mailing address state name}=='MAINE','ME',\niif({provider business mailing address state name}=='MARSHALL ISLANDS','MH',\niif({provider business mailing address state name}=='MICHIGAN','MI',\niif({provider business mailing address state name}=='MINNESOTA','MN',\niif({provider business mailing address state name}=='MISSOURI','MO',\niif({provider business mailing address state name}=='MARIANA ISLANDS, NORTHERN','MP',\niif({provider business mailing address state name}=='MISSISSIPPI','MS',\niif({provider business mailing address state name}=='MS- MISSISSIPPI','MS',\niif({provider business mailing address state name}=='MONTANA','MT',\niif({provider business mailing address state name}=='N.C.','NC',\niif({provider business mailing address state name}=='NC - NORTH CAROLINA','NC',\niif({provider business mailing address state name}=='NORTH CAROLINA','NC',\niif({provider business mailing address state name}=='NORTH CAROLINA (NC)','NC',\niif({provider business mailing address state name}=='NORTH DAKOTA','ND',\niif({provider business mailing address state name}=='NEBRASKA','NE',\niif({provider business mailing address state name}=='NEW HAMPSHIRE','NH',\niif({provider business mailing address state name}=='NEW JERSEY','NJ',\niif({provider business mailing address state name}=='NJ - NEW JERSEY','NJ',\niif({provider business mailing address state name}=='NEW MEXICO','NM',\niif({provider business mailing address state name}=='NEVADA','NV',\niif({provider business mailing address state name}=='N.Y.','NY',\niif({provider business mailing address state name}=='NY - NEW YORK','NY',\niif({provider business mailing address state name}=='NY- NEW YORK','NY',\niif({provider business mailing address state name}=='NEW YORK','NY',\niif({provider business mailing address state name}=='OHIO','OH',\niif({provider business mailing address state name}=='OHIO (OH)','OH',\niif({provider business mailing address state name}=='OKLAHOMA','OK',\niif({provider business mailing address state name}=='OR OREGON','OR',\niif({provider business mailing address state name}=='OREGON','OR',\niif({provider business mailing address state name}=='PENNSYLVANIA','PA',\niif({provider business mailing address state name}=='P. R.','PR',\niif({provider business mailing address state name}=='P.R','PR',\niif({provider business mailing address state name}=='P.R.','PR',\niif({provider business mailing address state name}=='P.R. PUERTO RICO','PR',\niif({provider business mailing address state name}=='PR - PUERTO RICO','PR',\niif({provider business mailing address state name}=='PUERTO RICO','PR',\niif({provider business mailing address state name}=='PUERTORICO','PR',\niif({provider business mailing address state name}=='PALAU','PW',\niif({provider business mailing address state name}=='RHODE ISLAND','RI',\niif({provider business mailing address state name}=='SOUTH CAROLINA','SC',\niif({provider business mailing address state name}=='SOUTH DAKOTA','SD',\niif({provider business mailing address state name}=='TENNESSEE','TN',\niif({provider business mailing address state name}=='TEXAS','TX',\niif({provider business mailing address state name}=='TX-TEXAS','TX',\niif({provider business mailing address state name}=='U.T','UT',\niif({provider business mailing address state name}=='UTAH','UT',\niif({provider business mailing address state name}=='VIRGINIA','VA',\niif({provider business mailing address state name}=='VIRGIN ISLANDS','VI',\niif({provider business mailing address state name}=='VERMONT','VT',\niif({provider business mailing address state name}=='WASHINGTON','WA',\niif({provider business mailing address state name}=='WISCONSIN','WI',\niif({provider business mailing address state name}=='WEST VIRGINIA','WV',\niif({provider business mailing address state name}=='WYOMING','WY',\n{provider business mailing address state name}\n))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) ~> AddtlColumns\nIdentifyPrimaryTaxonomy select(mapColumn(\n\t\ttemp_npi = npi,\n\t\t{healthcare provider primary taxonomy code} = healthcare_provider_taxonomy_code,\n\t\t{healthcare provider primary group taxonomy} = healthcare_provider_group_taxonomy,\n\t\t{provider primary license number} = provider_license_number,\n\t\t{provider primary license number state code} = provider_license_number_state_code,\n\t\tprimary_taxonomy_grouping = taxonomy_grouping,\n\t\tprimary_taxonomy_classification = taxonomy_classification,\n\t\tprimary_taxonomy_specialization = taxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nAppendPrimaryTaxonomy select(mapColumn(\n\t\teach(match(upper(name)!='TEMP_NPI'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nInputStateCorrection select(mapColumn(\n\t\tselect5_npi = npi,\n\t\taddress_line_1,\n\t\taddress_line_2,\n\t\tcity,\n\t\tpostal_code,\n\t\tcorrected_state\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nAddtlColumns, Select5 lookup(npi == select5_npi\n\t&& {provider first line business practice location address} == address_line_1\n\t&& {provider second line business practice location address} == address_line_2\n\t&& {provider business practice location address city name} == city\n\t&& {provider business practice location address postal code} == postal_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupCorrectedStatePracAddr\nLookupCorrectedCountryPracAddr derive({provider business practice location address state name} = iif(isNull(corrected_state), {provider business practice location address state name}, corrected_state),\n\t\t{provider business practice location address country code out us} = iif(isNull(corrected_country), {provider business practice location address country code out us}, corrected_country)) ~> DerivedColumn1\nLookupCorrectedStatePracAddr, Select6 lookup(npi == select6_npi\n\t&& {provider first line business practice location address} == Select6@address_line_1\n\t&& {provider second line business practice location address} == Select6@address_line_2\n\t&& {provider business practice location address city name} == Select6@city\n\t&& {provider business practice location address postal code} == Select6@postal_code\n\t&& {provider business practice location address state name} == state,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupCorrectedCountryPracAddr\nInputCountryCorrection select(mapColumn(\n\t\tselect6_npi = npi,\n\t\taddress_line_1,\n\t\taddress_line_2,\n\t\tcity,\n\t\tstate,\n\t\tpostal_code,\n\t\tcorrected_country\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nDerivedColumn1 select(mapColumn(\n\t\teach(match(!in(['select5_npi','select6_npi','address_line_1','address_line_2','city','postal_code','state','corrected_state','corrected_country'],name)))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nSelect7, Select5 lookup(npi == select5_npi\n\t&& {provider first line business mailing address} == address_line_1\n\t&& {provider second line business mailing address} == address_line_2\n\t&& {provider business mailing address city name} == city\n\t&& {provider business mailing address postal code} == postal_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupCorrrectedStateMailAddr\nLookupCorrrectedStateMailAddr, Select6 lookup(npi == select6_npi\n\t&& {provider first line business mailing address} == Select6@address_line_1\n\t&& {provider second line business mailing address} == Select6@address_line_2\n\t&& {provider business mailing address city name} == Select6@city\n\t&& {provider business mailing address postal code} == Select6@postal_code\n\t&& {provider business mailing address state name} == state,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> LookupCorrectedCountryMailAddr\nLookupCorrectedCountryMailAddr derive({provider business mailing address state name} = iif(isNull(corrected_state), {provider business mailing address state name}, corrected_state),\n\t\t{provider business mailing address country code (if outside u.s.) } = iif(isNull(corrected_country), {provider business mailing address country code (if outside u.s.) }, corrected_country)) ~> DerivedColumn2\nDerivedColumn2 select(mapColumn(\n\t\teach(match(!in(['select5_npi','select6_npi','address_line_1','address_line_2','city','postal_code','state','corrected_state','corrected_country'],name)))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nNPPESProviderMain select(mapColumn(\n\t\teach(match(!startsWith(upper(name),'HEALTHCARE PROVIDER TAXONOMY CODE_')&&!startsWith(upper(name),'PROVIDER LICENSE NUMBER_')&&!startsWith(upper(name),'PROVIDER LICENSE NUMBER STATE CODE_')&&!startsWith(upper(name),'HEALTHCARE PROVIDER PRIMARY TAXONOMY SWITCH_')&&!startsWith(upper(name),'HEALTHCARE PROVIDER TAXONOMY GROUP_')))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select9\nStageProviderTaxonomy aggregate(groupBy(current_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\t{healthcare provider primary taxonomy switch},\n\t\t{healthcare provider taxonomy code},\n\t\t{healthcare provider taxonomy group},\n\t\t{provider license number},\n\t\t{provider license number state code}),\n\tposition = min(position)) ~> Aggregate1\nSelect1 select(mapColumn(\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select10\nStageOtherProvID aggregate(groupBy(current_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\t{other provider identifier},\n\t\t{other provider identifier type code},\n\t\t{other provider identifier state},\n\t\t{other provider identifier issuer}),\n\ttemp = count(npi)) ~> Aggregate2\nAggregate2 select(mapColumn(\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\t{other provider identifier},\n\t\t{other provider identifier state},\n\t\t{other provider identifier issuer},\n\t\t{other provider identifier type code}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select11\nSelect10 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\thealthcare_provider_group_taxonomy as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1\nSelect8 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tcurrent_flag as string,\n\t\tnpi as string,\n\t\tdata_month as integer,\n\t\t{active flag} as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{replacement npi} as string,\n\t\t{employer identification number (ein)} as string,\n\t\t{provider organization name (legal business name)} as string,\n\t\t{provider last name (legal name)} as string,\n\t\t{provider first name} as string,\n\t\t{provider middle name} as string,\n\t\t{provider name prefix text} as string,\n\t\t{provider name suffix text} as string,\n\t\t{provider credential text} as string,\n\t\t{provider other organization name} as string,\n\t\t{provider other organization name type code} as string,\n\t\t{provider other last name} as string,\n\t\t{provider other first name} as string,\n\t\t{provider other middle name} as string,\n\t\t{provider other name prefix text} as string,\n\t\t{provider other name suffix text} as string,\n\t\t{provider other credential text} as string,\n\t\t{provider other last name type code} as string,\n\t\t{provider first line business mailing address} as string,\n\t\t{provider second line business mailing address} as string,\n\t\t{provider business mailing address city name} as string,\n\t\t{provider business mailing address state name} as string,\n\t\t{provider business mailing address postal code} as string,\n\t\t{provider business mailing address country code (if outside u.s.) } as string,\n\t\t{provider business mailing address telephone number} as string,\n\t\t{provider business mailing address fax number} as string,\n\t\t{provider first line business practice location address} as string,\n\t\t{provider second line business practice location address} as string,\n\t\t{provider business practice location address city name} as string,\n\t\t{provider business practice location address state name} as string,\n\t\t{provider business practice location address postal code} as string,\n\t\t{provider business practice location address country code out us} as string,\n\t\t{provider business practice location address telephone number} as string,\n\t\t{provider business practice location address fax number} as string,\n\t\t{provider enumeration date} as date,\n\t\t{last update date} as date,\n\t\t{npi deactivation reason code} as string,\n\t\t{npi deactivation date} as date,\n\t\t{npi reactivation date} as date,\n\t\t{provider gender code} as string,\n\t\t{authorized official last name} as string,\n\t\t{authorized official first name} as string,\n\t\t{authorized official middle name} as string,\n\t\t{authorized official title or position} as string,\n\t\t{authorized official telephone number} as string,\n\t\t{is sole proprietor} as string,\n\t\t{is organization subpart} as string,\n\t\t{parent organization lbn} as string,\n\t\t{parent organization tin} as string,\n\t\t{authorized official name prefix text} as string,\n\t\t{authorized official name suffix text} as string,\n\t\t{authorized official credential text} as string,\n\t\t{healthcare provider primary taxonomy code} as string,\n\t\t{healthcare provider primary group taxonomy} as string,\n\t\t{provider primary license number} as string,\n\t\t{provider primary license number state code} as string,\n\t\tprimary_taxonomy_grouping as string,\n\t\tprimary_taxonomy_classification as string,\n\t\tprimary_taxonomy_specialization as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> LoadNPPESMainStage2a\nSelect11 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\t{other provider identifier} as string,\n\t\t{other provider identifier state} as string,\n\t\t{other provider identifier issuer} as string,\n\t\t{other provider identifier type code} as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sinkStNPPESProvOtherID"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NUCC_TAXONOMY')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DF_3_Stage_NPPES_Main')]",
@@ -1278,443 +1562,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DF_3_Stage_NPPES_Other_Provider_Identifier')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "PUF_2_Stage_NPPES"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "PUF_DS_2_st_cms_nppes_main",
-								"type": "DatasetReference"
-							},
-							"name": "StCmsNppesMain"
-						},
-						{
-							"dataset": {
-								"referenceName": "PUF_DS_PROD_NPPES_OTHER_PROVIDER_ID",
-								"type": "DatasetReference"
-							},
-							"name": "ProdCmsNppesOtherProviderID"
-						},
-						{
-							"dataset": {
-								"referenceName": "PUF_DS_2b_st_cms_nppes_other_provider_identifier",
-								"type": "DatasetReference"
-							},
-							"name": "StCMSNPPESOtherProvID"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "PUF_DS_3_st_cms_nppes_other_provider_id",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "ProdNPPESOtherProvIDCurrent"
-						},
-						{
-							"name": "StNPPESMainActive"
-						},
-						{
-							"name": "Aggregate1"
-						},
-						{
-							"name": "StNPPESMainActiveNPI"
-						},
-						{
-							"name": "Aggregate2"
-						},
-						{
-							"name": "Select1"
-						},
-						{
-							"name": "Join1"
-						},
-						{
-							"name": "Aggregate3"
-						},
-						{
-							"name": "Select2"
-						},
-						{
-							"name": "ConditionalSplit1"
-						},
-						{
-							"name": "Select3"
-						},
-						{
-							"name": "Select4"
-						},
-						{
-							"name": "Select5"
-						},
-						{
-							"name": "NewNPIProviderOtherIDFinal"
-						},
-						{
-							"name": "StCMSNPPESOtherProvIDFixColumnName"
-						},
-						{
-							"name": "NPIInBothNewData"
-						},
-						{
-							"name": "NPIInBothNewDataFinal"
-						},
-						{
-							"name": "NPIInBothOldData"
-						},
-						{
-							"name": "NPIInBothOldDataFinal"
-						},
-						{
-							"name": "DerivedColumn1"
-						},
-						{
-							"name": "Exists1"
-						},
-						{
-							"name": "Filter1"
-						},
-						{
-							"name": "SetOldDataToActiveFlag0"
-						},
-						{
-							"name": "SetOldDataToCurrentFlag0"
-						},
-						{
-							"name": "NPIOldDataActiveFlag0Final"
-						},
-						{
-							"name": "NPIOldDataCurrentFlag0Final"
-						},
-						{
-							"name": "NewChangeDataFinal"
-						},
-						{
-							"name": "Select6"
-						},
-						{
-							"name": "KeepOldDataFinal"
-						},
-						{
-							"name": "FinalData"
-						},
-						{
-							"name": "Select7"
-						},
-						{
-							"name": "Select8"
-						},
-						{
-							"name": "DerivedColumn2"
-						},
-						{
-							"name": "DerivedColumn3"
-						},
-						{
-							"name": "DerivedColumn4"
-						},
-						{
-							"name": "DerivedColumn5"
-						},
-						{
-							"name": "Select9"
-						},
-						{
-							"name": "Join2"
-						},
-						{
-							"name": "Join3"
-						},
-						{
-							"name": "InBothStOtherProvID"
-						},
-						{
-							"name": "Join4"
-						}
-					],
-					"script": "source(output(\n\t\tcurrent_flag as string,\n\t\tnpi as string,\n\t\tdata_month as integer,\n\t\t{active flag} as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{replacement npi} as string,\n\t\t{employer identification number (ein)} as string,\n\t\t{provider organization name (legal business name)} as string,\n\t\t{provider last name (legal name)} as string,\n\t\t{provider first name} as string,\n\t\t{provider middle name} as string,\n\t\t{provider name prefix text} as string,\n\t\t{provider name suffix text} as string,\n\t\t{provider credential text} as string,\n\t\t{provider other organization name} as string,\n\t\t{provider other organization name type code} as string,\n\t\t{provider other last name} as string,\n\t\t{provider other first name} as string,\n\t\t{provider other middle name} as string,\n\t\t{provider other name prefix text} as string,\n\t\t{provider other name suffix text} as string,\n\t\t{provider other credential text} as string,\n\t\t{provider other last name type code} as string,\n\t\t{provider first line business mailing address} as string,\n\t\t{provider second line business mailing address} as string,\n\t\t{provider business mailing address city name} as string,\n\t\t{provider business mailing address state name} as string,\n\t\t{provider business mailing address postal code} as string,\n\t\t{provider business mailing address country code (if outside u.s.) } as string,\n\t\t{provider business mailing address telephone number} as string,\n\t\t{provider business mailing address fax number} as string,\n\t\t{provider first line business practice location address} as string,\n\t\t{provider second line business practice location address} as string,\n\t\t{provider business practice location address city name} as string,\n\t\t{provider business practice location address state name} as string,\n\t\t{provider business practice location address postal code} as string,\n\t\t{provider business practice location address country code out us} as string,\n\t\t{provider business practice location address telephone number} as string,\n\t\t{provider business practice location address fax number} as string,\n\t\t{provider enumeration date} as date,\n\t\t{last update date} as date,\n\t\t{npi deactivation reason code} as string,\n\t\t{npi deactivation date} as date,\n\t\t{npi reactivation date} as date,\n\t\t{provider gender code} as string,\n\t\t{authorized official last name} as string,\n\t\t{authorized official first name} as string,\n\t\t{authorized official middle name} as string,\n\t\t{authorized official title or position} as string,\n\t\t{authorized official telephone number} as string,\n\t\t{is sole proprietor} as string,\n\t\t{is organization subpart} as string,\n\t\t{parent organization lbn} as string,\n\t\t{parent organization tin} as string,\n\t\t{authorized official name prefix text} as string,\n\t\t{authorized official name suffix text} as string,\n\t\t{authorized official credential text} as string,\n\t\t{healthcare provider primary taxonomy code} as string,\n\t\t{healthcare provider primary group taxonomy} as string,\n\t\t{provider primary license number} as string,\n\t\t{provider primary license number state code} as string,\n\t\tprimary_taxonomy_grouping as string,\n\t\tprimary_taxonomy_classification as string,\n\t\tprimary_taxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCmsNppesMain\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tother_provider_identifier as string,\n\t\tother_provider_identifier_type_code as string,\n\t\tother_provider_identifier_state as string,\n\t\tother_provider_identifier_issuer as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProdCmsNppesOtherProviderID\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\t{other provider identifier} as string,\n\t\t{other provider identifier state} as string,\n\t\t{other provider identifier issuer} as string,\n\t\t{other provider identifier type code} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCMSNPPESOtherProvID\nProdCmsNppesOtherProviderID filter(current_flag=='1') ~> ProdNPPESOtherProvIDCurrent\nStCmsNppesMain filter({active flag}=='1') ~> StNPPESMainActive\nStNPPESMainActive aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate1\nAggregate1 select(mapColumn(\n\t\teach(match(in([('npi')],name)))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StNPPESMainActiveNPI\nStCMSNPPESOtherProvIDFixColumnName aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate2\nAggregate2 select(mapColumn(\n\t\ttemp_npi = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, Select2 join(temp_npi == npi_prod,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join1\nProdNPPESOtherProvIDCurrent aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate3\nAggregate3 select(mapColumn(\n\t\tnpi_prod = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nJoin1 split(isNull(npi_prod),\n\ttemp_npi==npi_prod,\n\tdisjoint: false) ~> ConditionalSplit1@(NewNPI, InBoth, OldNPI)\nConditionalSplit1@NewNPI select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nConditionalSplit1@InBoth select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nConditionalSplit1@OldNPI select(mapColumn(\n\t\ttemp_npi = npi_prod\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nJoin2 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NewNPIProviderOtherIDFinal\nStCMSNPPESOtherProvID select(mapColumn(\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier = {other provider identifier},\n\t\tother_provider_identifier_issuer = {other provider identifier issuer},\n\t\tother_provider_identifier_state = {other provider identifier state},\n\t\tother_provider_identifier_type_code = {other provider identifier type code}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StCMSNPPESOtherProvIDFixColumnName\nSelect8, DerivedColumn2 exists(Compare_key_StOther == Compare_key_ProdOther,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothNewData\nNPIInBothNewData select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothNewDataFinal\nDerivedColumn2, DerivedColumn3 exists(Compare_key_ProdOther == Compare_key_StOther,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothOldData\nDerivedColumn1 select(mapColumn(\n\t\tnpi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_type_code,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_issuer\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothOldDataFinal\nNPIInBothOldData derive(current_flag = '0') ~> DerivedColumn1\nSelect5, StNPPESMainActiveNPI exists(temp_npi == npi,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists1\nJoin4 filter({active flag}=='1') ~> Filter1\nFilter1 derive({active flag} = '0') ~> SetOldDataToActiveFlag0\nFilter1 derive(current_flag = '0') ~> SetOldDataToCurrentFlag0\nSetOldDataToActiveFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataActiveFlag0Final\nSetOldDataToCurrentFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataCurrentFlag0Final\nNewNPIProviderOtherIDFinal, NPIInBothNewDataFinal, NPIInBothOldDataFinal, NPIOldDataActiveFlag0Final, NPIOldDataCurrentFlag0Final union(byName: true)~> NewChangeDataFinal\nDerivedColumn5 select(mapColumn(\n\t\teach(match(name!='current_flag'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nDerivedColumn4, Select6 exists(Prod_Compare_Key == OldData_CompareKey,\n\tnegate:true,\n\tbroadcast: 'auto')~> KeepOldDataFinal\nSelect9, NewChangeDataFinal union(byName: true)~> FinalData\nJoin3 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_type_code,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_issuer\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nDerivedColumn3 select(mapColumn(\n\t\ttemp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_issuer,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_type_code,\n\t\tCompare_key_StOther\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nSelect7 derive(Compare_key_ProdOther = upper(concat(npi,iifNull({entity type code},''),iifNull({active flag},''),iifNull(other_provider_identifier,''),iifNull(other_provider_identifier_type_code,''),\r\niifNull(other_provider_identifier_state,''),iifNull(other_provider_identifier_issuer,'')))) ~> DerivedColumn2\nInBothStOtherProvID derive(Compare_key_StOther = upper(concat(npi,iifNull({entity type code},''),iifNull({active flag},''),iifNull(other_provider_identifier,''),iifNull(other_provider_identifier_type_code,''),\r\niifNull(other_provider_identifier_state,''),iifNull(other_provider_identifier_issuer,'')))) ~> DerivedColumn3\nProdCmsNppesOtherProviderID derive(Prod_Compare_Key = upper(concat(npi,iifNull(toString(data_month),''),iifNull({entity type code},''),iifNull({active flag},''),iifNull(other_provider_identifier,''),iifNull(other_provider_identifier_type_code,''),\r\niifNull(other_provider_identifier_state,''),iifNull(other_provider_identifier_issuer,'')))) ~> DerivedColumn4\nNewChangeDataFinal derive(OldData_CompareKey = upper(concat(npi,iifNull(toString(data_month),''),iifNull({entity type code},''),iifNull({active flag},''),iifNull(other_provider_identifier,''),iifNull(other_provider_identifier_type_code,''), iifNull(other_provider_identifier_state,''),iifNull(other_provider_identifier_issuer,'')))) ~> DerivedColumn5\nKeepOldDataFinal select(mapColumn(\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\tother_provider_identifier,\n\t\tother_provider_identifier_type_code,\n\t\tother_provider_identifier_state,\n\t\tother_provider_identifier_issuer\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select9\nSelect3, StCMSNPPESOtherProvIDFixColumnName join(temp_npi == npi,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join2\nSelect4, ProdNPPESOtherProvIDCurrent join(temp_npi == npi,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join3\nSelect4, StCMSNPPESOtherProvIDFixColumnName join(temp_npi == npi,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> InBothStOtherProvID\nExists1, StCMSNPPESOtherProvIDFixColumnName join(temp_npi == npi,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join4\nFinalData sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tother_provider_identifier as string,\n\t\tother_provider_identifier_type_code as string,\n\t\tother_provider_identifier_state as string,\n\t\tother_provider_identifier_issuer as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DF_3_Stage_NPPES_Provider_Taxonomy')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "PUF_2_Stage_NPPES"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "PUF_DS_2_st_cms_nppes_main",
-								"type": "DatasetReference"
-							},
-							"name": "StCmsNppesMain"
-						},
-						{
-							"dataset": {
-								"referenceName": "PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY",
-								"type": "DatasetReference"
-							},
-							"name": "ProdCmsNppesProvTaxonomy"
-						},
-						{
-							"dataset": {
-								"referenceName": "PUF_DS_2b_st_cms_nppes_provider_taxonomy",
-								"type": "DatasetReference"
-							},
-							"name": "StCMSNPPESProvTaxonomy"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "PUF_DS_3_st_cms_nppes_provider_taxonomy",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "ProdNPPESProvTaxonomyCurrent"
-						},
-						{
-							"name": "StNPPESMainActive"
-						},
-						{
-							"name": "Aggregate1"
-						},
-						{
-							"name": "StNPPESMainActiveNPI"
-						},
-						{
-							"name": "Aggregate2"
-						},
-						{
-							"name": "Select1"
-						},
-						{
-							"name": "Join1"
-						},
-						{
-							"name": "Aggregate3"
-						},
-						{
-							"name": "Select2"
-						},
-						{
-							"name": "ConditionalSplit1"
-						},
-						{
-							"name": "Lookup"
-						},
-						{
-							"name": "Select3"
-						},
-						{
-							"name": "Select4"
-						},
-						{
-							"name": "Select5"
-						},
-						{
-							"name": "NewNPIProvTaxonomyFinal"
-						},
-						{
-							"name": "InBothStOtherProvID"
-						},
-						{
-							"name": "InBothProdOtherProvID"
-						},
-						{
-							"name": "StCMSNPPESProvTaxonomySelect"
-						},
-						{
-							"name": "NPIInBothNewData"
-						},
-						{
-							"name": "NPIInBothNewDataFinal"
-						},
-						{
-							"name": "NPIInBothOldData"
-						},
-						{
-							"name": "NPIInBothOldDataFinal"
-						},
-						{
-							"name": "DerivedColumn1"
-						},
-						{
-							"name": "Exists1"
-						},
-						{
-							"name": "Lookup1"
-						},
-						{
-							"name": "Filter1"
-						},
-						{
-							"name": "SetOldDataToActiveFlag0"
-						},
-						{
-							"name": "SetOldDataToCurrentFlag0"
-						},
-						{
-							"name": "NPIOldDataActiveFlag0Final"
-						},
-						{
-							"name": "NPIOldDataCurrentFlag0Final"
-						},
-						{
-							"name": "NewChangeDataFinal"
-						},
-						{
-							"name": "Select6"
-						},
-						{
-							"name": "KeepOldDataFinal"
-						},
-						{
-							"name": "FinalData"
-						},
-						{
-							"name": "Select7"
-						},
-						{
-							"name": "Select8"
-						},
-						{
-							"name": "DerivedColumn2"
-						},
-						{
-							"name": "DerivedColumn3"
-						},
-						{
-							"name": "DerivedColumn4"
-						},
-						{
-							"name": "DerivedColumn5"
-						},
-						{
-							"name": "Select9"
-						}
-					],
-					"script": "source(output(\n\t\tcurrent_flag as string,\n\t\tnpi as string,\n\t\tdata_month as integer,\n\t\t{active flag} as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{replacement npi} as string,\n\t\t{employer identification number (ein)} as string,\n\t\t{provider organization name (legal business name)} as string,\n\t\t{provider last name (legal name)} as string,\n\t\t{provider first name} as string,\n\t\t{provider middle name} as string,\n\t\t{provider name prefix text} as string,\n\t\t{provider name suffix text} as string,\n\t\t{provider credential text} as string,\n\t\t{provider other organization name} as string,\n\t\t{provider other organization name type code} as string,\n\t\t{provider other last name} as string,\n\t\t{provider other first name} as string,\n\t\t{provider other middle name} as string,\n\t\t{provider other name prefix text} as string,\n\t\t{provider other name suffix text} as string,\n\t\t{provider other credential text} as string,\n\t\t{provider other last name type code} as string,\n\t\t{provider first line business mailing address} as string,\n\t\t{provider second line business mailing address} as string,\n\t\t{provider business mailing address city name} as string,\n\t\t{provider business mailing address state name} as string,\n\t\t{provider business mailing address postal code} as string,\n\t\t{provider business mailing address country code (if outside u.s.) } as string,\n\t\t{provider business mailing address telephone number} as string,\n\t\t{provider business mailing address fax number} as string,\n\t\t{provider first line business practice location address} as string,\n\t\t{provider second line business practice location address} as string,\n\t\t{provider business practice location address city name} as string,\n\t\t{provider business practice location address state name} as string,\n\t\t{provider business practice location address postal code} as string,\n\t\t{provider business practice location address country code out us} as string,\n\t\t{provider business practice location address telephone number} as string,\n\t\t{provider business practice location address fax number} as string,\n\t\t{provider enumeration date} as date,\n\t\t{last update date} as date,\n\t\t{npi deactivation reason code} as string,\n\t\t{npi deactivation date} as date,\n\t\t{npi reactivation date} as date,\n\t\t{provider gender code} as string,\n\t\t{authorized official last name} as string,\n\t\t{authorized official first name} as string,\n\t\t{authorized official middle name} as string,\n\t\t{authorized official title or position} as string,\n\t\t{authorized official telephone number} as string,\n\t\t{is sole proprietor} as string,\n\t\t{is organization subpart} as string,\n\t\t{parent organization lbn} as string,\n\t\t{parent organization tin} as string,\n\t\t{authorized official name prefix text} as string,\n\t\t{authorized official name suffix text} as string,\n\t\t{authorized official credential text} as string,\n\t\t{healthcare provider primary taxonomy code} as string,\n\t\t{healthcare provider primary group taxonomy} as string,\n\t\t{provider primary license number} as string,\n\t\t{provider primary license number state code} as string,\n\t\tprimary_taxonomy_grouping as string,\n\t\tprimary_taxonomy_classification as string,\n\t\tprimary_taxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCmsNppesMain\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_group_taxonomy as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> ProdCmsNppesProvTaxonomy\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tposition as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\thealthcare_provider_group_taxonomy as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> StCMSNPPESProvTaxonomy\nProdCmsNppesProvTaxonomy filter(current_flag=='1') ~> ProdNPPESProvTaxonomyCurrent\nStCmsNppesMain filter({active flag}=='1') ~> StNPPESMainActive\nStNPPESMainActive aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate1\nAggregate1 select(mapColumn(\n\t\teach(match(in([('npi')],name)))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StNPPESMainActiveNPI\nStCMSNPPESProvTaxonomySelect aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate2\nAggregate2 select(mapColumn(\n\t\ttemp_npi = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1, Select2 join(temp_npi == npi_prod,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join1\nProdNPPESProvTaxonomyCurrent aggregate(groupBy(npi),\n\ttemp = count(npi)) ~> Aggregate3\nAggregate3 select(mapColumn(\n\t\tnpi_prod = npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select2\nJoin1 split(isNull(npi_prod),\n\ttemp_npi==npi_prod,\n\tdisjoint: true) ~> ConditionalSplit1@(NewNPI, InBoth, OldNPI)\nSelect3, StCMSNPPESProvTaxonomySelect lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup\nConditionalSplit1@NewNPI select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select3\nConditionalSplit1@InBoth select(mapColumn(\n\t\ttemp_npi\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nConditionalSplit1@OldNPI select(mapColumn(\n\t\ttemp_npi = npi_prod\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select5\nLookup select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NewNPIProvTaxonomyFinal\nSelect4, StCMSNPPESProvTaxonomySelect lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> InBothStOtherProvID\nSelect4, ProdNPPESProvTaxonomyCurrent lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> InBothProdOtherProvID\nStCMSNPPESProvTaxonomy select(mapColumn(\n\t\teach(match(upper(name)!='POSITION'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> StCMSNPPESProvTaxonomySelect\nSelect8, DerivedColumn2 exists(Compare_key_ProdProvTaxonomy == Compare_key_StProvTaxonomy,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothNewData\nNPIInBothNewData select(mapColumn(\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothNewDataFinal\nSelect7, DerivedColumn3 exists(Compare_key_StProvTaxonomy == Compare_key_ProdProvTaxonomy,\n\tnegate:true,\n\tbroadcast: 'auto')~> NPIInBothOldData\nDerivedColumn1 select(mapColumn(\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_taxonomy_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_group_taxonomy\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIInBothOldDataFinal\nNPIInBothOldData derive(current_flag = '0') ~> DerivedColumn1\nSelect5, StNPPESMainActiveNPI exists(temp_npi == npi,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists1\nExists1, StCMSNPPESProvTaxonomySelect lookup(temp_npi == npi,\n\tmultiple: true,\n\tbroadcast: 'auto')~> Lookup1\nLookup1 filter({active flag}=='1') ~> Filter1\nFilter1 derive({active flag} = '0') ~> SetOldDataToActiveFlag0\nFilter1 derive(current_flag = '0') ~> SetOldDataToCurrentFlag0\nSetOldDataToActiveFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataActiveFlag0Final\nSetOldDataToCurrentFlag0 select(mapColumn(\n\t\tnpi = temp_npi,\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> NPIOldDataCurrentFlag0Final\nNewNPIProvTaxonomyFinal, NPIInBothNewDataFinal, NPIInBothOldDataFinal, NPIOldDataActiveFlag0Final, NPIOldDataCurrentFlag0Final union(byName: true)~> NewChangeDataFinal\nDerivedColumn5 select(mapColumn(\n\t\teach(match(name!='current_flag'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select6\nDerivedColumn4, Select6 exists(Prod_Compare_Key == OldData_CompareKey,\n\tnegate:true,\n\tbroadcast: 'auto')~> KeepOldDataFinal\nSelect9, NewChangeDataFinal union(byName: true)~> FinalData\nDerivedColumn2 select(mapColumn(\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_taxonomy_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_group_taxonomy,\n\t\tCompare_key_StProvTaxonomy\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select7\nDerivedColumn3 select(mapColumn(\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_taxonomy_code,\n\t\thealthcare_provider_group_taxonomy,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization,\n\t\tCompare_key_ProdProvTaxonomy\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select8\nInBothProdOtherProvID derive(Compare_key_StProvTaxonomy = upper(concat(iifNull(npi,''),iifNull({entity type code},''),iifNull({active flag},''),iifNull(healthcare_provider_taxonomy_code,''),iifNull(taxonomy_grouping,''),\r\niifNull(taxonomy_classification,''),iifNull(taxonomy_specialization,''),iifNull(provider_license_number,''),iifNull(provider_license_number_state_code,''),\r\niifNull(healthcare_provider_primary_taxonomy_switch,''),iifNull(healthcare_provider_group_taxonomy,'')))) ~> DerivedColumn2\nInBothStOtherProvID derive(Compare_key_ProdProvTaxonomy = upper(concat(iifNull(npi,''),iifNull({entity type code},''),iifNull({active flag},''),iifNull(healthcare_provider_taxonomy_code,''),iifNull(taxonomy_grouping,''),\r\niifNull(taxonomy_classification,''),iifNull(taxonomy_specialization,''),iifNull(provider_license_number,''),iifNull(provider_license_number_state_code,''),\r\niifNull(healthcare_provider_primary_taxonomy_switch,''),iifNull(healthcare_provider_group_taxonomy,'')))) ~> DerivedColumn3\nProdCmsNppesProvTaxonomy derive(Prod_Compare_Key = upper(concat(iifNull(toString(data_month),''),iifNull(npi,''),iifNull({entity type code},''),iifNull({active flag},''),iifNull(healthcare_provider_taxonomy_code,''),\r\niifNull(taxonomy_grouping,''),iifNull(taxonomy_classification,''),iifNull(taxonomy_specialization,''),iifNull(provider_license_number,''),\r\niifNull(provider_license_number_state_code,''),iifNull(healthcare_provider_primary_taxonomy_switch,''),iifNull(healthcare_provider_group_taxonomy,'')))) ~> DerivedColumn4\nNewChangeDataFinal derive(OldData_CompareKey = upper(concat(iifNull(toString(data_month),''),iifNull(npi,''),iifNull({entity type code},''),iifNull({active flag},''),iifNull(healthcare_provider_taxonomy_code,''),\r\niifNull(taxonomy_grouping,''),iifNull(taxonomy_classification,''),iifNull(taxonomy_specialization,''),iifNull(provider_license_number,''),\r\niifNull(provider_license_number_state_code,''),iifNull(healthcare_provider_primary_taxonomy_switch,''),iifNull(healthcare_provider_group_taxonomy,'')))) ~> DerivedColumn5\nKeepOldDataFinal select(mapColumn(\n\t\tcurrent_flag,\n\t\tdata_month,\n\t\tnpi,\n\t\t{entity type code},\n\t\t{entity type},\n\t\t{active flag},\n\t\thealthcare_provider_taxonomy_code,\n\t\ttaxonomy_grouping,\n\t\ttaxonomy_classification,\n\t\ttaxonomy_specialization,\n\t\tprovider_license_number,\n\t\tprovider_license_number_state_code,\n\t\thealthcare_provider_primary_taxonomy_switch,\n\t\thealthcare_provider_group_taxonomy\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select9\nFinalData sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_group_taxonomy as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "DA_Test"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "PUF_temp",
-								"type": "DatasetReference"
-							},
-							"name": "Redshift"
-						},
-						{
-							"dataset": {
-								"referenceName": "PUF_DS_2b_st_cms_nppes_provider_taxonomy",
-								"type": "DatasetReference"
-							},
-							"name": "Azure"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "Azure_Qral_Dev_Table",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Exists2"
-						}
-					],
-					"script": "source(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_group_taxonomy as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Redshift\nsource(output(\n\t\tcurrent_flag as string,\n\t\tdata_month as integer,\n\t\tnpi as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{active flag} as string,\n\t\tposition as string,\n\t\thealthcare_provider_primary_taxonomy_switch as string,\n\t\thealthcare_provider_taxonomy_code as string,\n\t\thealthcare_provider_group_taxonomy as string,\n\t\tprovider_license_number as string,\n\t\tprovider_license_number_state_code as string,\n\t\ttaxonomy_grouping as string,\n\t\ttaxonomy_classification as string,\n\t\ttaxonomy_specialization as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Azure\nAzure, Redshift exists(Azure@npi == Redshift@npi,\n\tnegate:true,\n\tbroadcast: 'auto')~> Exists2\nExists2 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "DA_Test"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "PUF_temp_a",
-								"type": "DatasetReference"
-							},
-							"name": "tempa"
-						},
-						{
-							"dataset": {
-								"referenceName": "PUF_temp_b",
-								"type": "DatasetReference"
-							},
-							"name": "tempb"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "Azure_Qral_Dev_Table",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Join1"
-						}
-					],
-					"script": "source(output(\n\t\ttemp_int as integer,\n\t\ttemp_var as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tempa\nsource(output(\n\t\ttemp_int_b as integer,\n\t\ttemp_var_b as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tempb\ntempa, tempb join(temp_int == temp_int_b,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join1\nJoin1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/PUF_temp_a')]",
-				"[concat(variables('factoryId'), '/datasets/PUF_temp_b')]"
-			]
 		}
 	]
 }

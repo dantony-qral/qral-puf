@@ -113,12 +113,6 @@
 					"Qral_PUF_PROD_password": {
 						"value": "[parameters('Qral_PUF_PROD_password')]"
 					},
-					"Azure_Qral_Dev_connectionString": {
-						"value": "[parameters('Azure_Qral_Dev_connectionString')]"
-					},
-					"Azure_Qral_Dev_servicePrincipalKey": {
-						"value": "[parameters('Azure_Qral_Dev_servicePrincipalKey')]"
-					},
 					"Qral_PUF_DEV_properties_typeProperties_server": {
 						"value": "[parameters('Qral_PUF_DEV_properties_typeProperties_server')]"
 					},
@@ -145,12 +139,6 @@
 					},
 					"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
 						"value": "[parameters('integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
-					},
-					"Azure_Qral_Dev_properties_typeProperties_servicePrincipalId": {
-						"value": "[parameters('Azure_Qral_Dev_properties_typeProperties_servicePrincipalId')]"
-					},
-					"Azure_Qral_Dev_properties_typeProperties_tenant": {
-						"value": "[parameters('Azure_Qral_Dev_properties_typeProperties_tenant')]"
 					}
 				}
 			},
@@ -169,6 +157,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"Azure_Qral_Dev_connectionString": {
+						"value": "[parameters('Azure_Qral_Dev_connectionString')]"
+					},
+					"Azure_Qral_Dev_servicePrincipalKey": {
+						"value": "[parameters('Azure_Qral_Dev_servicePrincipalKey')]"
+					},
+					"Azure_Qral_Dev_properties_typeProperties_servicePrincipalId": {
+						"value": "[parameters('Azure_Qral_Dev_properties_typeProperties_servicePrincipalId')]"
+					},
+					"Azure_Qral_Dev_properties_typeProperties_tenant": {
+						"value": "[parameters('Azure_Qral_Dev_properties_typeProperties_tenant')]"
 					}
 				}
 			},

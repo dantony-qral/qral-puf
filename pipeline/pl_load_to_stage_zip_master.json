@@ -1,0 +1,290 @@
+{
+	"name": "pl_load_to_stage_zip_master",
+	"properties": {
+		"activities": [
+			{
+				"name": "df_copy_landing_to_staging",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_load_to_stage",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"landingTableSource": {
+								"tableName": {
+									"value": "@pipeline().parameters.landingTableName",
+									"type": "Expression"
+								},
+								"schemaName": {
+									"value": "@pipeline().parameters.landingSchemaName",
+									"type": "Expression"
+								}
+							},
+							"writeDataToStage": {
+								"tableName": {
+									"value": "@pipeline().parameters.stageTableName",
+									"type": "Expression"
+								},
+								"schemaName": {
+									"value": "@pipeline().parameters.stageSchemaName",
+									"type": "Expression"
+								}
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "deleteSourceZipFile",
+				"type": "Delete",
+				"dependsOn": [
+					{
+						"activity": "df_copy_landing_to_staging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_read_raw_file",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": {
+								"value": "@pipeline().parameters.sourceFileContainerName",
+								"type": "Expression"
+							},
+							"fileName": {
+								"value": "@pipeline().parameters.sourceFileName",
+								"type": "Expression"
+							}
+						}
+					},
+					"logStorageSettings": {
+						"linkedServiceName": {
+							"referenceName": "QralStorageDev_Blob",
+							"type": "LinkedServiceReference"
+						},
+						"path": "logs"
+					},
+					"enableLogging": true,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "ZipCode",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "zipcode",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "City",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "city",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "State",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "state",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Latitude",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "latitude",
+									"type": "Single",
+									"physicalType": "real"
+								}
+							},
+							{
+								"source": {
+									"name": "Longitude",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "longitude",
+									"type": "Single",
+									"physicalType": "real"
+								}
+							},
+							{
+								"source": {
+									"name": "Classification",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "classification",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Population",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "population",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_read_raw_file",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": {
+								"value": "@pipeline().parameters.sourceFileContainerName",
+								"type": "Expression"
+							},
+							"fileName": {
+								"value": "@pipeline().parameters.sourceFileName",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Azure_Qral_Dev_Table",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaName": {
+								"value": "@pipeline().parameters.landingSchemaName",
+								"type": "Expression"
+							},
+							"tableName": {
+								"value": "@pipeline().parameters.landingTableName",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"stageSchemaName": {
+				"type": "string"
+			},
+			"stageTableName": {
+				"type": "string"
+			},
+			"sourceFileContainerName": {
+				"type": "string"
+			},
+			"sourceFileName": {
+				"type": "string"
+			},
+			"landingTableName": {
+				"type": "string"
+			},
+			"landingSchemaName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "AM_Test"
+		},
+		"annotations": []
+	}
+}

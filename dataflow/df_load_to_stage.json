@@ -1,0 +1,35 @@
+{
+	"name": "df_load_to_stage",
+	"properties": {
+		"folder": {
+			"name": "AM_test"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_azure_sql_dev",
+						"type": "DatasetReference"
+					},
+					"name": "landingTableSource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_azure_sql_dev",
+						"type": "DatasetReference"
+					},
+					"name": "writeDataToStage"
+				}
+			],
+			"transformations": [
+				{
+					"name": "addLoaddate"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> landingTableSource\nlandingTableSource derive(load_date = currentTimestamp(),\n\t\tcurrent_flag = 1) ~> addLoaddate\naddLoaddate sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> writeDataToStage"
+		}
+	}
+}

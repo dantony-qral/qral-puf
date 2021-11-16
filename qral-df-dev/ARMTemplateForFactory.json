@@ -127,7 +127,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('Readin_QC_List').output",
+								"value": "@activity('Readin_QC_List').output.value",
 								"type": "Expression"
 							},
 							"isSequential": false,

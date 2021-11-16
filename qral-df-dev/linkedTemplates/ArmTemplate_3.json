@@ -359,7 +359,7 @@
 													"type": "Expression"
 												},
 												"qc_id": {
-													"value": "@item().query_number",
+													"value": "'@{item().query_number}'",
 													"type": "Expression"
 												}
 											},

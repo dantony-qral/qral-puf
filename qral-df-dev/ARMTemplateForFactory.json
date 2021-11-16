@@ -161,11 +161,11 @@
 											"datasetParameters": {
 												"source1": {
 													"schemaName": {
-														"value": "@item().schema_name",
+														"value": "nucc",
 														"type": "Expression"
 													},
 													"tableName": {
-														"value": "@item().table_name",
+														"value": "nucc_taxonomy",
 														"type": "Expression"
 													}
 												},

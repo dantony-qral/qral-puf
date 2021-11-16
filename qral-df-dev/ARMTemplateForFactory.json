@@ -160,7 +160,14 @@
 											},
 											"datasetParameters": {
 												"source1": {
-													"data_year": "2021"
+													"schemaName": {
+														"value": "@item().schema_name",
+														"type": "Expression"
+													},
+													"tableName": {
+														"value": "@item().table_name",
+														"type": "Expression"
+													}
 												},
 												"sink1": {}
 											}
@@ -8865,7 +8872,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "0_ld_nucc_taxonomy_year",
+								"referenceName": "Azure_Qral_Dev_Table",
 								"type": "DatasetReference"
 							},
 							"name": "source1"
@@ -8889,7 +8896,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/0_ld_nucc_taxonomy_year')]",
+				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]",
 				"[concat(variables('factoryId'), '/datasets/TEST_SQL_LOOP_OUT')]"
 			]
 		},

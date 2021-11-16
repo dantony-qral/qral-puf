@@ -114,11 +114,11 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "ForEach1",
+						"name": "ForEach_QC_ID",
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "Lookup1",
+								"activity": "Readin_QC_List",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -127,13 +127,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('Lookup1').output.value",
+								"value": "@activity('Readin_QC_List').output",
 								"type": "Expression"
 							},
 							"isSequential": false,
 							"activities": [
 								{
-									"name": "dataflow1",
+									"name": "Run_QC_SQL",
 									"type": "ExecuteDataFlow",
 									"dependsOn": [],
 									"policy": {
@@ -152,6 +152,10 @@
 												"sql_query": {
 													"value": "'@{item().query}'",
 													"type": "Expression"
+												},
+												"qc_id": {
+													"value": "@item().query_number",
+													"type": "Expression"
 												}
 											},
 											"datasetParameters": {
@@ -162,9 +166,9 @@
 											}
 										},
 										"staging": {},
-										"compute": {
-											"coreCount": 8,
-											"computeType": "General"
+										"integrationRuntime": {
+											"referenceName": "integrationRuntime-TEST2",
+											"type": "IntegrationRuntimeReference"
 										},
 										"traceLevel": "Fine"
 									}
@@ -173,7 +177,7 @@
 						}
 					},
 					{
-						"name": "Lookup1",
+						"name": "Readin_QC_List",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -214,7 +218,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/BLOB_XLS_TEST_SQL_LOOP')]",
-				"[concat(variables('factoryId'), '/dataflows/DA_TEST_Execute_SQL_Query')]"
+				"[concat(variables('factoryId'), '/dataflows/DA_TEST_Execute_SQL_Query')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-TEST2')]"
 			]
 		},
 		{
@@ -8880,7 +8885,7 @@
 							"name": "TestQuery"
 						}
 					],
-					"script": "parameters{\n\tsql_query as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($sql_query),\n\tformat: 'query') ~> source1\nsource1 derive(test_query = $sql_query) ~> TestQuery\nTestQuery sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as string,\n\t\t{Deactivation Date} as string,\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tpartitionFileNames:['test_loop_sql_out.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1"
+					"script": "parameters{\n\tsql_query as string,\n\tqc_id as integer\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($sql_query),\n\tformat: 'query') ~> source1\nsource1 derive(qc_id = $qc_id,\n\t\tsql_query = $sql_query) ~> TestQuery\nTestQuery sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as string,\n\t\t{Deactivation Date} as string,\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tpartitionFileNames:['test_loop_sql_out.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1"
 				}
 			},
 			"dependsOn": [

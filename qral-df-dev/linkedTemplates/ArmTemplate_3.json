@@ -319,11 +319,11 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "ForEach1",
+						"name": "ForEach_QC_ID",
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "Lookup1",
+								"activity": "Readin_QC_List",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -332,13 +332,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('Lookup1').output.value",
+								"value": "@activity('Readin_QC_List').output",
 								"type": "Expression"
 							},
 							"isSequential": false,
 							"activities": [
 								{
-									"name": "dataflow1",
+									"name": "Run_QC_SQL",
 									"type": "ExecuteDataFlow",
 									"dependsOn": [],
 									"policy": {
@@ -357,6 +357,10 @@
 												"sql_query": {
 													"value": "'@{item().query}'",
 													"type": "Expression"
+												},
+												"qc_id": {
+													"value": "@item().query_number",
+													"type": "Expression"
 												}
 											},
 											"datasetParameters": {
@@ -367,9 +371,9 @@
 											}
 										},
 										"staging": {},
-										"compute": {
-											"coreCount": 8,
-											"computeType": "General"
+										"integrationRuntime": {
+											"referenceName": "integrationRuntime-TEST2",
+											"type": "IntegrationRuntimeReference"
 										},
 										"traceLevel": "Fine"
 									}
@@ -378,7 +382,7 @@
 						}
 					},
 					{
-						"name": "Lookup1",
+						"name": "Readin_QC_List",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {

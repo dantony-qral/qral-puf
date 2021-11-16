@@ -49,7 +49,14 @@
 									},
 									"datasetParameters": {
 										"source1": {
-											"data_year": "2021"
+											"schemaName": {
+												"value": "@item().schema_name",
+												"type": "Expression"
+											},
+											"tableName": {
+												"value": "@item().table_name",
+												"type": "Expression"
+											}
 										}
 									}
 								},

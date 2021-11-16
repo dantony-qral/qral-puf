@@ -42,18 +42,6 @@
 											"value": "'@{item().query}'",
 											"type": "Expression"
 										}
-									},
-									"datasetParameters": {
-										"source1": {
-											"schemaName": {
-												"value": "nucc",
-												"type": "Expression"
-											},
-											"tableName": {
-												"value": "nucc_taxonomy",
-												"type": "Expression"
-											}
-										}
 									}
 								},
 								"integrationRuntime": {

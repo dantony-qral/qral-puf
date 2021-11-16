@@ -43,8 +43,20 @@
 											"type": "Expression"
 										},
 										"qc_id": {
-											"value": "'@{item().query_number}'",
+											"value": "@item().query_number",
 											"type": "Expression"
+										}
+									},
+									"datasetParameters": {
+										"QCTable": {
+											"schemaName": {
+												"value": "@item().table_schema",
+												"type": "Expression"
+											},
+											"tableName": {
+												"value": "@item().table_name",
+												"type": "Expression"
+											}
 										}
 									}
 								},

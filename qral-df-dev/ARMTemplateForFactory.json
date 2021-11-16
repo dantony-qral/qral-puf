@@ -155,16 +155,7 @@
 												}
 											},
 											"datasetParameters": {
-												"source1": {
-													"schemaName": {
-														"value": "nucc",
-														"type": "Expression"
-													},
-													"tableName": {
-														"value": "nucc_taxonomy",
-														"type": "Expression"
-													}
-												},
+												"source1": {},
 												"sink1": {}
 											}
 										},
@@ -8868,7 +8859,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "Azure_Qral_Dev_Table",
+								"referenceName": "nucc_taxonomy",
 								"type": "DatasetReference"
 							},
 							"name": "source1"
@@ -8888,11 +8879,11 @@
 							"name": "TestQuery"
 						}
 					],
-					"script": "parameters{\n\tsql_query as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($sql_query),\n\tformat: 'query') ~> source1\nsource1 derive(qc_id = $qc_id,\n\t\tsql_query = $sql_query) ~> TestQuery\nTestQuery sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as string,\n\t\t{Deactivation Date} as string,\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tpartitionFileNames:['test_loop_sql_out.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1"
+					"script": "parameters{\n\tsql_query as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 derive(sql_query = $sql_query) ~> TestQuery\nTestQuery sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as string,\n\t\t{Deactivation Date} as string,\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tpartitionFileNames:['test_loop_sql_out.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]",
+				"[concat(variables('factoryId'), '/datasets/nucc_taxonomy')]",
 				"[concat(variables('factoryId'), '/datasets/TEST_SQL_LOOP_OUT')]"
 			]
 		},

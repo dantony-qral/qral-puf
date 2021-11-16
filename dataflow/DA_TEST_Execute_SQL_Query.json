@@ -9,10 +9,10 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "PUF_DS_PROD_NUCC_TAXONOMY",
+						"referenceName": "Azure_Qral_Dev_Table",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "QCTable"
 				}
 			],
 			"sinks": [
@@ -29,7 +29,7 @@
 					"name": "TestQuery"
 				}
 			],
-			"script": "parameters{\n\tsql_query as string,\n\tqc_id as string\n}\nsource(output(\n\t\tcode as string,\n\t\tgrouping as string,\n\t\tclassification as string,\n\t\tspecialization as string,\n\t\tdefinition as string,\n\t\tnotes as string,\n\t\tyear as integer,\n\t\tcurrent_flag as integer,\n\t\t{effective date} as string,\n\t\t{deactivation date} as string,\n\t\t{last modified date} as string,\n\t\t{display name} as string,\n\t\t{right_effective date} as string,\n\t\t{right_deactivation date} as string,\n\t\t{right_last modified date} as string,\n\t\t{right_display name} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($sql_query),\n\tformat: 'query') ~> source1\nsource1 derive(sql_query = $sql_query,\n\t\tqc_id = $qc_id) ~> TestQuery\nTestQuery sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as string,\n\t\t{Deactivation Date} as string,\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tpartitionFileNames:['test_loop_sql_out.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1"
+			"script": "parameters{\n\tsql_query as string,\n\tqc_id as integer\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($sql_query),\n\tformat: 'query') ~> QCTable\nQCTable derive(sql_query = $sql_query,\n\t\tqc_id = $qc_id) ~> TestQuery\nTestQuery sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as string,\n\t\t{Deactivation Date} as string,\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tpartitionFileNames:['test_loop_sql_out.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1"
 		}
 	}
 }

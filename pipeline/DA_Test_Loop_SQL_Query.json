@@ -43,18 +43,18 @@
 											"type": "Expression"
 										},
 										"qc_id": {
-											"value": "@item().query_number",
+											"value": "'@{item().query_number}'",
 											"type": "Expression"
 										}
 									},
 									"datasetParameters": {
 										"source1": {
 											"schemaName": {
-												"value": "@item().schema_name",
+												"value": "nucc",
 												"type": "Expression"
 											},
 											"tableName": {
-												"value": "@item().table_name",
+												"value": "nucc_taxonomy",
 												"type": "Expression"
 											}
 										}

@@ -41,6 +41,10 @@
 										"sql_query": {
 											"value": "'@{item().query}'",
 											"type": "Expression"
+										},
+										"qc_id": {
+											"value": "'@{item().query_number}'",
+											"type": "Expression"
 										}
 									}
 								},

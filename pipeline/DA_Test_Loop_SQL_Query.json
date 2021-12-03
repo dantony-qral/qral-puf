@@ -45,6 +45,10 @@
 										"qc_id": {
 											"value": "@item().query_number",
 											"type": "Expression"
+										},
+										"test1": {
+											"value": "'@{pipeline().Pipeline}'",
+											"type": "Expression"
 										}
 									},
 									"datasetParameters": {

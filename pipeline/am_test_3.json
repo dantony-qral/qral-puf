@@ -1,0 +1,43 @@
+{
+	"name": "am_test_3",
+	"properties": {
+		"activities": [
+			{
+				"name": "Validation1",
+				"type": "Validation",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_read_raw_file",
+						"type": "DatasetReference",
+						"parameters": {
+							"containerName": {
+								"value": "@pipeline().parameters.inputfilecontainername",
+								"type": "Expression"
+							},
+							"fileName": {
+								"value": "@pipeline().parameters.inputfilename",
+								"type": "Expression"
+							}
+						}
+					},
+					"timeout": "40",
+					"sleep": 10
+				}
+			}
+		],
+		"parameters": {
+			"inputfilecontainername": {
+				"type": "string"
+			},
+			"inputfilename": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "AM_Test"
+		},
+		"annotations": []
+	}
+}

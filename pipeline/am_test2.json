@@ -75,12 +75,6 @@
 			}
 		],
 		"parameters": {
-			"stageSchemaName": {
-				"type": "string"
-			},
-			"stageTableName": {
-				"type": "string"
-			},
 			"sourceFileContainerName": {
 				"type": "string"
 			},

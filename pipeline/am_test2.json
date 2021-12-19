@@ -74,6 +74,26 @@
 				]
 			}
 		],
+		"parameters": {
+			"stageSchemaName": {
+				"type": "string"
+			},
+			"stageTableName": {
+				"type": "string"
+			},
+			"sourceFileContainerName": {
+				"type": "string"
+			},
+			"sourceFileName": {
+				"type": "string"
+			},
+			"landingTableName": {
+				"type": "string"
+			},
+			"landingSchemaName": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "AM_Test"
 		},

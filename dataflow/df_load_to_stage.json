@@ -9,7 +9,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_azure_sql_dev",
+						"referenceName": "Azure_Qral_Dev_Table",
 						"type": "DatasetReference"
 					},
 					"name": "landingTableSource"

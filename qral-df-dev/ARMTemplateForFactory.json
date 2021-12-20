@@ -80,6 +80,154 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/AM_Execute_DQM')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Readin_QC_List",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": false,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"dataset": {
+								"referenceName": "BLOB_XLS_TEST_SQL_LOOP",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					},
+					{
+						"name": "ForEach_QC_ID",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Readin_QC_List",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Readin_QC_List').output.value",
+								"type": "Expression"
+							},
+							"isSequential": false,
+							"activities": [
+								{
+									"name": "Run_QC_SQL",
+									"type": "ExecuteDataFlow",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataflow": {
+											"referenceName": "AM_TEST_Execute_SQL_Query",
+											"type": "DataFlowReference",
+											"parameters": {
+												"sql_query": {
+													"value": "'@{item().query}'",
+													"type": "Expression"
+												},
+												"qc_id": {
+													"value": "@item().query_number",
+													"type": "Expression"
+												},
+												"pipeline_name": {
+													"value": "'@{pipeline().Pipeline}'",
+													"type": "Expression"
+												},
+												"pkey_column": {
+													"value": "'@{'code'}'",
+													"type": "Expression"
+												},
+												"table_name": {
+													"value": "'@{item().table_name}'",
+													"type": "Expression"
+												}
+											},
+											"datasetParameters": {
+												"QCTable": {
+													"schemaName": {
+														"value": "@item().table_schema",
+														"type": "Expression"
+													},
+													"tableName": {
+														"value": "@item().table_name",
+														"type": "Expression"
+													}
+												},
+												"sink1": {},
+												"sink2": {
+													"schemaName": "nucc",
+													"tableName": "qc_summary"
+												},
+												"sink3": {
+													"schemaName": {
+														"value": "@item().table_schema",
+														"type": "Expression"
+													},
+													"tableName": {
+														"value": "@concat('qc_rejects_',item().table_name)",
+														"type": "Expression"
+													}
+												}
+											}
+										},
+										"staging": {},
+										"integrationRuntime": {
+											"referenceName": "integrationRuntime-TEST2",
+											"type": "IntegrationRuntimeReference"
+										},
+										"traceLevel": "Fine"
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "AM_Test"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-14T17:49:00Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/BLOB_XLS_TEST_SQL_LOOP')]",
+				"[concat(variables('factoryId'), '/dataflows/AM_TEST_Execute_SQL_Query')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-TEST2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DA_Test_Loop_SQL_Query')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -122,7 +270,7 @@
 											"type": "DataFlowReference",
 											"parameters": {
 												"sql_query": {
-													"value": "'@{item().query}'",
+													"value": "@item().query",
 													"type": "Expression"
 												},
 												"qc_id": {
@@ -136,7 +284,8 @@
 												"pkey_column": {
 													"value": "@item().pkey_column",
 													"type": "Expression"
-												}
+												},
+												"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, {$sql_query} GROUP BY {$pkey_column}\""
 											},
 											"datasetParameters": {
 												"QCTable": {
@@ -2075,6 +2224,68 @@
 				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1-Test4-16cores')]",
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Main')]",
 				"[concat(variables('factoryId'), '/dataflows/PUF_DF_2b_Stage_NPPES')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline4')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DA_TEST_Execute_SQL_Query",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DA_TEST_Execute_SQL_Query",
+								"type": "DataFlowReference",
+								"parameters": {
+									"sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, COUNT(*) AS rec_count  FROM [nucc].[nucc_taxonomy] GROUP BY {$pkey_column}\"",
+									"qc_id": "1",
+									"pipeline_name": {
+										"value": "'@{pipeline().Pipeline}'",
+										"type": "Expression"
+									},
+									"pkey_column": "\"code,year\"",
+									"final_sql_query": "$sql_query"
+								},
+								"datasetParameters": {
+									"QCTable": {
+										"schemaName": "nucc",
+										"tableName": "nucc_taxonomy"
+									},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 32,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DA_TEST_Execute_SQL_Query')]"
 			]
 		},
 		{
@@ -9199,6 +9410,67 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AM_TEST_Execute_SQL_Query')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "AM_test"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "QCTable"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "TEST_SQL_LOOP_OUT",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						},
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "sink3"
+						}
+					],
+					"transformations": [
+						{
+							"name": "TestQuery"
+						},
+						{
+							"name": "Aggregate1"
+						},
+						{
+							"name": "AddLoadDate"
+						}
+					],
+					"script": "parameters{\n\tsql_query as string,\n\tqc_id as integer,\n\tpipeline_name as string,\n\tpkey_column as string,\n\ttable_name as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tprocedureName: '',\n\tresultSet: true,\n\tformat: 'procedure') ~> QCTable\nQCTable derive(sql_query = $sql_query,\n\t\tqc_id = $qc_id,\n\t\tpipeline_name = $pipeline_name,\n\t\tpkey_column_values = toString(byName($pkey_column)),\n\t\tload_date = currentDate(),\n\t\ttable_name = $table_name) ~> TestQuery\nTestQuery aggregate(groupBy(qc_id,\n\t\tpipeline_name,\n\t\ttable_name),\n\tcount_of_rows = count(qc_id)) ~> Aggregate1\nAggregate1 derive(load_date = currentDate()) ~> AddLoadDate\nTestQuery sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as string,\n\t\t{Deactivation Date} as string,\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tpartitionFileNames:['test_loop_sql_out.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1\nAddLoadDate sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink2\nTestQuery sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink3"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]",
+				"[concat(variables('factoryId'), '/datasets/TEST_SQL_LOOP_OUT')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DA_TEST_Execute_SQL_Query')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -9231,7 +9503,7 @@
 							"name": "TestQuery"
 						}
 					],
-					"script": "parameters{\n\tsql_query as string,\n\tqc_id as integer,\n\tpipeline_name as string,\n\tpkey_column as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($sql_query),\n\tformat: 'query') ~> QCTable\nQCTable derive(sql_query = $sql_query,\n\t\tqc_id = $qc_id,\n\t\tpipeline_name = $pipeline_name,\n\t\tpkey_column_values = array(byNames([$pkey_column]))) ~> TestQuery\nTestQuery sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as string,\n\t\t{Deactivation Date} as string,\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tpartitionFileNames:['test_loop_sql_out.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1"
+					"script": "parameters{\n\tsql_query as string,\n\tqc_id as integer,\n\tpipeline_name as string,\n\tpkey_column as string,\n\tfinal_sql_query as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($final_sql_query),\n\tformat: 'query') ~> QCTable\nQCTable derive(sql_query = $final_sql_query,\n\t\tqc_id = $qc_id,\n\t\tpipeline_name = $pipeline_name) ~> TestQuery\nTestQuery sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tCode as string,\n\t\tGrouping as string,\n\t\tClassification as string,\n\t\tSpecialization as string,\n\t\tDefinition as string,\n\t\t{Effective Date} as string,\n\t\t{Deactivation Date} as string,\n\t\t{Last Modified Date} as string,\n\t\tNotes as string,\n\t\t{Display Name} as string\n\t),\n\tpartitionFileNames:['test_loop_sql_out.csv'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tpartitionBy('hash', 1)) ~> sink1"
 				}
 			},
 			"dependsOn": [

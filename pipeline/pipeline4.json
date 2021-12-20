@@ -3,11 +3,11 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Readin_QC_List",
-				"type": "Lookup",
+				"name": "DA_TEST_Execute_SQL_Query",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
-					"timeout": "7.00:00:00",
+					"timeout": "1.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
 					"secureOutput": false,
@@ -15,24 +15,41 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "ExcelSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": false,
-							"enablePartitionDiscovery": false
+					"dataflow": {
+						"referenceName": "DA_TEST_Execute_SQL_Query",
+						"type": "DataFlowReference",
+						"parameters": {
+							"sql_query": {
+								"value": "'@{COUNT(*) AS rec_count  FROM [nucc].[nucc_taxonomy] GROUP BY }'",
+								"type": "Expression"
+							},
+							"qc_id": "1",
+							"pipeline_name": {
+								"value": "'@{pipeline().Pipeline}'",
+								"type": "Expression"
+							},
+							"pkey_column": {
+								"value": "'@{code}'",
+								"type": "Expression"
+							}
+						},
+						"datasetParameters": {
+							"QCTable": {
+								"schemaName": "nucc",
+								"tableName": "nucc_taxonomy"
+							}
 						}
 					},
-					"dataset": {
-						"referenceName": "BLOB_XLS_TEST_SQL_LOOP",
-						"type": "DatasetReference"
+					"compute": {
+						"coreCount": 32,
+						"computeType": "General"
 					},
-					"firstRowOnly": false
+					"traceLevel": "Fine"
 				}
 			}
 		],
 		"folder": {
-			"name": "AM_Test"
+			"name": "DA_Test"
 		},
 		"annotations": []
 	}

@@ -97,6 +97,10 @@
 												"value": "@item().table_name",
 												"type": "Expression"
 											}
+										},
+										"sink2": {
+											"schemaName": "nucc",
+											"tableName": "qc_summary"
 										}
 									}
 								},

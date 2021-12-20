@@ -39,7 +39,7 @@
 									"type": "DataFlowReference",
 									"parameters": {
 										"sql_query": {
-											"value": "'@{item().query}'",
+											"value": "@item().query",
 											"type": "Expression"
 										},
 										"qc_id": {
@@ -53,7 +53,8 @@
 										"pkey_column": {
 											"value": "@item().pkey_column",
 											"type": "Expression"
-										}
+										},
+										"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, {$sql_query} GROUP BY {$pkey_column}\""
 									},
 									"datasetParameters": {
 										"QCTable": {

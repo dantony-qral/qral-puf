@@ -65,6 +65,24 @@
 								"dataflow": {
 									"referenceName": "AM_TEST_Execute_SQL_Query",
 									"type": "DataFlowReference",
+									"parameters": {
+										"sql_query": {
+											"value": "'@{item().query}'",
+											"type": "Expression"
+										},
+										"qc_id": {
+											"value": "@item().query_number",
+											"type": "Expression"
+										},
+										"pipeline_name": {
+											"value": "'@{pipeline().Pipeline}'",
+											"type": "Expression"
+										},
+										"pkey_column": {
+											"value": "'@{item().pkey_column}'",
+											"type": "Expression"
+										}
+									},
 									"datasetParameters": {
 										"QCTable": {
 											"schemaName": {

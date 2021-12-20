@@ -23,6 +23,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Qral_PUF_PROD'"
 		},
+		"Azure_Qral_Dev_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure_Qral_Dev'"
+		},
+		"Azure_Qral_Dev_servicePrincipalKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalKey' of 'Azure_Qral_Dev'"
+		},
 		"Qral_PUF_DEV_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "qral-dev.cakklrvslequ.us-east-1.redshift.amazonaws.com"
@@ -57,40 +65,20 @@
 		},
 		"integrationRuntime-TEST_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
 			"type": "secureString"
+		},
+		"Azure_Qral_Dev_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "aaf9a90a-09e5-443d-876a-1fe452a2ece3"
+		},
+		"Azure_Qral_Dev_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "4f3ec667-1d15-4cdb-9cf1-e91ccd39101d"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/Am_Test_Pipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Wait1",
-						"type": "Wait",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"waitTimeInSeconds": 10
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "AM_Test"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-10-29T14:46:02Z"
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/QralStorageDev_Blob')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -2092,6 +2080,31 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Qral_PUF_PROD')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Azure_Qral_Dev')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('Azure_Qral_Dev_connectionString')]",
+					"servicePrincipalId": "[parameters('Azure_Qral_Dev_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalKey": {
+						"type": "SecureString",
+						"value": "[parameters('Azure_Qral_Dev_servicePrincipalKey')]"
+					},
+					"tenant": "[parameters('Azure_Qral_Dev_properties_typeProperties_tenant')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1-Test4-16cores",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1-Test4-16cores')]"
 			]
 		}
 	]

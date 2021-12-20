@@ -131,7 +131,7 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": {
-							"value": "@{concat('delete from', pipeline().parameters.landingSchemaName, '.',\r\n pipeline().parameters.landingSchemaName)}",
+							"value": "@{concat('delete from ', pipeline().parameters.landingSchemaName, '.',\n pipeline().parameters.landingTableName)}",
 							"type": "Expression"
 						},
 						"disableMetricsCollection": false

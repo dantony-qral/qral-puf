@@ -25,10 +25,7 @@
 								"value": "'@{pipeline().Pipeline}'",
 								"type": "Expression"
 							},
-							"pkey_column": {
-								"value": "'code','data_month'",
-								"type": "Expression"
-							}
+							"pkey_column": "\"code,year\""
 						},
 						"datasetParameters": {
 							"QCTable": {

@@ -51,7 +51,7 @@
 											"type": "Expression"
 										},
 										"pkey_column": {
-											"value": "array(byNames('code','rec_count'))",
+											"value": "concat(code)",
 											"type": "Expression"
 										}
 									},

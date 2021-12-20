@@ -50,10 +50,7 @@
 											"value": "'@{pipeline().Pipeline}'",
 											"type": "Expression"
 										},
-										"pkey_column": {
-											"value": "'@{\"{code}\"}'",
-											"type": "Expression"
-										}
+										"pkey_column": "\"{code}\""
 									},
 									"datasetParameters": {
 										"QCTable": {

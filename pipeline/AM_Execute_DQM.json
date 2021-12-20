@@ -101,6 +101,16 @@
 										"sink2": {
 											"schemaName": "nucc",
 											"tableName": "qc_summary"
+										},
+										"sink3": {
+											"schemaName": {
+												"value": "@item().table_schema",
+												"type": "Expression"
+											},
+											"tableName": {
+												"value": "@concat('qc_rejects_',item().table_name)",
+												"type": "Expression"
+											}
 										}
 									}
 								},

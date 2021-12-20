@@ -619,10 +619,7 @@
 													"value": "'@{pipeline().Pipeline}'",
 													"type": "Expression"
 												},
-												"pkey_column": {
-													"value": "'@{item().pkey_column}'",
-													"type": "Expression"
-												}
+												"pkey_column": "'code'"
 											},
 											"datasetParameters": {
 												"QCTable": {

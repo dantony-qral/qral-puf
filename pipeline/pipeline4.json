@@ -19,7 +19,7 @@
 						"referenceName": "DA_TEST_Execute_SQL_Query",
 						"type": "DataFlowReference",
 						"parameters": {
-							"sql_query": "\"SELECT {$pkey_column} as pkey_column_values, COUNT(*) AS rec_count  FROM [nucc].[nucc_taxonomy]\"",
+							"sql_query": "\"SELECT {$pkey_column} as pkey_column_values, COUNT(*) AS rec_count  FROM [nucc].[nucc_taxonomy] GROUP BY {$pkey_column}\"",
 							"qc_id": "1",
 							"pipeline_name": {
 								"value": "'@{pipeline().Pipeline}'",

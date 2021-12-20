@@ -129,7 +129,12 @@
 						}
 					},
 					"sink": {
-						"type": "AzureSqlSink"
+						"type": "AzureSqlSink",
+						"preCopyScript": {
+							"value": "@{concat('delete from', pipeline().parameters.landingSchemaName, '.',\r\n pipeline().parameters.landingSchemaName)}",
+							"type": "Expression"
+						},
+						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
 					"translator": {

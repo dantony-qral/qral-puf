@@ -25,7 +25,8 @@
 								"value": "'@{pipeline().Pipeline}'",
 								"type": "Expression"
 							},
-							"pkey_column": "\"code,year\""
+							"pkey_column": "\"code,year\"",
+							"final_sql_query": "$sql_query"
 						},
 						"datasetParameters": {
 							"QCTable": {

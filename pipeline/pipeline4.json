@@ -19,19 +19,13 @@
 						"referenceName": "DA_TEST_Execute_SQL_Query",
 						"type": "DataFlowReference",
 						"parameters": {
-							"sql_query": {
-								"value": "SELECT COUNT(*) AS rec_count  FROM [nucc].[nucc_taxonomy]",
-								"type": "Expression"
-							},
+							"sql_query": "\"SELECT COUNT(*) AS rec_count  FROM [nucc].[nucc_taxonomy]\"",
 							"qc_id": "1",
 							"pipeline_name": {
 								"value": "'@{pipeline().Pipeline}'",
 								"type": "Expression"
 							},
-							"pkey_column": {
-								"value": "code",
-								"type": "Expression"
-							}
+							"pkey_column": "'code'"
 						},
 						"datasetParameters": {
 							"QCTable": {

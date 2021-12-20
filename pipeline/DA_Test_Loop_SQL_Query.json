@@ -49,6 +49,10 @@
 										"pipeline_name": {
 											"value": "'@{pipeline().Pipeline}'",
 											"type": "Expression"
+										},
+										"pkey_column": {
+											"value": "'@{item().pkey_column}'",
+											"type": "Expression"
 										}
 									},
 									"datasetParameters": {

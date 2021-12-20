@@ -79,7 +79,7 @@
 											"type": "Expression"
 										},
 										"pkey_column": {
-											"value": "'@{item().pkey_column}'",
+											"value": "'@{'code'}'",
 											"type": "Expression"
 										}
 									},

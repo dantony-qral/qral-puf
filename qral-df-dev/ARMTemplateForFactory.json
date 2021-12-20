@@ -134,7 +134,7 @@
 													"type": "Expression"
 												},
 												"pkey_column": {
-													"value": "'@{'code'}'",
+													"value": "@item().pkey_column",
 													"type": "Expression"
 												}
 											},
@@ -2109,12 +2109,12 @@
 								"parameters": {},
 								"datasetParameters": {
 									"landingTableSource": {
-										"tableName": {
-											"value": "@pipeline().parameters.landingTableName",
-											"type": "Expression"
-										},
 										"schemaName": {
 											"value": "@pipeline().parameters.landingSchemaName",
+											"type": "Expression"
+										},
+										"tableName": {
+											"value": "@pipeline().parameters.landingTableName",
 											"type": "Expression"
 										}
 									},
@@ -2205,7 +2205,6 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
-									"wildcardFileName": "*",
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -2213,97 +2212,16 @@
 								}
 							},
 							"sink": {
-								"type": "AzureSqlSink"
+								"type": "AzureSqlSink",
+								"preCopyScript": {
+									"value": "@{concat('delete from ', pipeline().parameters.landingSchemaName, '.',\n pipeline().parameters.landingTableName)}",
+									"type": "Expression"
+								},
+								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
 							"translator": {
 								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "ZipCode",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "zipcode",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "City",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "city",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "State",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "state",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Latitude",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "latitude",
-											"type": "Single",
-											"physicalType": "real"
-										}
-									},
-									{
-										"source": {
-											"name": "Longitude",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "longitude",
-											"type": "Single",
-											"physicalType": "real"
-										}
-									},
-									{
-										"source": {
-											"name": "Classification",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "classification",
-											"type": "String",
-											"physicalType": "varchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Population",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "population",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									}
-								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -10240,7 +10158,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_azure_sql_dev",
+								"referenceName": "Azure_Qral_Dev_Table",
 								"type": "DatasetReference"
 							},
 							"name": "landingTableSource"
@@ -10264,6 +10182,7 @@
 				}
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]",
 				"[concat(variables('factoryId'), '/datasets/ds_azure_sql_dev')]"
 			]
 		}

@@ -20,7 +20,7 @@
 						"type": "DataFlowReference",
 						"parameters": {
 							"sql_query": {
-								"value": "COUNT(*) AS rec_count  FROM [nucc].[nucc_taxonomy] GROUP BY ",
+								"value": "SELECT COUNT(*) AS rec_count  FROM [nucc].[nucc_taxonomy]",
 								"type": "Expression"
 							},
 							"qc_id": "1",

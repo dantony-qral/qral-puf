@@ -11,10 +11,9 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "Test_Loop_SQL.xlsx",
+				"fileName": "Test_Loop_SQL_AM.xlsx",
 				"container": "nucc"
 			},
 			"firstRowAsHeader": true

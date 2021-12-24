@@ -24,7 +24,7 @@
 						}
 					},
 					"dataset": {
-						"referenceName": "BLOB_XLS_TEST_SQL_LOOP",
+						"referenceName": "BLOB_XLS_TEST_SQL_LOOP_AM",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false

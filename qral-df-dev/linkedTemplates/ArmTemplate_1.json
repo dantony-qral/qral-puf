@@ -6,12 +6,51 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "qral-df-dev"
+		},
+		"Azure_Qral_Dev_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure_Qral_Dev'"
+		},
+		"Azure_Qral_Dev_servicePrincipalKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'servicePrincipalKey' of 'Azure_Qral_Dev'"
+		},
+		"Azure_Qral_Dev_properties_typeProperties_servicePrincipalId": {
+			"type": "string",
+			"defaultValue": "aaf9a90a-09e5-443d-876a-1fe452a2ece3"
+		},
+		"Azure_Qral_Dev_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "4f3ec667-1d15-4cdb-9cf1-e91ccd39101d"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Azure_Qral_Dev')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('Azure_Qral_Dev_connectionString')]",
+					"servicePrincipalId": "[parameters('Azure_Qral_Dev_properties_typeProperties_servicePrincipalId')]",
+					"servicePrincipalKey": {
+						"type": "SecureString",
+						"value": "[parameters('Azure_Qral_Dev_servicePrincipalKey')]"
+					},
+					"tenant": "[parameters('Azure_Qral_Dev_properties_typeProperties_tenant')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1-Test4-16cores",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/0_ld_nucc_taxonomy_year')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -40,7 +79,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Azure_Qral_Dev_Table')]",
@@ -76,7 +117,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_0_raw_cms_nppes')]",
@@ -1423,7 +1466,9 @@
 					"table": "0_raw_cms_nppes"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_0_raw_country_correction')]",
@@ -1482,7 +1527,9 @@
 					"table": "0_raw_country_correction"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_0_raw_state_correction')]",
@@ -1537,7 +1584,9 @@
 					"table": "0_raw_state_correction"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_1_LD_cms_nppes_provider_taxonomy')]",
@@ -1881,7 +1930,9 @@
 					"table": "1_ld_cms_nppes_provider_taxonomy"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_1_ld_cms_nppes')]",
@@ -2193,7 +2244,9 @@
 					"table": "1_ld_cms_nppes"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_1_ld_cms_nppes_other_provider_identifiers')]",
@@ -3037,7 +3090,9 @@
 					"table": "1_ld_cms_nppes_other_provider_identifiers"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_2_st_cms_nppes_main')]",
@@ -3321,7 +3376,9 @@
 					"table": "2_st_cms_nppes_main"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_2a_st_cms_nppes_other_provider_identifier')]",
@@ -3385,7 +3442,9 @@
 					"table": "2a_st_cms_nppes_other_provider_identifiers"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_2a_st_cms_nppes_provider_taxonomy')]",
@@ -3457,7 +3516,9 @@
 					"table": "2a_st_cms_nppes_provider_taxonomy"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_2b_st_cms_nppes_other_provider_identifier')]",
@@ -3521,7 +3582,9 @@
 					"table": "2b_st_cms_nppes_other_provider_identifiers"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_2b_st_cms_nppes_provider_taxonomy')]",
@@ -3601,7 +3664,9 @@
 					"table": "2b_st_cms_nppes_provider_taxonomy"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_main')]",
@@ -3885,7 +3950,9 @@
 					"table": "3_st_cms_nppes_main"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_other_provider_id')]",
@@ -3949,7 +4016,9 @@
 					"table": "3_st_cms_nppes_other_provider_identifiers"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_provider_taxonomy')]",
@@ -4029,7 +4098,9 @@
 					"table": "3_st_cms_nppes_provider_taxonomy"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_MAIN')]",
@@ -4313,7 +4384,9 @@
 					"table": "nppes_main"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_OTHER_PROVIDER_ID')]",
@@ -4377,7 +4450,9 @@
 					"table": "nppes_other_provider_identifiers"
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY')]",
@@ -4457,96 +4532,9 @@
 					"table": "nppes_provider_taxonomy"
 				}
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NUCC_TAXONOMY')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/PUF_PROD"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "code",
-						"type": "varchar"
-					},
-					{
-						"name": "grouping",
-						"type": "varchar"
-					},
-					{
-						"name": "classification",
-						"type": "varchar"
-					},
-					{
-						"name": "specialization",
-						"type": "varchar"
-					},
-					{
-						"name": "definition",
-						"type": "varchar"
-					},
-					{
-						"name": "notes",
-						"type": "varchar"
-					},
-					{
-						"name": "year",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "current_flag",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "effective date",
-						"type": "varchar"
-					},
-					{
-						"name": "deactivation date",
-						"type": "varchar"
-					},
-					{
-						"name": "last modified date",
-						"type": "varchar"
-					},
-					{
-						"name": "display name",
-						"type": "varchar"
-					},
-					{
-						"name": "right_effective date",
-						"type": "varchar"
-					},
-					{
-						"name": "right_deactivation date",
-						"type": "varchar"
-					},
-					{
-						"name": "right_last modified date",
-						"type": "varchar"
-					},
-					{
-						"name": "right_display name",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "nucc",
-					"table": "nucc_taxonomy"
-				}
-			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
 		}
 	]
 }

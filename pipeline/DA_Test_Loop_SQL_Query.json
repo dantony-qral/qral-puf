@@ -55,7 +55,7 @@
 											"type": "Expression"
 										},
 										"final_sql_query": {
-											"value": "'@{concat('select ',item().pkey_column, 'as pkey_column_values ',\r\nitem().query)}'",
+											"value": "'@{concat('select ',item().pkey_column, ' as pkey_column_values ',\nitem().query)}'",
 											"type": "Expression"
 										}
 									},

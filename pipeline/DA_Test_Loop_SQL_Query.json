@@ -39,7 +39,7 @@
 									"type": "DataFlowReference",
 									"parameters": {
 										"sql_query": {
-											"value": "'@{item().query}'",
+											"value": "'@{concat('''',item().query,'''')}'",
 											"type": "Expression"
 										},
 										"qc_id": {

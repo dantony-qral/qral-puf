@@ -24,7 +24,14 @@
 						{
 							"name": "Run_QC_SQL",
 							"type": "ExecuteDataFlow",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "7.00:00:00",
 								"retry": 0,
@@ -55,7 +62,7 @@
 											"type": "Expression"
 										},
 										"final_sql_query": {
-											"value": "'@{concat('select ',item().pkey_column, ' as pkey_column_values ',\nitem().query)}'",
+											"value": "'@{concat('select concat(',item().pkey_column,') as pkey_column_values ',\nitem().query)}'",
 											"type": "Expression"
 										}
 									},
@@ -77,6 +84,19 @@
 									"type": "IntegrationRuntimeReference"
 								},
 								"traceLevel": "Fine"
+							}
+						},
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "test_variable",
+								"value": {
+									"value": "@concat('select concat(',item().pkey_column,') as pkey_column_values ',\nitem().query)",
+									"type": "Expression"
+								}
 							}
 						}
 					]
@@ -111,6 +131,11 @@
 				}
 			}
 		],
+		"variables": {
+			"test_variable": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "DA_Test"
 		},

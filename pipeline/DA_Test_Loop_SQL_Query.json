@@ -98,6 +98,26 @@
 									"type": "Expression"
 								}
 							}
+						},
+						{
+							"name": "Set variable1_copy1",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "Run_QC_SQL",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "test_variable",
+								"value": {
+									"value": "@concat('select concat(',item().pkey_column,') as pkey_column_values ',\nitem().query)",
+									"type": "Expression"
+								}
+							}
 						}
 					]
 				}

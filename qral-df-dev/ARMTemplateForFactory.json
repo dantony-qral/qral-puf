@@ -285,7 +285,7 @@
 													"value": "'@{item().pkey_column}'",
 													"type": "Expression"
 												},
-												"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values {$sql_query}\""
+												"final_sql_query": "\"SELECT COUNT(*) AS rec_count  FROM [nucc].[nucc_taxonomy] WHERE year=2017 GROUP BY code, year\""
 											},
 											"datasetParameters": {
 												"QCTable": {

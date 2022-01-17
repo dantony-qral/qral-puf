@@ -8691,6 +8691,58 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/QC_Exception_Detail')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/DQM"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "qc_id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "pipeline_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pipeline_run_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pipeline_trigger_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "pkey_column_values",
+						"type": "nvarchar"
+					},
+					{
+						"name": "column_metric_error_values",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dqm",
+					"table": "qc_exception_detail"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/QRAL_AZURE_SQL_DEV')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -10448,58 +10500,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]",
 				"[concat(variables('factoryId'), '/datasets/ds_azure_sql_dev')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/QC_Exception_Detail')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/AzureSQL"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "qc_id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "pipeline_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pipeline_run_id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pipeline_trigger_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "pkey_column_values",
-						"type": "nvarchar"
-					},
-					{
-						"name": "column_metric_error_values",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dqm",
-					"table": "qc_exception_detail"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
 			]
 		}
 	]

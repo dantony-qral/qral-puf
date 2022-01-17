@@ -62,6 +62,14 @@
 										"alert_type": {
 											"value": "'@{item().alert_type}'",
 											"type": "Expression"
+										},
+										"pipeline_run_id": {
+											"value": "'@{pipeline().RunId}'",
+											"type": "Expression"
+										},
+										"pipeline_trigger_time": {
+											"value": "'@{pipeline().TriggerTime}'",
+											"type": "Expression"
 										}
 									},
 									"datasetParameters": {

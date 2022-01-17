@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "QRAL_AZURE_PUF/AzureSQL"
+			"name": "QRAL_AZURE_PUF/DQM"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",

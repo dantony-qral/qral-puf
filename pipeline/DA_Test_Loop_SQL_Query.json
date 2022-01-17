@@ -54,7 +54,7 @@
 											"value": "'@{item().pkey_column}'",
 											"type": "Expression"
 										},
-										"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values {$sql_query}\"",
+										"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
 										"column_metric_name": {
 											"value": "'@{item().column_metric_name}'",
 											"type": "Expression"

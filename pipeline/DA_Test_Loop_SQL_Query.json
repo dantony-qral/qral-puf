@@ -60,7 +60,7 @@
 											"type": "Expression"
 										},
 										"alert_type": {
-											"value": "'@{item().alert_type}'",
+											"value": "'@{item().alert_code}'",
 											"type": "Expression"
 										},
 										"pipeline_run_id": {

@@ -1,0 +1,47 @@
+{
+	"name": "QC_Exception_Detail",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/AzureSQL"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "qc_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "pipeline_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pipeline_run_id",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pipeline_trigger_time",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "pkey_column_values",
+				"type": "nvarchar"
+			},
+			{
+				"name": "column_metric_error_values",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dqm",
+			"table": "qc_exception_detail"
+		}
+	}
+}

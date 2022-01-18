@@ -16,7 +16,8 @@
 				"type": "AzureBlobStorageLocation",
 				"fileName": "Test_Loop_SQL.xlsx",
 				"container": "nucc"
-			}
+			},
+			"firstRowAsHeader": true
 		},
 		"schema": [
 			{

@@ -1,0 +1,54 @@
+{
+	"name": "PUF_BLOB_XLSX_DQM_QC_List",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "QralStorageDev_Blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/DQM"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "qc_list",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Test_Loop_SQL.xlsx",
+				"container": "nucc"
+			}
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}

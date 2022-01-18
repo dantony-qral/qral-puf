@@ -1,5 +1,5 @@
 {
-	"name": "QC_Exception_Detail",
+	"name": "PUF_QC_Exception_Detail",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Azure_Qral_Dev",

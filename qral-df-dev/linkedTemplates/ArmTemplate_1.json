@@ -52,6 +52,104 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_BLOB_XLSX_DQM_QC_Tables')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "QralStorageDev_Blob",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/DQM"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "qc_tables",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Test_Loop_SQL.xlsx",
+						"container": "nucc"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "table_schema",
+						"type": "String"
+					},
+					{
+						"name": "table_name",
+						"type": "String"
+					},
+					{
+						"name": "pkey_column_names",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_BLOB_XLSX_DQM_QC_List')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "QralStorageDev_Blob",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/DQM"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "qc_list",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Test_Loop_SQL.xlsx",
+						"container": "nucc"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/0_ld_nucc_taxonomy_year')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -4382,154 +4480,6 @@
 				"typeProperties": {
 					"schema": "cms",
 					"table": "nppes_main"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_OTHER_PROVIDER_ID')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/PUF_PROD"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "current_flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "data_month",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "npi",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "active flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier_type_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier_state",
-						"type": "nvarchar"
-					},
-					{
-						"name": "other_provider_identifier_issuer",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "cms",
-					"table": "nppes_other_provider_identifiers"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/PUF_PROD"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "current_flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "data_month",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "npi",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "active flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare_provider_taxonomy_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "taxonomy_grouping",
-						"type": "nvarchar"
-					},
-					{
-						"name": "taxonomy_classification",
-						"type": "nvarchar"
-					},
-					{
-						"name": "taxonomy_specialization",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider_license_number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "provider_license_number_state_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare_provider_primary_taxonomy_switch",
-						"type": "nvarchar"
-					},
-					{
-						"name": "healthcare_provider_group_taxonomy",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "cms",
-					"table": "nppes_provider_taxonomy"
 				}
 			},
 			"dependsOn": [

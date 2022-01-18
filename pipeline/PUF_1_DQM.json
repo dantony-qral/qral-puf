@@ -39,11 +39,11 @@
 									"type": "DataFlowReference",
 									"parameters": {
 										"sql_query": {
-											"value": "'@{item().query}'",
+											"value": "'@{item().sql_query}'",
 											"type": "Expression"
 										},
 										"qc_id": {
-											"value": "@item().query_number",
+											"value": "@item().qc_id",
 											"type": "Expression"
 										},
 										"pipeline_name": {
@@ -51,7 +51,7 @@
 											"type": "Expression"
 										},
 										"pkey_column": {
-											"value": "'@{item().pkey_column}'",
+											"value": "'@{item().pkey_column_names}'",
 											"type": "Expression"
 										},
 										"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",

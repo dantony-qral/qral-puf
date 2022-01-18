@@ -1,9 +1,9 @@
 {
-	"name": "PUF_0_Readin_DQM_QC_Tables",
+	"name": "PUF_0_Readin_DQM_QC_Tables_List",
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Readin_Raw_QC_Tables",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -23,11 +23,79 @@
 							"enablePartitionDiscovery": false
 						}
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "DELETE * FROM dqm.qc_tables",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
-						"referenceName": "BLOB_XLS_TEST_SQL_LOOP",
+						"referenceName": "PUF_BLOB_XLSX_DQM_QC_Tables",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "PUF_QC_Tables",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Readin_Raw_QC_List",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "DELETE FROM DQM.QC_LIST",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PUF_BLOB_XLSX_DQM_QC_List",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "PUF_QC_List",
 						"type": "DatasetReference"
 					}
 				]

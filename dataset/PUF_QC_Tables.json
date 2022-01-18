@@ -1,0 +1,32 @@
+{
+	"name": "PUF_QC_Tables",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/DQM"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "table_schema",
+				"type": "nvarchar"
+			},
+			{
+				"name": "table_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "pkey_column_names",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dqm",
+			"table": "qc_tables"
+		}
+	}
+}

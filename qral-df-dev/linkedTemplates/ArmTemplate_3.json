@@ -1270,6 +1270,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
+								"preCopyScript": "DELETE FROM DQM.QC_TABLES;",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -1320,6 +1321,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
+								"preCopyScript": "DELETE FROM DQM.QC_LIST;",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,

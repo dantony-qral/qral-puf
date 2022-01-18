@@ -18,7 +18,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "QC_Exception_Detail",
+						"referenceName": "PUF_QC_Exception_Detail",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"

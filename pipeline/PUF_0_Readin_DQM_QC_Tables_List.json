@@ -81,8 +81,9 @@
 						"mappings": [
 							{
 								"source": {
+									"name": "qc_id",
 									"type": "String",
-									"ordinal": 1
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "qc_id",
@@ -92,8 +93,9 @@
 							},
 							{
 								"source": {
+									"name": "pipeline_name",
 									"type": "String",
-									"ordinal": 2
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "pipeline_name",
@@ -103,8 +105,9 @@
 							},
 							{
 								"source": {
+									"name": "table_schema",
 									"type": "String",
-									"ordinal": 3
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "table_schema",
@@ -114,8 +117,9 @@
 							},
 							{
 								"source": {
+									"name": "table_name",
 									"type": "String",
-									"ordinal": 4
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "table_name",
@@ -125,8 +129,9 @@
 							},
 							{
 								"source": {
+									"name": "column_metric_name",
 									"type": "String",
-									"ordinal": 5
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "column_metric_name",
@@ -136,8 +141,9 @@
 							},
 							{
 								"source": {
+									"name": "sql_query",
 									"type": "String",
-									"ordinal": 6
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "sql_query",
@@ -147,8 +153,9 @@
 							},
 							{
 								"source": {
+									"name": "qc_type_code",
 									"type": "String",
-									"ordinal": 7
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "qc_type_code",
@@ -158,8 +165,9 @@
 							},
 							{
 								"source": {
+									"name": "alert_code",
 									"type": "String",
-									"ordinal": 8
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "alert_code",
@@ -169,8 +177,9 @@
 							},
 							{
 								"source": {
+									"name": "active_flag",
 									"type": "String",
-									"ordinal": 9
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "active_flag",
@@ -180,8 +189,9 @@
 							},
 							{
 								"source": {
+									"name": "notes",
 									"type": "String",
-									"ordinal": 10
+									"physicalType": "String"
 								},
 								"sink": {
 									"name": "notes",

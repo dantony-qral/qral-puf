@@ -1,5 +1,5 @@
 {
-	"name": "PUF_V_QC_LIist",
+	"name": "PUF_V_QC_List",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Azure_Qral_Dev",

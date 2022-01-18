@@ -1,0 +1,61 @@
+{
+	"name": "PUF_QC_List",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/DQM"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "qc_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "pipeline_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "table_schema",
+				"type": "nvarchar"
+			},
+			{
+				"name": "table_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "column_metric_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sql_query",
+				"type": "nvarchar"
+			},
+			{
+				"name": "qc_type_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "alert_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "active_flag",
+				"type": "nvarchar"
+			},
+			{
+				"name": "notes",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dqm",
+			"table": "qc_list"
+		}
+	}
+}

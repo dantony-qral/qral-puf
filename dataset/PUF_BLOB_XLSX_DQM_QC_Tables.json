@@ -1,0 +1,37 @@
+{
+	"name": "PUF_BLOB_XLSX_DQM_QC_Tables",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "QralStorageDev_Blob",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/DQM"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "qc_tables",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Test_Loop_SQL.xlsx",
+				"container": "nucc"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "table_schema",
+				"type": "String"
+			},
+			{
+				"name": "table_name",
+				"type": "String"
+			},
+			{
+				"name": "pkey_column_names",
+				"type": "String"
+			}
+		]
+	}
+}

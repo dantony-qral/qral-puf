@@ -22,11 +22,11 @@
 					"isSequential": false,
 					"activities": [
 						{
-							"name": "Run_QC_SQL",
+							"name": "RUN_QC_SQL_AM",
 							"type": "ExecuteDataFlow",
 							"dependsOn": [],
 							"policy": {
-								"timeout": "7.00:00:00",
+								"timeout": "1.00:00:00",
 								"retry": 0,
 								"retryIntervalInSeconds": 30,
 								"secureOutput": false,
@@ -35,7 +35,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataflow": {
-									"referenceName": "DA_TEST_Execute_SQL_Query",
+									"referenceName": "RUN_QC_SQL_AM",
 									"type": "DataFlowReference",
 									"parameters": {
 										"sql_query": {
@@ -54,40 +54,12 @@
 											"value": "'@{item().pkey_column_names}'",
 											"type": "Expression"
 										},
-										"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
-										"column_metric_name": {
-											"value": "'@{item().column_metric_name}'",
-											"type": "Expression"
-										},
-										"alert_type": {
-											"value": "'@{item().alert_code}'",
-											"type": "Expression"
-										},
-										"pipeline_run_id": {
-											"value": "'@{pipeline().RunId}'",
-											"type": "Expression"
-										},
-										"pipeline_trigger_time": {
-											"value": "'@{pipeline().TriggerTime}'",
-											"type": "Expression"
-										}
-									},
-									"datasetParameters": {
-										"QCTable": {
-											"schemaName": {
-												"value": "@item().table_schema",
-												"type": "Expression"
-											},
-											"tableName": {
-												"value": "@item().table_name",
-												"type": "Expression"
-											}
-										}
+										"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\""
 									}
 								},
-								"integrationRuntime": {
-									"referenceName": "integrationRuntime-TEST2",
-									"type": "IntegrationRuntimeReference"
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
 								},
 								"traceLevel": "Fine"
 							}

@@ -16,7 +16,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "Azure_Qral_Dev_Table",
+						"referenceName": "dqm_exception_detail",
 						"type": "DatasetReference"
 					},
 					"name": "source2"
@@ -32,7 +32,7 @@
 				}
 			],
 			"transformations": [],
-			"script": "parameters{\n\texception_detail_schema_name as string,\n\texception_detail_table_name as string,\n\tl_table_name as string,\n\tl_schema_name as string,\n\ts_schema_name as string,\n\ts_table_name as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source2\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+			"script": "parameters{\n\texception_detail_schema_name as string,\n\texception_detail_table_name as string,\n\tl_table_name as string,\n\tl_schema_name as string,\n\ts_schema_name as string,\n\ts_table_name as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource(output(\n\t\tqc_id as integer,\n\t\tpipeline_name as string,\n\t\tpipeline_run_id as string,\n\t\tpipeline_trigger_time as timestamp,\n\t\tpkey_column_values as string,\n\t\tcolumn_metric_error_values as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source2\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }

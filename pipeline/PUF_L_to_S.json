@@ -18,12 +18,6 @@
 					"dataflow": {
 						"referenceName": "Copy_L_to_S",
 						"type": "DataFlowReference",
-						"parameters": {
-							"l_table_name": "'nucc_taxonomy'",
-							"l_schema_name": "'nucc'",
-							"s_schema_name": "'nucc'",
-							"s_table_name": "'s_nucc_taxonomy'"
-						},
 						"datasetParameters": {
 							"source1": {
 								"schemaName": "nucc",

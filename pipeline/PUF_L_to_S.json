@@ -19,8 +19,6 @@
 						"referenceName": "Copy_L_to_S",
 						"type": "DataFlowReference",
 						"parameters": {
-							"exception_detail_schema_name": "'qc_exception_detail'",
-							"exception_detail_table_name": "'dqm'",
 							"l_table_name": "'nucc_taxonomy'",
 							"l_schema_name": "'nucc'",
 							"s_schema_name": "'nucc'",
@@ -30,10 +28,6 @@
 							"source1": {
 								"schemaName": "nucc",
 								"tableName": "nucc_taxonomy"
-							},
-							"source2": {
-								"schemaName": "dqm",
-								"tableName": "qc_exception_detail"
 							},
 							"sink1": {
 								"schemaName": "nucc",

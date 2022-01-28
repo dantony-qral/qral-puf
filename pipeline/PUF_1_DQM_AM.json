@@ -54,7 +54,19 @@
 											"value": "'@{item().pkey_column_names}'",
 											"type": "Expression"
 										},
-										"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\""
+										"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
+										"column_metric_name": {
+											"value": "'@{item().column_metric_name}'",
+											"type": "Expression"
+										},
+										"alert_type": {
+											"value": "'@{item().alert_code}'",
+											"type": "Expression"
+										},
+										"pipeline_run_id": {
+											"value": "'@{pipeline().RunId}'",
+											"type": "Expression"
+										}
 									}
 								},
 								"compute": {

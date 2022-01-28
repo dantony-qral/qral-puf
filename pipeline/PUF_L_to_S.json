@@ -31,6 +31,10 @@
 								"schemaName": "nucc",
 								"tableName": "nucc_taxonomy"
 							},
+							"source2": {
+								"schemaName": "dqm",
+								"tableName": "qc_exception_detail"
+							},
 							"sink1": {
 								"schemaName": "nucc",
 								"tableName": "s_nucc_taxonomy"

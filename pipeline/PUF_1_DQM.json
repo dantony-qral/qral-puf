@@ -68,7 +68,7 @@
 											"type": "Expression"
 										},
 										"pipeline_trigger_time": {
-											"value": "'@{pipeline().TriggerTime}'",
+											"value": "'@{convertFromUtc(pipeline().TriggerTime,'Central Standard Time', 'yyyy-MM-dd HH:mm:ss.fff')}'",
 											"type": "Expression"
 										}
 									},

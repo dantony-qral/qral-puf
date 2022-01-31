@@ -1167,7 +1167,7 @@
 													"type": "Expression"
 												},
 												"pipeline_trigger_time": {
-													"value": "'@{convertFromUtc(pipeline().TriggerTime,'New Zealand Standard Time', 'yyyy-MM-dd HH:mm:ss.fff')}'",
+													"value": "'@{convertFromUtc(pipeline().TriggerTime,'Eastern Standard Time', 'yyyy-MM-dd HH:mm:ss.fff')}'",
 													"type": "Expression"
 												}
 											},

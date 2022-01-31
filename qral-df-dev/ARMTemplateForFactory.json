@@ -484,6 +484,253 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_DQM_QC_Tables_List')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Readin_Raw_QC_Tables",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "DELETE FROM DQM.QC_TABLES;",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PUF_BLOB_XLSX_DQM_QC_Tables",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "PUF_QC_Tables",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Readin_Raw_QC_List",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "DELETE FROM DQM.QC_LIST;",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "qc_id",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "qc_id",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "pipeline_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "pipeline_name",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "table_schema",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "table_schema",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "table_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "table_name",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "column_metric_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "column_metric_name",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "sql_query",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "sql_query",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "qc_type_code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "qc_type_code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "alert_code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "alert_code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "active_flag",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "active_flag",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "notes",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "notes",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PUF_BLOB_XLSX_DQM_QC_List",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "PUF_QC_List",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PUF_BLOB_XLSX_DQM_QC_Tables')]",
+				"[concat(variables('factoryId'), '/datasets/PUF_QC_Tables')]",
+				"[concat(variables('factoryId'), '/datasets/PUF_BLOB_XLSX_DQM_QC_List')]",
+				"[concat(variables('factoryId'), '/datasets/PUF_QC_List')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_Raw')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -846,6 +1093,350 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PUF_FS_XLSX_State_Correction')]",
 				"[concat(variables('factoryId'), '/datasets/QRAL_AZURE_SQL_DEV')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_1_DQM')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach_QC_ID",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Readin_QC_List",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Readin_QC_List').output.value",
+								"type": "Expression"
+							},
+							"isSequential": false,
+							"activities": [
+								{
+									"name": "Run_QC_SQL",
+									"type": "ExecuteDataFlow",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataflow": {
+											"referenceName": "DA_TEST_Execute_SQL_Query",
+											"type": "DataFlowReference",
+											"parameters": {
+												"sql_query": {
+													"value": "'@{item().sql_query}'",
+													"type": "Expression"
+												},
+												"qc_id": {
+													"value": "@item().qc_id",
+													"type": "Expression"
+												},
+												"pipeline_name": {
+													"value": "'@{pipeline().Pipeline}'",
+													"type": "Expression"
+												},
+												"pkey_column": {
+													"value": "'@{item().pkey_column_names}'",
+													"type": "Expression"
+												},
+												"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
+												"column_metric_name": {
+													"value": "'@{item().column_metric_name}'",
+													"type": "Expression"
+												},
+												"alert_type": {
+													"value": "'@{item().alert_code}'",
+													"type": "Expression"
+												},
+												"pipeline_run_id": {
+													"value": "'@{pipeline().RunId}'",
+													"type": "Expression"
+												},
+												"pipeline_trigger_time": {
+													"value": "'@{convertFromUtc(pipeline().TriggerTime,'New Zealand Standard Time', 'yyyy-MM-dd HH:mm:ss.fff')}'",
+													"type": "Expression"
+												}
+											},
+											"datasetParameters": {
+												"QCTable": {
+													"schemaName": {
+														"value": "@item().table_schema",
+														"type": "Expression"
+													},
+													"tableName": {
+														"value": "@item().table_name",
+														"type": "Expression"
+													}
+												},
+												"sink1": {}
+											}
+										},
+										"staging": {},
+										"integrationRuntime": {
+											"referenceName": "integrationRuntime-TEST2",
+											"type": "IntegrationRuntimeReference"
+										},
+										"traceLevel": "Fine"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "Readin_QC_List",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "PUF_V_QC_List",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-14T17:49:00Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PUF_V_QC_List')]",
+				"[concat(variables('factoryId'), '/dataflows/DA_TEST_Execute_SQL_Query')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-TEST2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_1_DQM_AM')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach_QC_ID",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Readin_QC_List",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Readin_QC_List').output.value",
+								"type": "Expression"
+							},
+							"isSequential": false,
+							"activities": [
+								{
+									"name": "RUN_QC_SQL_AM",
+									"type": "ExecuteDataFlow",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "1.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataflow": {
+											"referenceName": "RUN_QC_SQL_AM",
+											"type": "DataFlowReference",
+											"parameters": {
+												"sql_query": {
+													"value": "'@{item().sql_query}'",
+													"type": "Expression"
+												},
+												"qc_id": {
+													"value": "@item().qc_id",
+													"type": "Expression"
+												},
+												"pipeline_name": {
+													"value": "'@{pipeline().Pipeline}'",
+													"type": "Expression"
+												},
+												"pkey_column": {
+													"value": "'@{item().pkey_column_names}'",
+													"type": "Expression"
+												},
+												"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
+												"column_metric_name": {
+													"value": "'@{item().column_metric_name}'",
+													"type": "Expression"
+												},
+												"alert_type": {
+													"value": "'@{item().alert_code}'",
+													"type": "Expression"
+												},
+												"pipeline_run_id": {
+													"value": "'@{pipeline().RunId}'",
+													"type": "Expression"
+												},
+												"pipeline_trigger_time": {
+													"value": "'@{pipeline().TriggerTime}'",
+													"type": "Expression"
+												}
+											},
+											"datasetParameters": {
+												"QCTable": {
+													"schemaName": {
+														"value": "@item().table_schema",
+														"type": "Expression"
+													},
+													"tableName": {
+														"value": "@item().table_name",
+														"type": "Expression"
+													}
+												},
+												"sink1": {}
+											}
+										},
+										"staging": {},
+										"compute": {
+											"coreCount": 8,
+											"computeType": "General"
+										},
+										"traceLevel": "Fine"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "Readin_QC_List",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "PUF_V_QC_List",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "AM_Test"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-14T17:49:00Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PUF_V_QC_List')]",
+				"[concat(variables('factoryId'), '/dataflows/RUN_QC_SQL_AM')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_L_to_S')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Copy_L_to_S",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {
+										"schemaName": "nucc",
+										"tableName": "nucc_taxonomy"
+									},
+									"source2": {},
+									"sink1": {
+										"schemaName": "nucc",
+										"tableName": "s_nucc_taxonomy"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "AM_Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Copy_L_to_S')]"
 			]
 		},
 		{
@@ -2602,6 +3193,108 @@
 					},
 					{
 						"name": "query",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/QralStorageDev_Blob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_BLOB_XLSX_DQM_QC_List')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "QralStorageDev_Blob",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/DQM"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "qc_list",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Test_Loop_SQL.xlsx",
+						"container": "nucc"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/QralStorageDev_Blob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_BLOB_XLSX_DQM_QC_Tables')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "QralStorageDev_Blob",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/DQM"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "qc_tables",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Test_Loop_SQL.xlsx",
+						"container": "nucc"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "table_schema",
+						"type": "String"
+					},
+					{
+						"name": "table_name",
+						"type": "String"
+					},
+					{
+						"name": "pkey_column_names",
 						"type": "String"
 					}
 				]
@@ -8541,6 +9234,231 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_QC_Exception_Detail')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/DQM"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "qc_id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "pipeline_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pipeline_run_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pipeline_trigger_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "pkey_column_values",
+						"type": "nvarchar"
+					},
+					{
+						"name": "column_metric_error_values",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dqm",
+					"table": "qc_exception_detail"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_QC_List')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/DQM"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "qc_id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "pipeline_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "table_schema",
+						"type": "nvarchar"
+					},
+					{
+						"name": "table_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "column_metric_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "sql_query",
+						"type": "nvarchar"
+					},
+					{
+						"name": "qc_type_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "alert_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "notes",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dqm",
+					"table": "qc_list"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_QC_Tables')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/DQM"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "table_schema",
+						"type": "nvarchar"
+					},
+					{
+						"name": "table_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pkey_column_names",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dqm",
+					"table": "qc_tables"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_V_QC_List')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/DQM"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "qc_id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "pipeline_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "table_schema",
+						"type": "nvarchar"
+					},
+					{
+						"name": "table_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "column_metric_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "sql_query",
+						"type": "nvarchar"
+					},
+					{
+						"name": "qc_type_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "alert_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "notes",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pkey_column_names",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dqm",
+					"table": "v_qc_list"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PUF_temp')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -8691,58 +9609,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PUF_QC_Exception_Detail')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/DQM"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "qc_id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "pipeline_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pipeline_run_id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pipeline_trigger_time",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "pkey_column_values",
-						"type": "nvarchar"
-					},
-					{
-						"name": "column_metric_error_values",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dqm",
-					"table": "qc_exception_detail"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/QRAL_AZURE_SQL_DEV')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -8873,6 +9739,58 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/QralStorageDev_Blob')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dqm_exception_detail')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_DQM_EXCEPTION"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "qc_id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "pipeline_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pipeline_run_id",
+						"type": "nvarchar"
+					},
+					{
+						"name": "pipeline_trigger_time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "pkey_column_values",
+						"type": "nvarchar"
+					},
+					{
+						"name": "column_metric_error_values",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dqm",
+					"table": "qc_exception_detail"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
 			]
 		},
 		{
@@ -9515,6 +10433,63 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Copy_L_to_S')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "AM_test"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "dqm_exception_detail",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Filter1"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Join1"
+						},
+						{
+							"name": "Filter2"
+						}
+					],
+					"script": "parameters{\n\tl_table_name as string ('nucc_taxonomy')\n}\nsource(output(\n\t\tcode as string,\n\t\tgrouping as string,\n\t\tclassification as string,\n\t\tspecialization as string,\n\t\tdefinition as string,\n\t\tnotes as string,\n\t\tyear as long,\n\t\tcurrent_flag as long,\n\t\t{effective date} as string,\n\t\t{deactivation date} as string,\n\t\t{last modified date} as string,\n\t\t{display name} as string,\n\t\t{right_effective date} as string,\n\t\t{right_deactivation date} as string,\n\t\t{right_last modified date} as string,\n\t\t{right_display name} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> source1\nsource(output(\n\t\tqc_id as integer,\n\t\tpipeline_name as string,\n\t\tpipeline_run_id as string,\n\t\tpipeline_trigger_time as timestamp,\n\t\tpkey_column_values as string,\n\t\tcolumn_metric_error_values as string,\n\t\ttable_name as string,\n\t\talert_code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: '\\nselect a.*, b.table_name, b.alert_code from [dqm].[qc_exception_detail] a\\ninner join (select distinct qc_id,table_name, alert_code from [dqm].[qc_list]) b\\non a.qc_id = b.qc_id',\n\tformat: 'query') ~> source2\nsource2 filter(and(table_name == $l_table_name, alert_code == 'Y')) ~> Filter1\nsource1 derive(join_value = concat(code, toString(year))) ~> DerivedColumn1\nDerivedColumn1, Filter1 join(join_value == pkey_column_values,\n\tjoinType:'left',\n\tbroadcast: 'auto')~> Join1\nJoin1 filter(isNull(pkey_column_values)) ~> Filter2\nFilter2 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]",
+				"[concat(variables('factoryId'), '/datasets/dqm_exception_detail')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DA_TEST_Execute_SQL_Query')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -9547,7 +10522,7 @@
 							"name": "TestQuery"
 						}
 					],
-					"script": "parameters{\n\tsql_query as string,\n\tqc_id as integer,\n\tpipeline_name as string,\n\tpkey_column as string,\n\tfinal_sql_query as string,\n\tcolumn_metric_name as string,\n\talert_type as string,\n\tpipeline_run_id as string,\n\tpipeline_trigger_time as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($final_sql_query),\n\tformat: 'query') ~> QCTable\nQCTable derive(qc_id = $qc_id,\n\t\tsql_query = $final_sql_query,\n\t\tpipeline_name = $pipeline_name,\n\t\tpipeline_run_id = $pipeline_run_id,\n\t\tpipeline_trigger_time = toTimestamp('$pipeline_trigger_time','yyyy-MM-dd\\'T\\'HH:mm:ss.SSS')) ~> TestQuery\nTestQuery sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tqc_id as integer,\n\t\tpipeline_name as string,\n\t\tpipeline_run_id as string,\n\t\tpipeline_trigger_time as timestamp,\n\t\tpkey_column_values as string,\n\t\tcolumn_metric_error_values as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tpartitionBy('hash', 1)) ~> sink1"
+					"script": "parameters{\n\tsql_query as string,\n\tqc_id as integer,\n\tpipeline_name as string,\n\tpkey_column as string,\n\tfinal_sql_query as string,\n\tcolumn_metric_name as string,\n\talert_type as string,\n\tpipeline_run_id as string,\n\tpipeline_trigger_time as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($final_sql_query),\n\tformat: 'query') ~> QCTable\nQCTable derive(qc_id = $qc_id,\n\t\tsql_query = $final_sql_query,\n\t\tpipeline_name = $pipeline_name,\n\t\tpipeline_run_id = $pipeline_run_id,\n\t\tpipeline_trigger_time = toTimestamp($pipeline_trigger_time,'yyyy-MM-dd HH:mm:ss.SSSSS')) ~> TestQuery\nTestQuery sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tqc_id as integer,\n\t\tpipeline_name as string,\n\t\tpipeline_run_id as string,\n\t\tpipeline_trigger_time as timestamp,\n\t\tpkey_column_values as string,\n\t\tcolumn_metric_error_values as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tpartitionBy('hash', 1)) ~> sink1"
 				}
 			},
 			"dependsOn": [
@@ -10364,6 +11339,50 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/RUN_QC_SQL_AM')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "AM_test"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "QCTable"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "PUF_QC_Exception_Detail",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "TestQuery"
+						},
+						{
+							"name": "Select1"
+						}
+					],
+					"script": "parameters{\n\tsql_query as string,\n\tqc_id as integer,\n\tpipeline_name as string,\n\tpkey_column as string,\n\tfinal_sql_query as string,\n\tcolumn_metric_name as string,\n\talert_type as string,\n\tpipeline_run_id as string,\n\tpipeline_trigger_time as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($final_sql_query),\n\tformat: 'query') ~> QCTable\nQCTable derive(qc_id = $qc_id,\n\t\tsql_query = $final_sql_query,\n\t\tpipeline_name = $pipeline_name,\n\t\tpipeline_run_id = $pipeline_run_id,\n\t\tpipeline_trigger_time = toTimestamp('$pipeline_trigger_time','yyyy-MM-dd\\'T\\'HH:mm:ss.SSS'),\n\t\talert_type = $alert_type) ~> TestQuery\nTestQuery select(mapColumn(\n\t\tqc_id,\n\t\tsql_query,\n\t\tpipeline_name,\n\t\tpipeline_run_id,\n\t\tpipeline_trigger_time,\n\t\talert_type\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 sink(allowSchemaDrift: false,\n\tvalidateSchema: false,\n\tinput(\n\t\tqc_id as integer,\n\t\tpipeline_name as string,\n\t\tpipeline_run_id as string,\n\t\tpipeline_trigger_time as timestamp,\n\t\tpkey_column_values as string,\n\t\tcolumn_metric_error_values as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError',\n\tpartitionBy('hash', 1)) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]",
+				"[concat(variables('factoryId'), '/datasets/PUF_QC_Exception_Detail')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -10500,672 +11519,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]",
 				"[concat(variables('factoryId'), '/datasets/ds_azure_sql_dev')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_V_QC_List')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/DQM"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "qc_id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "pipeline_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "table_schema",
-						"type": "nvarchar"
-					},
-					{
-						"name": "table_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "column_metric_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "sql_query",
-						"type": "nvarchar"
-					},
-					{
-						"name": "qc_type_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "alert_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "active_flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "notes",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pkey_column_names",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dqm",
-					"table": "v_qc_list"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_DQM_QC_Tables_List')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Readin_Raw_QC_Tables",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "DELETE FROM DQM.QC_TABLES;",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "PUF_BLOB_XLSX_DQM_QC_Tables",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "PUF_QC_Tables",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					},
-					{
-						"name": "Readin_Raw_QC_List",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "DELETE FROM DQM.QC_LIST;",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "qc_id",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "qc_id",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "pipeline_name",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "pipeline_name",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "table_schema",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "table_schema",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "table_name",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "table_name",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "column_metric_name",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "column_metric_name",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "sql_query",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "sql_query",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "qc_type_code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "qc_type_code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "alert_code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "alert_code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "active_flag",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "active_flag",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "notes",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "notes",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "PUF_BLOB_XLSX_DQM_QC_List",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "PUF_QC_List",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "DA_Test"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/PUF_BLOB_XLSX_DQM_QC_Tables')]",
-				"[concat(variables('factoryId'), '/datasets/PUF_QC_Tables')]",
-				"[concat(variables('factoryId'), '/datasets/PUF_BLOB_XLSX_DQM_QC_List')]",
-				"[concat(variables('factoryId'), '/datasets/PUF_QC_List')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_BLOB_XLSX_DQM_QC_Tables')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "QralStorageDev_Blob",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/DQM"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "qc_tables",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Test_Loop_SQL.xlsx",
-						"container": "nucc"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "table_schema",
-						"type": "String"
-					},
-					{
-						"name": "table_name",
-						"type": "String"
-					},
-					{
-						"name": "pkey_column_names",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/QralStorageDev_Blob')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_BLOB_XLSX_DQM_QC_List')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "QralStorageDev_Blob",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/DQM"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "qc_list",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Test_Loop_SQL.xlsx",
-						"container": "nucc"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/QralStorageDev_Blob')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_QC_Tables')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/DQM"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "table_schema",
-						"type": "nvarchar"
-					},
-					{
-						"name": "table_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pkey_column_names",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dqm",
-					"table": "qc_tables"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_QC_List')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure_Qral_Dev",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/DQM"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "qc_id",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "pipeline_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "table_schema",
-						"type": "nvarchar"
-					},
-					{
-						"name": "table_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "column_metric_name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "sql_query",
-						"type": "nvarchar"
-					},
-					{
-						"name": "qc_type_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "alert_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "active_flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "notes",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dqm",
-					"table": "qc_list"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Azure_Qral_Dev')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_1_DQM')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ForEach_QC_ID",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Readin_QC_List",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Readin_QC_List').output.value",
-								"type": "Expression"
-							},
-							"isSequential": false,
-							"activities": [
-								{
-									"name": "Run_QC_SQL",
-									"type": "ExecuteDataFlow",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataflow": {
-											"referenceName": "DA_TEST_Execute_SQL_Query",
-											"type": "DataFlowReference",
-											"parameters": {
-												"sql_query": {
-													"value": "'@{item().sql_query}'",
-													"type": "Expression"
-												},
-												"qc_id": {
-													"value": "@item().qc_id",
-													"type": "Expression"
-												},
-												"pipeline_name": {
-													"value": "'@{pipeline().Pipeline}'",
-													"type": "Expression"
-												},
-												"pkey_column": {
-													"value": "'@{item().pkey_column_names}'",
-													"type": "Expression"
-												},
-												"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
-												"column_metric_name": {
-													"value": "'@{item().column_metric_name}'",
-													"type": "Expression"
-												},
-												"alert_type": {
-													"value": "'@{item().alert_code}'",
-													"type": "Expression"
-												},
-												"pipeline_run_id": {
-													"value": "'@{pipeline().RunId}'",
-													"type": "Expression"
-												},
-												"pipeline_trigger_time": {
-													"value": "'@{pipeline().TriggerTime}'",
-													"type": "Expression"
-												}
-											},
-											"datasetParameters": {
-												"QCTable": {
-													"schemaName": {
-														"value": "@item().table_schema",
-														"type": "Expression"
-													},
-													"tableName": {
-														"value": "@item().table_name",
-														"type": "Expression"
-													}
-												},
-												"sink1": {}
-											}
-										},
-										"staging": {},
-										"integrationRuntime": {
-											"referenceName": "integrationRuntime-TEST2",
-											"type": "IntegrationRuntimeReference"
-										},
-										"traceLevel": "Fine"
-									}
-								}
-							]
-						}
-					},
-					{
-						"name": "Readin_QC_List",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "PUF_V_QC_List",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "DA_Test"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-05-14T17:49:00Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/PUF_V_QC_List')]",
-				"[concat(variables('factoryId'), '/dataflows/DA_TEST_Execute_SQL_Query')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime-TEST2')]"
 			]
 		}
 	]

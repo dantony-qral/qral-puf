@@ -29,6 +29,78 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/redshift_Qral_PUF_DEV')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Qral_PUF_DEV",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schemaName": {
+						"type": "string"
+					},
+					"tableName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "QRAL_REDSHIFT_PUF/QRAL_PUF"
+				},
+				"annotations": [],
+				"type": "AmazonRedshiftTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schemaName",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/redshift_Qral_PUF_PROD')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Qral_PUF_PROD",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"schemaName": {
+						"type": "string"
+					},
+					"tableName": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "QRAL_REDSHIFT_PUF/QRAL_PUF"
+				},
+				"annotations": [],
+				"type": "AmazonRedshiftTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": {
+						"value": "@dataset().schemaName",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "@dataset().tableName",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Azure_Qral_Dev')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -48,104 +120,6 @@
 					"referenceName": "integrationRuntime1-Test4-16cores",
 					"type": "IntegrationRuntimeReference"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_BLOB_XLSX_DQM_QC_Tables')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "QralStorageDev_Blob",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/DQM"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "qc_tables",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Test_Loop_SQL.xlsx",
-						"container": "nucc"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "table_schema",
-						"type": "String"
-					},
-					{
-						"name": "table_name",
-						"type": "String"
-					},
-					{
-						"name": "pkey_column_names",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_BLOB_XLSX_DQM_QC_List')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "QralStorageDev_Blob",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "QRAL_AZURE_PUF/DQM"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "qc_list",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "Test_Loop_SQL.xlsx",
-						"container": "nucc"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		},

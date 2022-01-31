@@ -13,6 +13,713 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_1_DQM')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach_QC_ID",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Readin_QC_List",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Readin_QC_List').output.value",
+								"type": "Expression"
+							},
+							"isSequential": false,
+							"activities": [
+								{
+									"name": "Run_QC_SQL",
+									"type": "ExecuteDataFlow",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "7.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataflow": {
+											"referenceName": "DA_TEST_Execute_SQL_Query",
+											"type": "DataFlowReference",
+											"parameters": {
+												"sql_query": {
+													"value": "'@{item().sql_query}'",
+													"type": "Expression"
+												},
+												"qc_id": {
+													"value": "@item().qc_id",
+													"type": "Expression"
+												},
+												"pipeline_name": {
+													"value": "'@{pipeline().Pipeline}'",
+													"type": "Expression"
+												},
+												"pkey_column": {
+													"value": "'@{item().pkey_column_names}'",
+													"type": "Expression"
+												},
+												"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
+												"column_metric_name": {
+													"value": "'@{item().column_metric_name}'",
+													"type": "Expression"
+												},
+												"alert_type": {
+													"value": "'@{item().alert_code}'",
+													"type": "Expression"
+												},
+												"pipeline_run_id": {
+													"value": "'@{pipeline().RunId}'",
+													"type": "Expression"
+												},
+												"pipeline_trigger_time": {
+													"value": "'@{convertFromUtc(pipeline().TriggerTime,'New Zealand Standard Time', 'yyyy-MM-dd HH:mm:ss.fff')}'",
+													"type": "Expression"
+												}
+											},
+											"datasetParameters": {
+												"QCTable": {
+													"schemaName": {
+														"value": "@item().table_schema",
+														"type": "Expression"
+													},
+													"tableName": {
+														"value": "@item().table_name",
+														"type": "Expression"
+													}
+												},
+												"sink1": {}
+											}
+										},
+										"staging": {},
+										"integrationRuntime": {
+											"referenceName": "integrationRuntime-TEST2",
+											"type": "IntegrationRuntimeReference"
+										},
+										"traceLevel": "Fine"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "Readin_QC_List",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "PUF_V_QC_List",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-14T17:49:00Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_1_DQM_AM')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ForEach_QC_ID",
+						"type": "ForEach",
+						"dependsOn": [
+							{
+								"activity": "Readin_QC_List",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"items": {
+								"value": "@activity('Readin_QC_List').output.value",
+								"type": "Expression"
+							},
+							"isSequential": false,
+							"activities": [
+								{
+									"name": "RUN_QC_SQL_AM",
+									"type": "ExecuteDataFlow",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "1.00:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"dataflow": {
+											"referenceName": "RUN_QC_SQL_AM",
+											"type": "DataFlowReference",
+											"parameters": {
+												"sql_query": {
+													"value": "'@{item().sql_query}'",
+													"type": "Expression"
+												},
+												"qc_id": {
+													"value": "@item().qc_id",
+													"type": "Expression"
+												},
+												"pipeline_name": {
+													"value": "'@{pipeline().Pipeline}'",
+													"type": "Expression"
+												},
+												"pkey_column": {
+													"value": "'@{item().pkey_column_names}'",
+													"type": "Expression"
+												},
+												"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
+												"column_metric_name": {
+													"value": "'@{item().column_metric_name}'",
+													"type": "Expression"
+												},
+												"alert_type": {
+													"value": "'@{item().alert_code}'",
+													"type": "Expression"
+												},
+												"pipeline_run_id": {
+													"value": "'@{pipeline().RunId}'",
+													"type": "Expression"
+												},
+												"pipeline_trigger_time": {
+													"value": "'@{pipeline().TriggerTime}'",
+													"type": "Expression"
+												}
+											},
+											"datasetParameters": {
+												"QCTable": {
+													"schemaName": {
+														"value": "@item().table_schema",
+														"type": "Expression"
+													},
+													"tableName": {
+														"value": "@item().table_name",
+														"type": "Expression"
+													}
+												},
+												"sink1": {}
+											}
+										},
+										"staging": {},
+										"compute": {
+											"coreCount": 8,
+											"computeType": "General"
+										},
+										"traceLevel": "Fine"
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "Readin_QC_List",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "PUF_V_QC_List",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": false
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "AM_Test"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-14T17:49:00Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_L_to_S')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Copy_L_to_S",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {
+										"schemaName": "nucc",
+										"tableName": "nucc_taxonomy"
+									},
+									"source2": {},
+									"sink1": {
+										"schemaName": "nucc",
+										"tableName": "s_nucc_taxonomy"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "AM_Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Monthly_Test')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PUF_DF_2a_Stage_NPPES",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_2a_Stage_NPPES",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ProviderTaxonomyMonth": {},
+									"ProviderOtherIdentifiers": {},
+									"sink1": {},
+									"sink2": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "PUF_NPPES"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-10-09T15:09:38Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Monthly_Update_Process_Jobrun')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PUF_DF_1_Load_NPPES_Month",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_1_Load_NPPES_Month",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"RawCMSNPPESMonth": {},
+									"sinkNPPESMain": {},
+									"sinkNPPESOtherProvider": {},
+									"sinkProviderTaxonomy": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_2a_Stage_NPPES",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_1_Load_NPPES_Month",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_2a_Stage_NPPES",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"ProviderTaxonomyMonth": {},
+									"ProviderOtherIdentifiers": {},
+									"sink1": {},
+									"sink2": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_2b_Stage_NPPES",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2a_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_2b_Stage_NPPES",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StageProviderTaxonomy": {},
+									"NUCCTaxonomy": {},
+									"NPPESProviderMain": {},
+									"InputStateCorrection": {},
+									"InputCountryCorrection": {},
+									"StageOtherProvID": {},
+									"sink1": {},
+									"LoadNPPESMainStage2a": {},
+									"sinkStNPPESProvOtherID": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_3_Stage_NPPES_Main",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2b_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_3_Stage_NPPES_Main",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain": {},
+									"ProdCmsNppesMain": {},
+									"SinkNPPESMain": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2b_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain": {},
+									"ProdCmsNppesOtherProviderID": {},
+									"StCMSNPPESOtherProvID": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PUF_DF_2b_Stage_NPPES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain": {},
+									"ProdCmsNppesProvTaxonomy": {},
+									"StCMSNPPESProvTaxonomy": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "PUF_NPPES"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-06-21T03:52:53Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Readin_NUCC_Taxonomy')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Initial_Load_NUCC_Taxonomy",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "A0_Initial_Load_NUCC_Taxonomy",
+								"type": "DataFlowReference",
+								"parameters": {
+									"nucc_year_raw_file_suffix": {
+										"value": "'@{pipeline().parameters.nucc_year_raw_file_suffix}'",
+										"type": "Expression"
+									},
+									"data_year": {
+										"value": "'@{pipeline().parameters.data_year}'",
+										"type": "Expression"
+									}
+								},
+								"datasetParameters": {
+									"ReadinRawNUCCTaxonomy": {},
+									"LoadToSQL": {
+										"data_year": {
+											"value": "@pipeline().parameters.data_year",
+											"type": "Expression"
+										}
+									}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test3",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"parameters": {
+					"nucc_year_raw_file_suffix": {
+						"type": "string"
+					},
+					"data_year": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "PUF_NUCC"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-05-19T03:20:52Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -469,146 +1176,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PUF_1_DQM')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ForEach_QC_ID",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Readin_QC_List",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Readin_QC_List').output.value",
-								"type": "Expression"
-							},
-							"isSequential": false,
-							"activities": [
-								{
-									"name": "Run_QC_SQL",
-									"type": "ExecuteDataFlow",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "7.00:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataflow": {
-											"referenceName": "DA_TEST_Execute_SQL_Query",
-											"type": "DataFlowReference",
-											"parameters": {
-												"sql_query": {
-													"value": "'@{item().sql_query}'",
-													"type": "Expression"
-												},
-												"qc_id": {
-													"value": "@item().qc_id",
-													"type": "Expression"
-												},
-												"pipeline_name": {
-													"value": "'@{pipeline().Pipeline}'",
-													"type": "Expression"
-												},
-												"pkey_column": {
-													"value": "'@{item().pkey_column_names}'",
-													"type": "Expression"
-												},
-												"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
-												"column_metric_name": {
-													"value": "'@{item().column_metric_name}'",
-													"type": "Expression"
-												},
-												"alert_type": {
-													"value": "'@{item().alert_code}'",
-													"type": "Expression"
-												},
-												"pipeline_run_id": {
-													"value": "'@{pipeline().RunId}'",
-													"type": "Expression"
-												},
-												"pipeline_trigger_time": {
-													"value": "'@{pipeline().TriggerTime}'",
-													"type": "Expression"
-												}
-											},
-											"datasetParameters": {
-												"QCTable": {
-													"schemaName": {
-														"value": "@item().table_schema",
-														"type": "Expression"
-													},
-													"tableName": {
-														"value": "@item().table_name",
-														"type": "Expression"
-													}
-												},
-												"sink1": {}
-											}
-										},
-										"staging": {},
-										"integrationRuntime": {
-											"referenceName": "integrationRuntime-TEST2",
-											"type": "IntegrationRuntimeReference"
-										},
-										"traceLevel": "Fine"
-									}
-								}
-							]
-						}
-					},
-					{
-						"name": "Readin_QC_List",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"dataset": {
-								"referenceName": "PUF_V_QC_List",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"firstRowOnly": false
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "DA_Test"
-				},
-				"annotations": [],
-				"lastPublishTime": "2021-05-14T17:49:00Z"
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Process_Main_Jobrun')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -719,7 +1286,9 @@
 				"annotations": [],
 				"lastPublishTime": "2021-06-18T01:28:04Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Monthly_Update_Process_Jobrun')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/NPPES_Trigger_Test')]",

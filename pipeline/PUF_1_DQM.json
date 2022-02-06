@@ -127,12 +127,10 @@
 		],
 		"parameters": {
 			"schemaName": {
-				"type": "string",
-				"defaultValue": "nucc"
+				"type": "string"
 			},
 			"tableName": {
-				"type": "string",
-				"defaultValue": "nucc_taxonomy"
+				"type": "string"
 			}
 		},
 		"folder": {

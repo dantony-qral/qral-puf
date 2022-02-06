@@ -121,6 +121,14 @@
 				}
 			}
 		],
+		"parameters": {
+			"schemaName": {
+				"type": "string"
+			},
+			"tableName": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "DA_Test"
 		},

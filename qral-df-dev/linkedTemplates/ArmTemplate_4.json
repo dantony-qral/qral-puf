@@ -128,6 +128,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "@concat('SELECT * FROM dqm.v_qc_list WHERE table_schema = ''',pipeline().parameters.schemaName,''' AND table_name= ''',pipeline().parameters.tableName,'''')",
+									"type": "Expression"
+								},
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -143,6 +147,16 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"parameters": {
+					"schemaName": {
+						"type": "string",
+						"defaultValue": "nucc"
+					},
+					"tableName": {
+						"type": "string",
+						"defaultValue": "nucc_taxonomy"
+					}
 				},
 				"folder": {
 					"name": "DA_Test"
@@ -1288,6 +1302,106 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Monthly_Update_Process_Jobrun')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_Test_Main_Jobrun')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PUF_1_DQM",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "PUF_1_DQM",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Email_Successful_Pipeline",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "PUF_1_DQM",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-19.eastus2.logic.azure.com:443/workflows/c0dbe0ef6af14d8389b9723475d9d61d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GXLOylKVKZwbhRg4sascQL6I6efKXy_yK-CSbN6lF8Y",
+							"connectVia": {
+								"referenceName": "integrationRuntime1-Test3",
+								"type": "IntegrationRuntimeReference"
+							},
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"TEST-PIPELINE RUN FINISHED!\",\n\"message\": \"TEST-PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n\"color\": \"Green\",\n\"dataFactoryName\":\"@{pipeline().DataFactory}\",\n\"pipelineName\":\"@{pipeline().Pipeline}\",\n\"pipelineRunId\":\"@{pipeline().RunId}\",\n\"pipelineTriggerTime\":\"@{pipeline().TriggerTime}\",\n\"time\":\"@{utcnow()}\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Email_Fail_Pipeline",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "PUF_1_DQM",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-19.eastus2.logic.azure.com:443/workflows/c0dbe0ef6af14d8389b9723475d9d61d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GXLOylKVKZwbhRg4sascQL6I6efKXy_yK-CSbN6lF8Y",
+							"connectVia": {
+								"referenceName": "integrationRuntime1-Test3",
+								"type": "IntegrationRuntimeReference"
+							},
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE FAILED!\",\n\"message\": \"DEMO-PIPELINE FAILED RUNNING!\",\n\"color\": \"Red\",\n\"dataFactoryName\":\"@{pipeline().DataFactory}\",\n\"pipelineName\":\"@{pipeline().Pipeline}\",\n\"pipelineRunId\":\"@{pipeline().RunId}\",\n\"pipelineTriggerTime\":\"@{pipeline().TriggerTime}\",\n\"time\":\"@{utcnow()}\"\n}",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PUF_1_DQM')]"
 			]
 		},
 		{

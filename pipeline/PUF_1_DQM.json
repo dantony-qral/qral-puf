@@ -110,6 +110,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "@concat('SELECT * FROM dqm.v_qc_list WHERE table_schema = ''',pipeline().parameters.schemaName,''' AND table_name= ''',pipeline().parameters.tableName,'''')",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -123,10 +127,12 @@
 		],
 		"parameters": {
 			"schemaName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "nucc"
 			},
 			"tableName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "nucc_taxonomy"
 			}
 		},
 		"folder": {

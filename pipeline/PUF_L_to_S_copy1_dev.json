@@ -77,7 +77,10 @@
 										},
 										"sink1": {
 											"schemaName": "nucc",
-											"tableName": "s_nucc_taxonomy"
+											"tableName": {
+												"value": "@replace('l_',item().table_name,'s_')\n",
+												"type": "Expression"
+											}
 										}
 									}
 								},

@@ -21,13 +21,10 @@
 						"partitionOption": "None"
 					},
 					"dataset": {
-						"referenceName": "Azure_Qral_Dev_Table",
-						"type": "DatasetReference",
-						"parameters": {
-							"schemaName": "dqm",
-							"tableName": "qc_tables"
-						}
-					}
+						"referenceName": "PUF_V_QC_List",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
 				}
 			},
 			{

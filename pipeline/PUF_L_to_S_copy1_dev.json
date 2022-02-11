@@ -71,14 +71,14 @@
 												"type": "Expression"
 											},
 											"tableName": {
-												"value": "@item.table_name",
+												"value": "@item().table_name",
 												"type": "Expression"
 											}
 										},
 										"sink1": {
-											"schemaName": "nucc",
+											"schemaName": "@item().table_schema",
 											"tableName": {
-												"value": "@replace('l_',item().table_name,'s_')\n",
+												"value": "s_nucc_taxonomy",
 												"type": "Expression"
 											}
 										}

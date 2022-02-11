@@ -1,0 +1,97 @@
+{
+	"name": "PUF_L_to_S_copy1_dev",
+	"properties": {
+		"activities": [
+			{
+				"name": "Read Table List",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "Azure_Qral_Dev_Table",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaName": "dqm",
+							"tableName": "qc_tables"
+						}
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Read Table List",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Read Table List').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Data flow1",
+							"type": "ExecuteDataFlow",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "1.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataflow": {
+									"referenceName": "Copy_L_to_S",
+									"type": "DataFlowReference",
+									"parameters": {
+										"l_table_name": "'nucc_taxonomy'"
+									},
+									"datasetParameters": {
+										"source1": {
+											"schemaName": "nucc",
+											"tableName": "nucc_taxonomy"
+										},
+										"sink1": {
+											"schemaName": "nucc",
+											"tableName": "s_nucc_taxonomy"
+										}
+									}
+								},
+								"compute": {
+									"coreCount": 8,
+									"computeType": "General"
+								},
+								"traceLevel": "Fine"
+							}
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "AM_Test"
+		},
+		"annotations": []
+	}
+}

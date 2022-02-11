@@ -66,8 +66,14 @@
 									},
 									"datasetParameters": {
 										"source1": {
-											"schemaName": "nucc",
-											"tableName": "nucc_taxonomy"
+											"schemaName": {
+												"value": "@item().table_schema",
+												"type": "Expression"
+											},
+											"tableName": {
+												"value": "@item.table_name",
+												"type": "Expression"
+											}
 										},
 										"sink1": {
 											"schemaName": "nucc",

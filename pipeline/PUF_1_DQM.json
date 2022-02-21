@@ -47,7 +47,7 @@
 											"type": "Expression"
 										},
 										"pipeline_name": {
-											"value": "'@{pipeline().Pipeline}'",
+											"value": "'@{pipeline()?.TriggeredByPipelineName}'",
 											"type": "Expression"
 										},
 										"pkey_column": {
@@ -64,7 +64,7 @@
 											"type": "Expression"
 										},
 										"pipeline_run_id": {
-											"value": "'@{pipeline().RunId}'",
+											"value": "'@{pipeline()?.TriggeredByPipelineRunId}'",
 											"type": "Expression"
 										},
 										"pipeline_trigger_time": {
@@ -111,7 +111,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "@concat('SELECT * FROM dqm.v_qc_list WHERE table_schema = ''',pipeline().parameters.schemaName,''' AND table_name= ''',pipeline().parameters.tableName,'''')",
+							"value": "@concat('SELECT * FROM dqm.v_qc_list WHERE pipeline_name = ''',pipeline()?.TriggeredByPipelineName,'''')",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -125,14 +125,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"schemaName": {
-				"type": "string"
-			},
-			"tableName": {
-				"type": "string"
-			}
-		},
 		"folder": {
 			"name": "DA_Test"
 		},

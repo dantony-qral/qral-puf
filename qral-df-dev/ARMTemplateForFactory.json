@@ -2218,6 +2218,20 @@
 							},
 							"enableStaging": false,
 							"validateDataConsistency": true,
+							"logSettings": {
+								"enableCopyActivityLog": true,
+								"copyActivityLogSettings": {
+									"logLevel": "Warning",
+									"enableReliableLogging": false
+								},
+								"logLocationSettings": {
+									"linkedServiceName": {
+										"referenceName": "QralStorageDev_Blob",
+										"type": "LinkedServiceReference"
+									},
+									"path": "logs"
+								}
+							},
 							"translator": {
 								"type": "TabularTranslator",
 								"typeConversion": true,
@@ -2287,7 +2301,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/redshift_Qral_PUF_PROD')]",
-				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]"
+				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]",
+				"[concat(variables('factoryId'), '/linkedServices/QralStorageDev_Blob')]"
 			]
 		},
 		{

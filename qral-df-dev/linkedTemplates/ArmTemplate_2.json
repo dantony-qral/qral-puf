@@ -1566,6 +1566,20 @@
 							},
 							"enableStaging": false,
 							"validateDataConsistency": true,
+							"logSettings": {
+								"enableCopyActivityLog": true,
+								"copyActivityLogSettings": {
+									"logLevel": "Warning",
+									"enableReliableLogging": false
+								},
+								"logLocationSettings": {
+									"linkedServiceName": {
+										"referenceName": "QralStorageDev_Blob",
+										"type": "LinkedServiceReference"
+									},
+									"path": "logs"
+								}
+							},
 							"translator": {
 								"type": "TabularTranslator",
 								"typeConversion": true,

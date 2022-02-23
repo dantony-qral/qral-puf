@@ -1,0 +1,97 @@
+{
+	"name": "PUF_DS_PROD_NPPES_PROVIDER_ADDRESSES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/PUF_PROD"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "current_flag",
+				"type": "varchar"
+			},
+			{
+				"name": "data_month",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "entity type code",
+				"type": "varchar"
+			},
+			{
+				"name": "entity type",
+				"type": "varchar"
+			},
+			{
+				"name": "active flag",
+				"type": "varchar"
+			},
+			{
+				"name": "address_type",
+				"type": "varchar"
+			},
+			{
+				"name": "npi",
+				"type": "varchar"
+			},
+			{
+				"name": "address_line_1",
+				"type": "varchar"
+			},
+			{
+				"name": "address_line_2",
+				"type": "varchar"
+			},
+			{
+				"name": "city",
+				"type": "varchar"
+			},
+			{
+				"name": "state",
+				"type": "varchar"
+			},
+			{
+				"name": "postal_code",
+				"type": "varchar"
+			},
+			{
+				"name": "country_code",
+				"type": "varchar"
+			},
+			{
+				"name": "telephone_number",
+				"type": "varchar"
+			},
+			{
+				"name": "telephone_ext",
+				"type": "varchar"
+			},
+			{
+				"name": "fax_number",
+				"type": "varchar"
+			},
+			{
+				"name": "primary_taxonomy_grouping",
+				"type": "varchar"
+			},
+			{
+				"name": "primary_taxonomy_classification",
+				"type": "varchar"
+			},
+			{
+				"name": "primary_taxonomy_specialization",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "cms",
+			"table": "nppes_provider_addresses"
+		}
+	}
+}

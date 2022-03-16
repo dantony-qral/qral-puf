@@ -35,7 +35,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataflow": {
-									"referenceName": "DA_TEST_Execute_SQL_Query",
+									"referenceName": "DA_TEST_1_QC_Exception_Detail",
 									"type": "DataFlowReference",
 									"parameters": {
 										"sql_query": {

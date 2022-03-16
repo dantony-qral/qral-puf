@@ -445,7 +445,8 @@
 					},
 					{
 						"name": "active_flag",
-						"type": "nvarchar"
+						"type": "int",
+						"precision": 10
 					},
 					{
 						"name": "notes",

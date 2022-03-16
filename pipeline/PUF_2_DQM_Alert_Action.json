@@ -1,5 +1,5 @@
 {
-	"name": "PUF_1_DQM",
+	"name": "PUF_2_DQM_Alert_Action",
 	"properties": {
 		"activities": [
 			{
@@ -111,7 +111,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "@concat('SELECT * FROM dqm.v_qc_list WHERE active_flag = 1 AND pipeline_name = ''',pipeline()?.TriggeredByPipelineName,'''')",
+							"value": "@concat('SELECT * FROM dqm.v_qc_list WHERE pipeline_name = ''',pipeline()?.TriggeredByPipelineName,'''')",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",

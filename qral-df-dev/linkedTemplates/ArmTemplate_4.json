@@ -13,6 +13,100 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DA_TEST_2_QC_Alert_Action')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "DA_Test"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "InputTable"
+						},
+						{
+							"dataset": {
+								"referenceName": "PUF_V_QC_Exception_Detail",
+								"type": "DatasetReference"
+							},
+							"name": "QCExceptionDetail"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "CreateTempAlertCode"
+						},
+						{
+							"name": "RedAlert"
+						},
+						{
+							"name": "OrangeAlert"
+						},
+						{
+							"name": "YellowAlert"
+						},
+						{
+							"name": "RedAlertTable"
+						},
+						{
+							"name": "OrangeAlertRecord"
+						},
+						{
+							"name": "YellowAlertRecord"
+						},
+						{
+							"name": "OrangeAlertFlag"
+						},
+						{
+							"name": "YellowAlertFlag"
+						},
+						{
+							"name": "RedAlertTempColumn"
+						},
+						{
+							"name": "RedAlertFlag"
+						},
+						{
+							"name": "CreateFinalAlertCode"
+						},
+						{
+							"name": "NonRedRecord"
+						},
+						{
+							"name": "MapDrifted1",
+							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "RedAlertTableFinal"
+						},
+						{
+							"name": "YellowAlertRecordFinal"
+						},
+						{
+							"name": "OrangeAlertRecordFinal"
+						}
+					],
+					"script": "parameters{\n\tpipeline_run_id as string,\n\tsql_query as string,\n\tinput_SchemaName as string,\n\tinput_TableName as string,\n\tpkey_column as string,\n\tpipeline_trigger_time as string,\n\tpipeline_name as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($sql_query),\n\tformat: 'query') ~> InputTable\nsource(output(\n\t\tqc_id as integer,\n\t\tpipeline_name as string,\n\t\tpipeline_run_id as string,\n\t\tpipeline_trigger_time as timestamp,\n\t\tpkey_column_values as string,\n\t\tcolumn_metric_error_values as string,\n\t\ttable_schema as string,\n\t\ttable_name as string,\n\t\tsql_query as string,\n\t\tcolumn_metric_name as string,\n\t\talert_code as string,\n\t\tqc_type_code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT * FROM dqm.v_qc_exception_detail WHERE pipeline_run_id ='a7b59fd3-d16a-4dbc-bd47-64a7ac30b3a6' AND table_schema='nucc' AND table_name = 'nucc_taxonomy'\"),\n\tformat: 'query') ~> QCExceptionDetail\nMapDrifted1 derive(dqm_alert_code = 'P',\n\t\tpipeline_name = $pipeline_name,\n\t\tpipeline_run_id = $pipeline_run_id,\n\t\tpipeline_trigger_time = toTimestamp($pipeline_trigger_time,'yyyy-MM-dd HH:mm:ss.SSSSS')) ~> CreateTempAlertCode\nQCExceptionDetail filter(alert_code==\"R\") ~> RedAlert\nQCExceptionDetail filter(alert_code==\"O\") ~> OrangeAlert\nQCExceptionDetail filter(alert_code==\"Y\") ~> YellowAlert\nRedAlertTempColumn aggregate(groupBy(temp_alert_code,\n\t\talert_code),\n\ttemp_cnt = count(qc_id)) ~> RedAlertTable\nOrangeAlert aggregate(groupBy(pkey_column_values,\n\t\talert_code),\n\ttemp_cnt = count(qc_id)) ~> OrangeAlertRecord\nYellowAlert aggregate(groupBy(pkey_column_values,\n\t\talert_code),\n\ttemp_cnt = count(qc_id)) ~> YellowAlertRecord\nRedAlertFlag, OrangeAlertRecordFinal lookup(MapDrifted1@pkey_column_values == OrangeAlertRecordFinal@pkey_column_values,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> OrangeAlertFlag\nOrangeAlertFlag, YellowAlertRecordFinal lookup(MapDrifted1@pkey_column_values == YellowAlertRecordFinal@pkey_column_values,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> YellowAlertFlag\nRedAlert derive(temp_alert_code = 'P') ~> RedAlertTempColumn\nCreateTempAlertCode, RedAlertTableFinal lookup(dqm_alert_code == temp_alert_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> RedAlertFlag\nYellowAlertFlag derive(final_alert_code = iifNull(iifNull(alert_code_red,alert_code_orange,alert_code_yellow),dqm_alert_code)) ~> CreateFinalAlertCode\nCreateFinalAlertCode filter(final_alert_code!='R') ~> NonRedRecord\nInputTable derive(pkey_column_values = toString(byName('pkey_column_values'))) ~> MapDrifted1\nRedAlertTable select(mapColumn(\n\t\ttemp_alert_code,\n\t\talert_code_red = alert_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RedAlertTableFinal\nYellowAlertRecord select(mapColumn(\n\t\tpkey_column_values,\n\t\talert_code_yellow = alert_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> YellowAlertRecordFinal\nOrangeAlertRecord select(mapColumn(\n\t\tpkey_column_values,\n\t\talert_code_orange = alert_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> OrangeAlertRecordFinal\nNonRedRecord sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AM_Execute_DQM')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1590,7 +1684,7 @@
 						"type": "ForEach",
 						"dependsOn": [
 							{
-								"activity": "Readin_QC_List",
+								"activity": "Readin_QC_Tables",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1599,13 +1693,13 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@activity('Readin_QC_List').output.value",
+								"value": "@activity('Readin_QC_Tables').output.value",
 								"type": "Expression"
 							},
 							"isSequential": false,
 							"activities": [
 								{
-									"name": "Run_QC_SQL",
+									"name": "Run_QC_Alert_Action",
 									"type": "ExecuteDataFlow",
 									"dependsOn": [],
 									"policy": {
@@ -1618,45 +1712,37 @@
 									"userProperties": [],
 									"typeProperties": {
 										"dataflow": {
-											"referenceName": "DA_TEST_1_QC_Exception_Detail",
+											"referenceName": "DA_TEST_2_QC_Alert_Action",
 											"type": "DataFlowReference",
 											"parameters": {
-												"sql_query": {
-													"value": "'@{item().sql_query}'",
+												"pipeline_run_id": {
+													"value": "'@{pipeline()?.TriggeredByPipelineRunId}'",
 													"type": "Expression"
 												},
-												"qc_id": {
-													"value": "@item().qc_id",
+												"sql_query": "\"SELECT *, CONCAT({$pkey_column},'') as pkey_column_values FROM {$input_SchemaName}.{$input_TableName}\"",
+												"input_SchemaName": {
+													"value": "'@{item().table_schema}'",
 													"type": "Expression"
 												},
-												"pipeline_name": {
-													"value": "'@{pipeline()?.TriggeredByPipelineName}'",
+												"input_TableName": {
+													"value": "'@{item().table_name}'",
 													"type": "Expression"
 												},
 												"pkey_column": {
 													"value": "'@{item().pkey_column_names}'",
 													"type": "Expression"
 												},
-												"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
-												"column_metric_name": {
-													"value": "'@{item().column_metric_name}'",
-													"type": "Expression"
-												},
-												"alert_type": {
-													"value": "'@{item().alert_code}'",
-													"type": "Expression"
-												},
-												"pipeline_run_id": {
-													"value": "'@{pipeline()?.TriggeredByPipelineRunId}'",
-													"type": "Expression"
-												},
 												"pipeline_trigger_time": {
 													"value": "'@{convertFromUtc(pipeline().TriggerTime,'Central Standard Time', 'yyyy-MM-dd HH:mm:ss.fff')}'",
+													"type": "Expression"
+												},
+												"pipeline_name": {
+													"value": "'@{pipeline()?.TriggeredByPipelineName}'",
 													"type": "Expression"
 												}
 											},
 											"datasetParameters": {
-												"QCTable": {
+												"InputTable": {
 													"schemaName": {
 														"value": "@item().table_schema",
 														"type": "Expression"
@@ -1666,12 +1752,20 @@
 														"type": "Expression"
 													}
 												},
-												"sink1": {}
-											}
+												"QCExceptionDetail": {},
+												"sink1": {
+													"schemaName": "@item().table_schema",
+													"tableName": {
+														"value": "@concat('temp_',item().table_name)",
+														"type": "Expression"
+													}
+												}
+											},
+											"linkedServiceParameters": {}
 										},
 										"staging": {},
 										"integrationRuntime": {
-											"referenceName": "integrationRuntime-TEST2",
+											"referenceName": "integrationRuntime1-Test4-16cores",
 											"type": "IntegrationRuntimeReference"
 										},
 										"traceLevel": "Fine"
@@ -1681,7 +1775,7 @@
 						}
 					},
 					{
-						"name": "Readin_QC_List",
+						"name": "Readin_QC_Tables",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -1696,7 +1790,7 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "@concat('SELECT * FROM dqm.v_qc_list WHERE pipeline_name = ''',pipeline()?.TriggeredByPipelineName,'''')",
+									"value": "@concat('SELECT table_schema, table_name, pkey_column_names FROM dqm.v_qc_list WHERE pipeline_name = ''',pipeline()?.TriggeredByPipelineName,''' GROUP BY table_schema, table_name, pkey_column_names')\n",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -1721,7 +1815,9 @@
 				"annotations": [],
 				"lastPublishTime": "2021-05-14T17:49:00Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DA_TEST_2_QC_Alert_Action')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DQM_Test_Main_Jobrun')]",

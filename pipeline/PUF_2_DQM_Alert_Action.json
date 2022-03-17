@@ -110,7 +110,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "@concat('SELECT table_schema, table_name, pkey_column_names FROM dqm.v_qc_list WHERE pipeline_name = ','''a7b59fd3-d16a-4dbc-bd47-64a7ac30b3a6''',' GROUP BY table_schema, table_name, pkey_column_names')",
+							"value": "@concat('SELECT table_schema, table_name, pkey_column_names FROM dqm.v_qc_list WHERE pipeline_name = ','''PUF_DQM_Test_Main_Jobrun''',' GROUP BY table_schema, table_name, pkey_column_names')\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",

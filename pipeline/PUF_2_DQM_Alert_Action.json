@@ -54,6 +54,14 @@
 										"pkey_column": {
 											"value": "'@{item().pkey_column_names}'",
 											"type": "Expression"
+										},
+										"pipeline_trigger_time": {
+											"value": "'@{convertFromUtc(pipeline().TriggerTime,'Central Standard Time', 'yyyy-MM-dd HH:mm:ss.fff')}'",
+											"type": "Expression"
+										},
+										"pipeline_name": {
+											"value": "'@{pipeline()?.TriggeredByPipelineName}'",
+											"type": "Expression"
 										}
 									},
 									"datasetParameters": {

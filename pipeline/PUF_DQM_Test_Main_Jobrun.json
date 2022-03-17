@@ -20,7 +20,7 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
-						"activity": "PUF_1_DQM",
+						"activity": "PUF_2_DQM_Alert_Action",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -52,6 +52,12 @@
 				"type": "WebActivity",
 				"dependsOn": [
 					{
+						"activity": "PUF_2_DQM_Alert_Action",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
 						"activity": "PUF_1_DQM",
 						"dependencyConditions": [
 							"Failed"
@@ -77,6 +83,26 @@
 						"value": "{\n\"title\": \"PIPELINE FAILED!\",\n\"message\": \"DEMO-PIPELINE FAILED RUNNING!\",\n\"color\": \"Red\",\n\"dataFactoryName\":\"@{pipeline().DataFactory}\",\n\"pipelineName\":\"@{pipeline().Pipeline}\",\n\"pipelineRunId\":\"@{pipeline().RunId}\",\n\"pipelineTriggerTime\":\"@{pipeline().TriggerTime}\",\n\"time\":\"@{utcnow()}\"\n}",
 						"type": "Expression"
 					}
+				}
+			},
+			{
+				"name": "PUF_2_DQM_Alert_Action",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "PUF_1_DQM",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "PUF_2_DQM_Alert_Action",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
 				}
 			}
 		],

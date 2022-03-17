@@ -74,11 +74,18 @@
 												"value": "@item().table_name",
 												"type": "Expression"
 											}
+										},
+										"sink1": {
+											"schemaName": "@item().table_schema",
+											"tableName": {
+												"value": "@concat('temp_',item().table_name)",
+												"type": "Expression"
+											}
 										}
 									}
 								},
 								"integrationRuntime": {
-									"referenceName": "integrationRuntime-TEST2",
+									"referenceName": "integrationRuntime1-Test4-16cores",
 									"type": "IntegrationRuntimeReference"
 								},
 								"traceLevel": "Fine"

@@ -7,7 +7,7 @@
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Readin_QC_List",
+						"activity": "Readin_QC_Tables",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -16,13 +16,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Readin_QC_List').output.value",
+						"value": "@activity('Readin_QC_Tables').output.value",
 						"type": "Expression"
 					},
 					"isSequential": false,
 					"activities": [
 						{
-							"name": "Run_QC_SQL",
+							"name": "Run_QC_Alert_Action",
 							"type": "ExecuteDataFlow",
 							"dependsOn": [],
 							"policy": {
@@ -35,43 +35,8 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataflow": {
-									"referenceName": "DA_TEST_1_QC_Exception_Detail",
+									"referenceName": "DA_TEST_2_QC_Alert_Action",
 									"type": "DataFlowReference",
-									"parameters": {
-										"sql_query": {
-											"value": "'@{item().sql_query}'",
-											"type": "Expression"
-										},
-										"qc_id": {
-											"value": "@item().qc_id",
-											"type": "Expression"
-										},
-										"pipeline_name": {
-											"value": "'@{pipeline()?.TriggeredByPipelineName}'",
-											"type": "Expression"
-										},
-										"pkey_column": {
-											"value": "'@{item().pkey_column_names}'",
-											"type": "Expression"
-										},
-										"final_sql_query": "\"SELECT CONCAT({$pkey_column},'') as pkey_column_values, CONCAT({$column_metric_name},'|') as column_metric_error_values {$sql_query}\"",
-										"column_metric_name": {
-											"value": "'@{item().column_metric_name}'",
-											"type": "Expression"
-										},
-										"alert_type": {
-											"value": "'@{item().alert_code}'",
-											"type": "Expression"
-										},
-										"pipeline_run_id": {
-											"value": "'@{pipeline()?.TriggeredByPipelineRunId}'",
-											"type": "Expression"
-										},
-										"pipeline_trigger_time": {
-											"value": "'@{convertFromUtc(pipeline().TriggerTime,'Central Standard Time', 'yyyy-MM-dd HH:mm:ss.fff')}'",
-											"type": "Expression"
-										}
-									},
 									"datasetParameters": {
 										"QCTable": {
 											"schemaName": {
@@ -96,7 +61,7 @@
 				}
 			},
 			{
-				"name": "Readin_QC_List",
+				"name": "Readin_QC_Tables",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -111,7 +76,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "@concat('SELECT * FROM dqm.v_qc_list WHERE pipeline_name = ''',pipeline()?.TriggeredByPipelineName,'''')",
+							"value": "@concat('SELECT table_schema, table_name, pkey_column_names FROM dqm.v_qc_list WHERE pipeline_name = ''',pipeline()?.TriggeredByPipelineName,''' GROUP BY table_schema, table_name, pkey_column_names')\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",

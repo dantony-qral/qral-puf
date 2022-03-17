@@ -37,8 +37,27 @@
 								"dataflow": {
 									"referenceName": "DA_TEST_2_QC_Alert_Action",
 									"type": "DataFlowReference",
+									"parameters": {
+										"pipeline_run_id": {
+											"value": "'@{pipeline()?.TriggeredByPipelineRunId}'",
+											"type": "Expression"
+										},
+										"sql_query": "\"SELECT *, CONCAT({$pkey_column},'') as pkey_column_values FROM {$input_SchemaName}.{$input_TableName}\"",
+										"input_SchemaName": {
+											"value": "'@{item().table_schema}'",
+											"type": "Expression"
+										},
+										"input_TableName": {
+											"value": "'@{item().table_name}'",
+											"type": "Expression"
+										},
+										"pkey_column": {
+											"value": "'@{item().pkey_column_names}'",
+											"type": "Expression"
+										}
+									},
 									"datasetParameters": {
-										"QCTable": {
+										"InputTable": {
 											"schemaName": {
 												"value": "@item().table_schema",
 												"type": "Expression"

@@ -1603,7 +1603,7 @@
 					},
 					"data_month": {
 						"type": "string",
-						"defaultValue": "202104"
+						"defaultValue": "202202"
 					}
 				},
 				"folder": {

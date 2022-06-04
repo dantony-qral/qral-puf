@@ -9700,7 +9700,7 @@
 							"value": "@concat('Country_State_Correction_',dataset().Data_Month,'.xlsx')",
 							"type": "Expression"
 						},
-						"folderPath": "Data Sources/CMS/NPPES/2021/"
+						"folderPath": "Data Sources/CMS/NPPES/2022/"
 					},
 					"firstRowAsHeader": true
 				},
@@ -9737,7 +9737,7 @@
 							"value": "@concat('Country_State_Correction_',dataset().Data_Month,'.xlsx')",
 							"type": "Expression"
 						},
-						"folderPath": "Data Sources/CMS/NPPES/2021/"
+						"folderPath": "Data Sources/CMS/NPPES/2022/"
 					},
 					"firstRowAsHeader": true
 				},

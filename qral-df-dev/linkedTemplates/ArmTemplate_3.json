@@ -842,6 +842,100 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DA_TEST_2_QC_Alert_Action')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "DA_Test"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "InputTable"
+						},
+						{
+							"dataset": {
+								"referenceName": "PUF_V_QC_Exception_Detail",
+								"type": "DatasetReference"
+							},
+							"name": "QCExceptionDetail"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "CreateTempAlertCode"
+						},
+						{
+							"name": "RedAlert"
+						},
+						{
+							"name": "OrangeAlert"
+						},
+						{
+							"name": "YellowAlert"
+						},
+						{
+							"name": "RedAlertTable"
+						},
+						{
+							"name": "OrangeAlertRecord"
+						},
+						{
+							"name": "YellowAlertRecord"
+						},
+						{
+							"name": "OrangeAlertFlag"
+						},
+						{
+							"name": "YellowAlertFlag"
+						},
+						{
+							"name": "RedAlertTempColumn"
+						},
+						{
+							"name": "RedAlertFlag"
+						},
+						{
+							"name": "CreateFinalAlertCode"
+						},
+						{
+							"name": "PassingRecord"
+						},
+						{
+							"name": "MapDrifted1",
+							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "RedAlertTableFinal"
+						},
+						{
+							"name": "YellowAlertRecordFinal"
+						},
+						{
+							"name": "OrangeAlertRecordFinal"
+						}
+					],
+					"script": "parameters{\n\tpipeline_run_id as string,\n\tsql_query as string,\n\tinput_SchemaName as string,\n\tinput_TableName as string,\n\tpkey_column as string,\n\tpipeline_trigger_time as string,\n\tpipeline_name as string\n}\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: ($sql_query),\n\tformat: 'query') ~> InputTable\nsource(output(\n\t\tqc_id as integer,\n\t\tpipeline_name as string,\n\t\tpipeline_run_id as string,\n\t\tpipeline_trigger_time as timestamp,\n\t\tpkey_column_values as string,\n\t\tcolumn_metric_error_values as string,\n\t\ttable_schema as string,\n\t\ttable_name as string,\n\t\tsql_query as string,\n\t\tcolumn_metric_name as string,\n\t\talert_code as string,\n\t\tqc_type_code as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: (\"SELECT * FROM dqm.v_qc_exception_detail WHERE pipeline_run_id ='{$pipeline_run_id}' AND table_schema='{$input_SchemaName}' AND table_name = '{$input_TableName}'\"),\n\tformat: 'query') ~> QCExceptionDetail\nMapDrifted1 derive(dqm_alert_code = 'P',\n\t\tpipeline_name = $pipeline_name,\n\t\tpipeline_run_id = $pipeline_run_id,\n\t\tpipeline_trigger_time = toTimestamp($pipeline_trigger_time,'yyyy-MM-dd HH:mm:ss.SSSSS')) ~> CreateTempAlertCode\nQCExceptionDetail filter(alert_code==\"R\") ~> RedAlert\nQCExceptionDetail filter(alert_code==\"O\") ~> OrangeAlert\nQCExceptionDetail filter(alert_code==\"Y\") ~> YellowAlert\nRedAlertTempColumn aggregate(groupBy(temp_alert_code,\n\t\talert_code),\n\ttemp_cnt = count(qc_id)) ~> RedAlertTable\nOrangeAlert aggregate(groupBy(pkey_column_values,\n\t\talert_code),\n\ttemp_cnt = count(qc_id)) ~> OrangeAlertRecord\nYellowAlert aggregate(groupBy(pkey_column_values,\n\t\talert_code),\n\ttemp_cnt = count(qc_id)) ~> YellowAlertRecord\nRedAlertFlag, OrangeAlertRecordFinal lookup(MapDrifted1@pkey_column_values == OrangeAlertRecordFinal@pkey_column_values,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> OrangeAlertFlag\nOrangeAlertFlag, YellowAlertRecordFinal lookup(MapDrifted1@pkey_column_values == YellowAlertRecordFinal@pkey_column_values,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> YellowAlertFlag\nRedAlert derive(temp_alert_code = 'P') ~> RedAlertTempColumn\nCreateTempAlertCode, RedAlertTableFinal lookup(dqm_alert_code == temp_alert_code,\n\tmultiple: false,\n\tpickup: 'any',\n\tbroadcast: 'auto')~> RedAlertFlag\nYellowAlertFlag derive(final_alert_code = iifNull(iifNull(alert_code_red,alert_code_orange,alert_code_yellow),dqm_alert_code)) ~> CreateFinalAlertCode\nCreateFinalAlertCode filter(final_alert_code=='P' || final_alert_code=='Y') ~> PassingRecord\nInputTable derive(pkey_column_values = toString(byName('pkey_column_values'))) ~> MapDrifted1\nRedAlertTable select(mapColumn(\n\t\ttemp_alert_code,\n\t\talert_code_red = alert_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> RedAlertTableFinal\nYellowAlertRecord select(mapColumn(\n\t\tpkey_column_values,\n\t\talert_code_yellow = alert_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> YellowAlertRecordFinal\nOrangeAlertRecord select(mapColumn(\n\t\tpkey_column_values,\n\t\talert_code_orange = alert_code\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> OrangeAlertRecordFinal\nPassingRecord sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/InitialLoadNUCCTaxonomy')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -1739,44 +1833,6 @@
 						}
 					],
 					"script": "source(output(\n\t\ttemp_int as integer,\n\t\ttemp_var as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tempa\nsource(output(\n\t\ttemp_int_b as integer,\n\t\ttemp_var_b as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> tempb\ntempa, tempb join(temp_int == temp_int_b,\n\tjoinType:'outer',\n\tbroadcast: 'auto')~> Join1\nJoin1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_load_to_stage')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "AM_test"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "Azure_Qral_Dev_Table",
-								"type": "DatasetReference"
-							},
-							"name": "landingTableSource"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "ds_azure_sql_dev",
-								"type": "DatasetReference"
-							},
-							"name": "writeDataToStage"
-						}
-					],
-					"transformations": [
-						{
-							"name": "addLoaddate"
-						}
-					],
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> landingTableSource\nlandingTableSource derive(load_date = currentTimestamp(),\n\t\tcurrent_flag = 1) ~> addLoaddate\naddLoaddate sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> writeDataToStage"
 				}
 			},
 			"dependsOn": []

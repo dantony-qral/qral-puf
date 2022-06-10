@@ -15,6 +15,16 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "PUF_DF_2b_Stage_NPPES_Test",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"LoadNPPESMainStage2a": {
+								"schemaName": "nppes",
+								"tableName": "test_uppercase"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"

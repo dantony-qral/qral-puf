@@ -51,6 +51,50 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DF_2b_Stage_NPPES_Test')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "PUF_2_Stage_NPPES"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "PUF_DS_1_ld_cms_nppes",
+								"type": "DatasetReference"
+							},
+							"name": "NPPESProviderMain"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Azure_Qral_Dev_Table",
+								"type": "DatasetReference"
+							},
+							"name": "LoadNPPESMainStage2a"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AddtlColumns"
+						},
+						{
+							"name": "Select4"
+						},
+						{
+							"name": "Select9"
+						}
+					],
+					"script": "source(output(\n\t\tnpi as string,\n\t\tdata_month as integer,\n\t\t{active flag} as string,\n\t\t{entity type code} as string,\n\t\t{entity type} as string,\n\t\t{replacement npi} as string,\n\t\t{employer identification number (ein)} as string,\n\t\t{provider organization name (legal business name)} as string,\n\t\t{provider last name (legal name)} as string,\n\t\t{provider first name} as string,\n\t\t{provider middle name} as string,\n\t\t{provider name prefix text} as string,\n\t\t{provider name suffix text} as string,\n\t\t{provider credential text} as string,\n\t\t{provider other organization name} as string,\n\t\t{provider other organization name type code} as string,\n\t\t{provider other last name} as string,\n\t\t{provider other first name} as string,\n\t\t{provider other middle name} as string,\n\t\t{provider other name prefix text} as string,\n\t\t{provider other name suffix text} as string,\n\t\t{provider other credential text} as string,\n\t\t{provider other last name type code} as string,\n\t\t{provider first line business mailing address} as string,\n\t\t{provider second line business mailing address} as string,\n\t\t{provider business mailing address city name} as string,\n\t\t{provider business mailing address state name} as string,\n\t\t{provider business mailing address postal code} as string,\n\t\t{provider business mailing address country code (if outside u.s.) } as string,\n\t\t{provider business mailing address telephone number} as string,\n\t\t{provider business mailing address fax number} as string,\n\t\t{provider first line business practice location address} as string,\n\t\t{provider second line business practice location address} as string,\n\t\t{provider business practice location address city name} as string,\n\t\t{provider business practice location address state name} as string,\n\t\t{provider business practice location address postal code} as string,\n\t\t{provider business practice location address country code out us} as string,\n\t\t{provider business practice location address telephone number} as string,\n\t\t{provider business practice location address fax number} as string,\n\t\t{provider enumeration date} as date,\n\t\t{last update date} as date,\n\t\t{npi deactivation reason code} as string,\n\t\t{npi deactivation date} as date,\n\t\t{npi reactivation date} as date,\n\t\t{provider gender code} as string,\n\t\t{authorized official last name} as string,\n\t\t{authorized official first name} as string,\n\t\t{authorized official middle name} as string,\n\t\t{authorized official title or position} as string,\n\t\t{authorized official telephone number} as string,\n\t\t{healthcare provider taxonomy code_1} as string,\n\t\t{provider license number_1} as string,\n\t\t{provider license number state code_1} as string,\n\t\t{healthcare provider primary taxonomy switch_1} as string,\n\t\t{healthcare provider taxonomy code_2} as string,\n\t\t{provider license number_2} as string,\n\t\t{provider license number state code_2} as string,\n\t\t{healthcare provider primary taxonomy switch_2} as string,\n\t\t{healthcare provider taxonomy code_3} as string,\n\t\t{provider license number_3} as string,\n\t\t{provider license number state code_3} as string,\n\t\t{healthcare provider primary taxonomy switch_3} as string,\n\t\t{is sole proprietor} as string,\n\t\t{is organization subpart} as string,\n\t\t{parent organization lbn} as string,\n\t\t{parent organization tin} as string,\n\t\t{authorized official name prefix text} as string,\n\t\t{authorized official name suffix text} as string,\n\t\t{authorized official credential text} as string,\n\t\t{healthcare provider taxonomy group_1} as string,\n\t\t{healthcare provider taxonomy group_2} as string,\n\t\t{healthcare provider taxonomy group_3} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select * from [nppes].[1_ld_cms_nppes] where npi = \\'1003003914\\'',\n\tformat: 'query') ~> NPPESProviderMain\nSelect4 derive(current_flag = '1',\n\t\t{provider business practice location address state name} = iif(upper({provider business practice location address state name})=='ALASKA','AK',\r\niif(upper({provider business practice location address state name})=='ALABAMA','AL',\r\niif(upper({provider business practice location address state name})=='ARKANSAS','AR',\r\niif(upper({provider business practice location address state name})=='AMERICAN SAMOA','AS',\r\niif(upper({provider business practice location address state name})=='ARIZONA','AZ',\r\niif(upper({provider business practice location address state name})=='CA- CALIFORNIA','CA',\r\niif(upper({provider business practice location address state name})=='CALIFORNIA','CA',\r\niif(upper({provider business practice location address state name})=='LOS ANGELES','CA',\r\niif(upper({provider business practice location address state name})=='COLORADO','CO',\r\niif(upper({provider business practice location address state name})=='CONNECTICUT','CT',\r\niif(upper({provider business practice location address state name})=='DISTRICT OF COLUMBIA','DC',\r\niif(upper({provider business practice location address state name})=='DELAWARE','DE',\r\niif(upper({provider business practice location address state name})=='FL - FLORIDA','FL',\r\niif(upper({provider business practice location address state name})=='FLA','FL',\r\niif(upper({provider business practice location address state name})=='FLORIDA','FL',\r\niif(upper({provider business practice location address state name})=='MICRONESIA, FEDERATED STATES OF','FM',\r\niif(upper({provider business practice location address state name})=='GEORGIA','GA',\r\niif(upper({provider business practice location address state name})=='GUAM','GU',\r\niif(upper({provider business practice location address state name})=='HAWAII','HI',\r\niif(upper({provider business practice location address state name})=='IOWA','IA',\r\niif(upper({provider business practice location address state name})=='IDAHO','ID',\r\niif(upper({provider business practice location address state name})=='IL - ILLINOIS','IL',\r\niif(upper({provider business practice location address state name})=='ILLINOIS','IL',\r\niif(upper({provider business practice location address state name})=='INDIANA','IN',\r\niif(upper({provider business practice location address state name})=='KANSAS','KS',\r\niif(upper({provider business practice location address state name})=='KENTUCKY','KY',\r\niif(upper({provider business practice location address state name})=='LOUISIANA','LA',\r\niif(upper({provider business practice location address state name})=='NEW ORLEANS','LA',\r\niif(upper({provider business practice location address state name})=='MA- MASSACHUSETTS','MA',\r\niif(upper({provider business practice location address state name})=='MASSACHUSETTS','MA',\r\niif(upper({provider business practice location address state name})=='MARYLAND','MD',\r\niif(upper({provider business practice location address state name})=='MAINE','ME',\r\niif(upper({provider business practice location address state name})=='MARSHALL ISLANDS','MH',\r\niif(upper({provider business practice location address state name})=='MICHIGAN','MI',\r\niif(upper({provider business practice location address state name})=='MINNESOTA','MN',\r\niif(upper({provider business practice location address state name})=='MISSOURI','MO',\r\niif(upper({provider business practice location address state name})=='MARIANA ISLANDS, NORTHERN','MP',\r\niif(upper({provider business practice location address state name})=='MISSISSIPPI','MS',\r\niif(upper({provider business practice location address state name})=='MS- MISSISSIPPI','MS',\r\niif(upper({provider business practice location address state name})=='MONTANA','MT',\r\niif(upper({provider business practice location address state name})=='N.C.','NC',\r\niif(upper({provider business practice location address state name})=='NC - NORTH CAROLINA','NC',\r\niif(upper({provider business practice location address state name})=='NORTH CAROLINA','NC',\r\niif(upper({provider business practice location address state name})=='NORTH CAROLINA (NC)','NC',\r\niif(upper({provider business practice location address state name})=='NORTH DAKOTA','ND',\r\niif(upper({provider business practice location address state name})=='NEBRASKA','NE',\r\niif(upper({provider business practice location address state name})=='NEW HAMPSHIRE','NH',\r\niif(upper({provider business practice location address state name})=='NEW JERSEY','NJ',\r\niif(upper({provider business practice location address state name})=='NJ - NEW JERSEY','NJ',\r\niif(upper({provider business practice location address state name})=='NEW MEXICO','NM',\r\niif(upper({provider business practice location address state name})=='NEVADA','NV',\r\niif(upper({provider business practice location address state name})=='N.Y.','NY',\r\niif(upper({provider business practice location address state name})=='NY - NEW YORK','NY',\r\niif(upper({provider business practice location address state name})=='NY- NEW YORK','NY',\r\niif(upper({provider business practice location address state name})=='OHIO','OH',\r\niif(upper({provider business practice location address state name})=='OHIO (OH)','OH',\r\niif(upper({provider business practice location address state name})=='OKLAHOMA','OK',\r\niif(upper({provider business practice location address state name})=='OR OREGON','OR',\r\niif(upper({provider business practice location address state name})=='OREGON','OR',\r\niif(upper({provider business practice location address state name})=='PENNSYLVANIA','PA',\r\niif(upper({provider business practice location address state name})=='P. R.','PR',\r\niif(upper({provider business practice location address state name})=='P.R','PR',\r\niif(upper({provider business practice location address state name})=='P.R.','PR',\r\niif(upper({provider business practice location address state name})=='P.R. PUERTO RICO','PR',\r\niif(upper({provider business practice location address state name})=='PR - PUERTO RICO','PR',\r\niif(upper({provider business practice location address state name})=='PUERTO RICO','PR',\r\niif(upper({provider business practice location address state name})=='PUERTORICO','PR',\r\niif(upper({provider business practice location address state name})=='RHODE ISLAND','RI',\r\niif(upper({provider business practice location address state name})=='SOUTH CAROLINA','SC',\r\niif(upper({provider business practice location address state name})=='SOUTH DAKOTA','SD',\r\niif(upper({provider business practice location address state name})=='TENNESSEE','TN',\r\niif(upper({provider business practice location address state name})=='TEXAS','TX',\r\niif(upper({provider business practice location address state name})=='TX-TEXAS','TX',\r\niif(upper({provider business practice location address state name})=='U.T.','UT',\r\niif(upper({provider business practice location address state name})=='UTAH','UT',\r\niif(upper({provider business practice location address state name})=='VIRGINIA','VA',\r\niif(upper({provider business practice location address state name})=='VIRGIN ISLANDS','VI',\r\niif(upper({provider business practice location address state name})=='VERMONT','VT',\r\niif(upper({provider business practice location address state name})=='WASHINGTON','WA',\r\niif(upper({provider business practice location address state name})=='WISCONSIN','WI',\r\niif(upper({provider business practice location address state name})=='WEST VIRGINIA','WV',\r\niif(upper({provider business practice location address state name})=='WYOMING','WY',\r\n{provider business practice location address state name}\r\n)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))),\n\t\t{provider business mailing address state name} = iif(upper({provider business mailing address state name})=='ALASKA','AK',\r\niif(upper({provider business mailing address state name})=='ALABAMA','AL',\r\niif(upper({provider business mailing address state name})=='ARKANSAS','AR',\r\niif(upper({provider business mailing address state name})=='AMERICAN SAMOA','AS',\r\niif(upper({provider business mailing address state name})=='ARIZONA','AZ',\r\niif(upper({provider business mailing address state name})=='CA- CALIFORNIA','CA',\r\niif(upper({provider business mailing address state name})=='CALIFORNIA','CA',\r\niif(upper({provider business mailing address state name})=='LOS ANGELES','CA',\r\niif(upper({provider business mailing address state name})=='COLORADO','CO',\r\niif(upper({provider business mailing address state name})=='CONNECTICUT','CT',\r\niif(upper({provider business mailing address state name})=='DISTRICT OF COLUMBIA','DC',\r\niif(upper({provider business mailing address state name})=='DELAWARE','DE',\r\niif(upper({provider business mailing address state name})=='FL - FLORIDA','FL',\r\niif(upper({provider business mailing address state name})=='FLA','FL',\r\niif(upper({provider business mailing address state name})=='FLORIDA','FL',\r\niif(upper({provider business mailing address state name})=='MIRCONESIA, FEDERATED STATES OF','FM',\r\niif(upper({provider business mailing address state name})=='GEORGIA','GA',\r\niif(upper({provider business mailing address state name})=='GUAM','GU',\r\niif(upper({provider business mailing address state name})=='HAWAII','HI',\r\niif(upper({provider business mailing address state name})=='IOWA','IA',\r\niif(upper({provider business mailing address state name})=='IDAHO','ID',\r\niif(upper({provider business mailing address state name})=='IL - ILLINOIS','IL',\r\niif(upper({provider business mailing address state name})=='ILLINOIS','IL',\r\niif(upper({provider business mailing address state name})=='INDIANA','IN',\r\niif(upper({provider business mailing address state name})=='KANSAS','KS',\r\niif(upper({provider business mailing address state name})=='KENTUCKY','KY',\r\niif(upper({provider business mailing address state name})=='LOUISIANA','LA',\r\niif(upper({provider business mailing address state name})=='NEW ORLEANS','LA',\r\niif(upper({provider business mailing address state name})=='MA- MASSACHUSETTS','MA',\r\niif(upper({provider business mailing address state name})=='MASSACHUSETTS','MA',\r\niif(upper({provider business mailing address state name})=='MARYLAND','MD',\r\niif(upper({provider business mailing address state name})=='MAINE','ME',\r\niif(upper({provider business mailing address state name})=='MARSHALL ISLANDS','MH',\r\niif(upper({provider business mailing address state name})=='MICHIGAN','MI',\r\niif(upper({provider business mailing address state name})=='MINNESOTA','MN',\r\niif(upper({provider business mailing address state name})=='MISSOURI','MO',\r\niif(upper({provider business mailing address state name})=='MARIANA ISLANDS, NORTHERN','MP',\r\niif(upper({provider business mailing address state name})=='MISSISSIPPI','MS',\r\niif(upper({provider business mailing address state name})=='MS- MISSISSIPPI','MS',\r\niif(upper({provider business mailing address state name})=='MONTANA','MT',\r\niif(upper({provider business mailing address state name})=='N.C.','NC',\r\niif(upper({provider business mailing address state name})=='NC- NORTH CAROLINA','NC',\r\niif(upper({provider business mailing address state name})=='NORTH CAROLINA','NC',\r\niif(upper({provider business mailing address state name})=='NORTH CAROLINA (NC)','NC',\r\niif(upper({provider business mailing address state name})=='NORTH DAKOTA','ND',\r\niif(upper({provider business mailing address state name})=='NEBRASKA','NE',\r\niif(upper({provider business mailing address state name})=='NEW HAMPSHIRE','NH',\r\niif(upper({provider business mailing address state name})=='NEW JERSEY','NJ',\r\niif(upper({provider business mailing address state name})=='NJ - NEW JERSEY','NJ',\r\niif(upper({provider business mailing address state name})=='NEW MEXICO','NM',\r\niif(upper({provider business mailing address state name})=='NEVADA','NV',\r\niif(upper({provider business mailing address state name})=='N.Y.','NY',\r\niif(upper({provider business mailing address state name})=='NY - NEW YORK','NY',\r\niif(upper({provider business mailing address state name})=='NY- NEW YORK','NY',\r\niif(upper({provider business mailing address state name})=='NEW YORK','NY',\r\niif(upper({provider business mailing address state name})=='OHIO','OH',\r\niif(upper({provider business mailing address state name})=='OKLAHOMA','OK',\r\niif(upper({provider business mailing address state name})=='OR OREGON','OR',\r\niif(upper({provider business mailing address state name})=='OREGON','OR',\r\niif(upper({provider business mailing address state name})=='PENNSYLVANIA','PA',\r\niif(upper({provider business mailing address state name})=='P. R.','PR',\r\niif(upper({provider business mailing address state name})=='P.R','PR',\r\niif(upper({provider business mailing address state name})=='P.R.','PR',\r\niif(upper({provider business mailing address state name})=='P.R. PUERTO RICO','PR',\r\niif(upper({provider business mailing address state name})=='PR - PUERTO RICO','PR',\r\niif(upper({provider business mailing address state name})=='PUERTO RICO','PR',\r\niif(upper({provider business mailing address state name})=='PUERTORICO','PR',\r\niif(upper({provider business mailing address state name})=='PALAU','PW',\r\niif(upper({provider business mailing address state name})=='RHODE ISLAND','RI',\r\niif(upper({provider business mailing address state name})=='SOUTH CAROLINA','SC',\r\niif(upper({provider business mailing address state name})=='SOUTH DAKOTA','SD',\r\niif(upper({provider business mailing address state name})=='TENNESSEE','TN',\r\niif(upper({provider business mailing address state name})=='TEXAS','TX',\r\niif(upper({provider business mailing address state name})=='TX-TEXAS','TX',\r\niif(upper({provider business mailing address state name})=='U.T','UT',\r\niif(upper({provider business mailing address state name})=='UTAH','UT',\r\niif(upper({provider business mailing address state name})=='VIRGINIA','VA',\r\niif(upper({provider business mailing address state name})=='VIRGIN ISLANDS','VI',\r\niif(upper({provider business mailing address state name})=='VERMONT','VT',\r\niif(upper({provider business mailing address state name})=='WASHINGTON','WA',\r\niif(upper({provider business mailing address state name})=='WISCONSIN','WI',\r\niif(upper({provider business mailing address state name})=='WEST VIRGINIA','WV',\r\niif(upper({provider business mailing address state name})=='WYOMING','WY',\r\n{provider business mailing address state name}\r\n)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) ~> AddtlColumns\nSelect9 select(mapColumn(\n\t\teach(match(upper(name)!='TEMP_NPI'))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select4\nNPPESProviderMain select(mapColumn(\n\t\teach(match(!startsWith(upper(name),'HEALTHCARE PROVIDER TAXONOMY CODE_')&&!startsWith(upper(name),'PROVIDER LICENSE NUMBER_')&&!startsWith(upper(name),'PROVIDER LICENSE NUMBER STATE CODE_')&&!startsWith(upper(name),'HEALTHCARE PROVIDER PRIMARY TAXONOMY SWITCH_')&&!startsWith(upper(name),'HEALTHCARE PROVIDER TAXONOMY GROUP_')))\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select9\nAddtlColumns sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> LoadNPPESMainStage2a"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AM_Execute_DQM')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1760,6 +1804,59 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/df_load_to_stage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline4')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_2b_Stage_NPPES_Test",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"NPPESProviderMain": {},
+									"LoadNPPESMainStage2a": {
+										"schemaName": "nppes",
+										"tableName": "test_uppercase"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "DA_Test"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_2b_Stage_NPPES_Test')]"
 			]
 		},
 		{

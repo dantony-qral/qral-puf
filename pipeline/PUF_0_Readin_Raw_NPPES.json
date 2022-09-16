@@ -105,7 +105,7 @@
 			},
 			"data_month_year": {
 				"type": "string",
-				"defaultValue": "202202"
+				"defaultValue": "202209"
 			}
 		},
 		"folder": {

@@ -16,14 +16,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "test",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"sink1": {
-								"schema_name": "temp",
-								"table_name": "test_aggregate"
-							}
-						}
+						"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
+						"type": "DataFlowReference"
 					},
 					"compute": {
 						"coreCount": 8,

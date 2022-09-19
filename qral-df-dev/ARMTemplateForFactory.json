@@ -3265,15 +3265,14 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "test",
+								"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
 									"StCmsNppesMain": {},
-									"sink1": {
-										"schema_name": "temp",
-										"table_name": "test_aggregate"
-									}
+									"ProdCmsNppesOtherProviderID": {},
+									"StCMSNPPESOtherProvID": {},
+									"sink1": {}
 								}
 							},
 							"staging": {},
@@ -3295,7 +3294,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/test')]"
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Other_Provider_Identifier')]"
 			]
 		},
 		{

@@ -1698,14 +1698,14 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "PUF_DF_1_Load_NPPES_Month_test",
+								"referenceName": "test",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"RawCMSNPPESMonth": {},
-									"sinkNPPESMain": {
-										"schemaName": "nppes",
-										"tableName": "test_active"
+									"StCmsNppesMain": {},
+									"sink1": {
+										"schema_name": "temp",
+										"table_name": "test_aggregate"
 									}
 								}
 							},
@@ -1727,7 +1727,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/test')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_load_to_stage_zip_master')]",

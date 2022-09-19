@@ -16,12 +16,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "PUF_DF_1_Load_NPPES_Month_test",
+						"referenceName": "test",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"sinkNPPESMain": {
-								"schemaName": "nppes",
-								"tableName": "test_active"
+							"sink1": {
+								"schema_name": "temp",
+								"table_name": "test_aggregate"
 							}
 						}
 					},

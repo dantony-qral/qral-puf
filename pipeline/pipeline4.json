@@ -17,7 +17,13 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "test_Other_Provider_Identifier",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sink1": {
+								"schemaName": "nppes",
+								"tableName": "test_OtherProvider"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,

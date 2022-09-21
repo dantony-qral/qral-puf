@@ -3265,7 +3265,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
+								"referenceName": "test_Other_Provider_Identifier",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -3294,7 +3294,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/PUF_DF_3_Stage_NPPES_Other_Provider_Identifier')]"
+				"[concat(variables('factoryId'), '/dataflows/test_Other_Provider_Identifier')]"
 			]
 		},
 		{

@@ -1838,7 +1838,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
+								"referenceName": "test_Other_Provider_Identifier",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -1866,7 +1866,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/test_Other_Provider_Identifier')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_load_to_stage_zip_master')]",

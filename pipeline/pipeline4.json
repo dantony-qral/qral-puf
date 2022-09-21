@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
+						"referenceName": "test_Other_Provider_Identifier",
 						"type": "DataFlowReference"
 					},
 					"compute": {

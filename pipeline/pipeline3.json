@@ -79,7 +79,13 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "PUF_DF_2b_Stage_NPPES",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"sink2": {
+								"schemaName": "temp",
+								"tableName": "test_corrected_country"
+							}
+						}
 					},
 					"compute": {
 						"coreCount": 8,

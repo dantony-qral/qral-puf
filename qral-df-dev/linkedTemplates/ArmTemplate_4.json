@@ -1352,7 +1352,11 @@
 									"StageOtherProvID": {},
 									"sink1": {},
 									"LoadNPPESMainStage2a": {},
-									"sinkStNPPESProvOtherID": {}
+									"sinkStNPPESProvOtherID": {},
+									"sink2": {
+										"schemaName": "temp",
+										"tableName": "test_corrected_country"
+									}
 								}
 							},
 							"staging": {},
@@ -1782,7 +1786,11 @@
 									"StageOtherProvID": {},
 									"sink1": {},
 									"LoadNPPESMainStage2a": {},
-									"sinkStNPPESProvOtherID": {}
+									"sinkStNPPESProvOtherID": {},
+									"sink2": {
+										"schemaName": "temp",
+										"tableName": "test_corrected_country"
+									}
 								}
 							},
 							"staging": {},

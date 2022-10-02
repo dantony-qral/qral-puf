@@ -1356,6 +1356,10 @@
 									"sink2": {
 										"schemaName": "temp",
 										"tableName": "test_corrected_country"
+									},
+									"sink3": {
+										"schemaName": "temp",
+										"tableName": "test_corrected_country_practice"
 									}
 								}
 							},
@@ -1790,6 +1794,10 @@
 									"sink2": {
 										"schemaName": "temp",
 										"tableName": "test_corrected_country"
+									},
+									"sink3": {
+										"schemaName": "temp",
+										"tableName": "test_corrected_country_practice"
 									}
 								}
 							},

@@ -79,17 +79,7 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "PUF_DF_2b_Stage_NPPES",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"sink2": {
-								"schemaName": "temp",
-								"tableName": "test_corrected_country"
-							},
-							"sink3": {
-								"schemaName": "temp",
-								"tableName": "test_corrected_country_practice"
-							}
-						}
+						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
 						"referenceName": "integrationRuntime1-Test4-16cores",
@@ -151,7 +141,25 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "PUF_DF_3_Stage_NPPES_Other_Provider_Identifier",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"TestNewNPIID": {
+								"schemaName": "temp",
+								"tableName": "TestNewNPIID"
+							},
+							"TestBothNewIDOnly": {
+								"schemaName": "temp",
+								"tableName": "TestBothNewIDOnly"
+							},
+							"TestBothOldOnly": {
+								"schemaName": "temp",
+								"tableName": "TestBothOldOnly"
+							},
+							"TestAggrError": {
+								"schemaName": "temp",
+								"tableName": "TestAggrError"
+							}
+						}
 					},
 					"integrationRuntime": {
 						"referenceName": "integrationRuntime1-Test4-16cores",

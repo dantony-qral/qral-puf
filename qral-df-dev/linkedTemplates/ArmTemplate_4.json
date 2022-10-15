@@ -1352,7 +1352,15 @@
 									"StageOtherProvID": {},
 									"sink1": {},
 									"LoadNPPESMainStage2a": {},
-									"sinkStNPPESProvOtherID": {}
+									"sinkStNPPESProvOtherID": {},
+									"testCorrectedCountryPractice": {
+										"schemaName": "temp",
+										"tableName": "test_corrected_country_practice"
+									},
+									"testCorrectedCountryMailing": {
+										"schemaName": "temp",
+										"tableName": "test_corrected_country_mailing"
+									}
 								}
 							},
 							"staging": {},

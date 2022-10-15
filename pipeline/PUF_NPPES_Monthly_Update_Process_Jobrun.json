@@ -158,6 +158,18 @@
 							"TestAggrError": {
 								"schemaName": "temp",
 								"tableName": "TestAggrError"
+							},
+							"TestOldActive": {
+								"schemaName": "temp",
+								"tableName": "TestOldActive"
+							},
+							"TestOldOtherProvData": {
+								"schemaName": "temp",
+								"tableName": "TestOldOtherProvData"
+							},
+							"TestCompareKeyWithMain": {
+								"schemaName": "temp",
+								"tableName": "TestCompareKeyWithMain"
 							}
 						}
 					},

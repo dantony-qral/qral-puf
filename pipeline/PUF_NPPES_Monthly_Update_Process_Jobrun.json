@@ -79,7 +79,17 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "PUF_DF_2b_Stage_NPPES",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"testCorrectedCountryPractice": {
+								"schemaName": "temp",
+								"tableName": "test_corrected_country_practice"
+							},
+							"testCorrectedCountryMailing": {
+								"schemaName": "temp",
+								"tableName": "test_corrected_country_mailing"
+							}
+						}
 					},
 					"integrationRuntime": {
 						"referenceName": "integrationRuntime1-Test4-16cores",

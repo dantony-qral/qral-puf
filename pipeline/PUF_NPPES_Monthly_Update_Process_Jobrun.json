@@ -212,7 +212,33 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"TestAggrError": {
+								"schemaName": "temp",
+								"tableName": "ProvTax_TestAggrError"
+							},
+							"TestCompareKey": {
+								"schemaName": "temp",
+								"tableName": "ProvTax_TestCompareKeyWithMain"
+							},
+							"TestBothOldOnly": {
+								"schemaName": "temp",
+								"tableName": "ProvTax_TestBothOldOnly"
+							},
+							"TestBothNewIDOnly": {
+								"schemaName": "temp",
+								"tableName": "ProvTax_TestBothNewIDOnly"
+							},
+							"TestOldProvTaxonomy": {
+								"schemaName": "temp",
+								"tableName": "ProvTax_TestOldProvTaxonomy"
+							},
+							"TestOldActive": {
+								"schemaName": "temp",
+								"tableName": "ProvTax_TestOldActive"
+							}
+						}
 					},
 					"integrationRuntime": {
 						"referenceName": "integrationRuntime1-Test4-16cores",

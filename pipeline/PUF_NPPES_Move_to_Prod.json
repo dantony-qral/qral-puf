@@ -1,0 +1,185 @@
+{
+	"name": "PUF_NPPES_Move_to_Prod",
+	"properties": {
+		"activities": [
+			{
+				"name": "Email_Successful_Pipeline",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "NPPES_Main",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "NPPES_Provider_Taxonomy",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "NPPES_Other_Provider_ID",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-19.eastus2.logic.azure.com:443/workflows/c0dbe0ef6af14d8389b9723475d9d61d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GXLOylKVKZwbhRg4sascQL6I6efKXy_yK-CSbN6lF8Y",
+					"connectVia": {
+						"referenceName": "integrationRuntime1-Test3",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "POST",
+					"body": {
+						"value": "{\n\"title\": \"PIPELINE RUN FINISHED!\",\n\"message\": \"DEMO-PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n\"color\": \"Green\",\n\"dataFactoryName\":\"@{pipeline().DataFactory}\",\n\"pipelineName\":\"@{pipeline().Pipeline}\",\n\"pipelineRunId\":\"@{pipeline().RunId}\",\n\"time\":\"@{utcnow()}\"\n}",
+						"type": "Expression"
+					},
+					"datasets": [
+						{
+							"referenceName": "PUF_DS_PROD_NUCC_TAXONOMY",
+							"type": "DatasetReference"
+						}
+					]
+				}
+			},
+			{
+				"name": "Email_Fail_Pipeline",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "NPPES_Main",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "NPPES_Provider_Taxonomy",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "NPPES_Other_Provider_ID",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-19.eastus2.logic.azure.com:443/workflows/c0dbe0ef6af14d8389b9723475d9d61d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GXLOylKVKZwbhRg4sascQL6I6efKXy_yK-CSbN6lF8Y",
+					"connectVia": {
+						"referenceName": "integrationRuntime1-Test3",
+						"type": "IntegrationRuntimeReference"
+					},
+					"method": "POST",
+					"body": {
+						"value": "{\n\"title\": \"PIPELINE FAILED!\",\n\"message\": \"DEMO-PIPELINE FAILED RUNNING!\",\n\"color\": \"Red\",\n\"dataFactoryName\":\"@{pipeline().DataFactory}\",\n\"pipelineName\":\"@{pipeline().Pipeline}\",\n\"pipelineRunId\":\"@{pipeline().RunId}\",\n\"time\":\"@{utcnow()}\"\n}",
+						"type": "Expression"
+					},
+					"datasets": [
+						{
+							"referenceName": "PUF_DS_PROD_NUCC_TAXONOMY",
+							"type": "DatasetReference"
+						}
+					]
+				}
+			},
+			{
+				"name": "NPPES_Main",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "PUF_DF_4_MtP_NPPES_Main",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "NPPES_Provider_Taxonomy",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "PUF_DF_4_MtP_NPPES_Provider_Taxonomy",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "NPPES_Other_Provider_ID",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "PUF_DF_4_MtP_NPPES_Other_Provider_Identifier",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "PUF_NPPES"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-06-18T01:28:04Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -12590,6 +12590,574 @@
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_2b_st_cms_nppes_other_provider_identifier')]",
 				"[concat(variables('factoryId'), '/datasets/Azure_Qral_Dev_Table')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DF_4_MtP_NPPES_Main')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "PUF_3_Move_to_Prod_NPPES"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "PUF_DS_3_st_cms_nppes_main",
+								"type": "DatasetReference"
+							},
+							"name": "StCmsNppesMain3"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "PUF_DS_PROD_NPPES_MAIN",
+								"type": "DatasetReference"
+							},
+							"name": "ProdNPPESMain"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          current_flag as string,",
+						"          npi as string,",
+						"          data_month as integer,",
+						"          {active flag} as string,",
+						"          {entity type code} as string,",
+						"          {entity type} as string,",
+						"          {replacement npi} as string,",
+						"          {employer identification number (ein)} as string,",
+						"          {provider organization name (legal business name)} as string,",
+						"          {provider last name (legal name)} as string,",
+						"          {provider first name} as string,",
+						"          {provider middle name} as string,",
+						"          {provider name prefix text} as string,",
+						"          {provider name suffix text} as string,",
+						"          {provider credential text} as string,",
+						"          {provider other organization name} as string,",
+						"          {provider other organization name type code} as string,",
+						"          {provider other last name} as string,",
+						"          {provider other first name} as string,",
+						"          {provider other middle name} as string,",
+						"          {provider other name prefix text} as string,",
+						"          {provider other name suffix text} as string,",
+						"          {provider other credential text} as string,",
+						"          {provider other last name type code} as string,",
+						"          {provider first line business mailing address} as string,",
+						"          {provider second line business mailing address} as string,",
+						"          {provider business mailing address city name} as string,",
+						"          {provider business mailing address state name} as string,",
+						"          {provider business mailing address postal code} as string,",
+						"          {provider business mailing address telephone number} as string,",
+						"          {provider business mailing address fax number} as string,",
+						"          {provider first line business practice location address} as string,",
+						"          {provider second line business practice location address} as string,",
+						"          {provider business practice location address city name} as string,",
+						"          {provider business practice location address state name} as string,",
+						"          {provider business practice location address postal code} as string,",
+						"          {provider business practice location address country code out us} as string,",
+						"          {provider business practice location address telephone number} as string,",
+						"          {provider business practice location address fax number} as string,",
+						"          {provider enumeration date} as date,",
+						"          {last update date} as date,",
+						"          {npi deactivation reason code} as string,",
+						"          {npi deactivation date} as date,",
+						"          {npi reactivation date} as date,",
+						"          {provider gender code} as string,",
+						"          {authorized official last name} as string,",
+						"          {authorized official first name} as string,",
+						"          {authorized official middle name} as string,",
+						"          {authorized official title or position} as string,",
+						"          {authorized official telephone number} as string,",
+						"          {is sole proprietor} as string,",
+						"          {is organization subpart} as string,",
+						"          {parent organization lbn} as string,",
+						"          {parent organization tin} as string,",
+						"          {authorized official name prefix text} as string,",
+						"          {authorized official name suffix text} as string,",
+						"          {authorized official credential text} as string,",
+						"          {healthcare provider primary taxonomy code} as string,",
+						"          {healthcare provider primary group taxonomy} as string,",
+						"          {provider primary license number} as string,",
+						"          {provider primary license number state code} as string,",
+						"          primary_taxonomy_grouping as string,",
+						"          primary_taxonomy_classification as string,",
+						"          primary_taxonomy_specialization as string,",
+						"          {provider business mailing address country code (if outside u.s.)} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> StCmsNppesMain3",
+						"StCmsNppesMain3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          current_flag as string,",
+						"          data_month as integer,",
+						"          npi as string,",
+						"          {entity type code} as string,",
+						"          {entity type} as string,",
+						"          {replacement npi} as string,",
+						"          {employer identification number (ein)} as string,",
+						"          {provider organization name (legal business name)} as string,",
+						"          {provider last name (legal name)} as string,",
+						"          {provider first name} as string,",
+						"          {provider middle name} as string,",
+						"          {provider name prefix text} as string,",
+						"          {provider name suffix text} as string,",
+						"          {provider credential text} as string,",
+						"          {provider other organization name} as string,",
+						"          {provider other organization name type code} as string,",
+						"          {provider other last name} as string,",
+						"          {provider other first name} as string,",
+						"          {provider other middle name} as string,",
+						"          {provider other name prefix text} as string,",
+						"          {provider other name suffix text} as string,",
+						"          {provider other credential text} as string,",
+						"          {provider other last name type code} as string,",
+						"          {provider first line business mailing address} as string,",
+						"          {provider second line business mailing address} as string,",
+						"          {provider business mailing address city name} as string,",
+						"          {provider business mailing address state name} as string,",
+						"          {provider business mailing address postal code} as string,",
+						"          {provider business mailing address country code (if outside u.s.)} as string,",
+						"          {provider business mailing address telephone number} as string,",
+						"          {provider business mailing address fax number} as string,",
+						"          {provider first line business practice location address} as string,",
+						"          {provider second line business practice location address} as string,",
+						"          {provider business practice location address city name} as string,",
+						"          {provider business practice location address state name} as string,",
+						"          {provider business practice location address postal code} as string,",
+						"          {provider business practice location address country code out us} as string,",
+						"          {provider business practice location address telephone number} as string,",
+						"          {provider business practice location address fax number} as string,",
+						"          {provider enumeration date} as date,",
+						"          {last update date} as date,",
+						"          {npi deactivation reason code} as string,",
+						"          {npi deactivation date} as date,",
+						"          {npi reactivation date} as date,",
+						"          {active flag} as string,",
+						"          {provider gender code} as string,",
+						"          {authorized official last name} as string,",
+						"          {authorized official first name} as string,",
+						"          {authorized official middle name} as string,",
+						"          {authorized official title or position} as string,",
+						"          {authorized official telephone number} as string,",
+						"          {healthcare provider primary taxonomy code} as string,",
+						"          primary_taxonomy_grouping as string,",
+						"          primary_taxonomy_classification as string,",
+						"          primary_taxonomy_specialization as string,",
+						"          {provider primary license number} as string,",
+						"          {provider primary license number state code} as string,",
+						"          {healthcare provider primary group taxonomy} as string,",
+						"          {is sole proprietor} as string,",
+						"          {is organization subpart} as string,",
+						"          {parent organization lbn} as string,",
+						"          {parent organization tin} as string,",
+						"          {authorized official name prefix text} as string,",
+						"          {authorized official name suffix text} as string,",
+						"          {authorized official credential text} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> ProdNPPESMain"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_3_st_cms_nppes_main')]",
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NPPES_MAIN')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DF_4_MtP_NPPES_Provider_Taxonomy')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "PUF_3_Move_to_Prod_NPPES"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "PUF_DS_3_st_cms_nppes_provider_taxonomy",
+								"type": "DatasetReference"
+							},
+							"name": "StCmsNppesProviderTaxonomy3"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY",
+								"type": "DatasetReference"
+							},
+							"name": "ProdNPPESProviderTaxonomy"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          current_flag as string,",
+						"          data_month as integer,",
+						"          npi as string,",
+						"          {entity type code} as string,",
+						"          {entity type} as string,",
+						"          {active flag} as string,",
+						"          healthcare_provider_taxonomy_code as string,",
+						"          taxonomy_grouping as string,",
+						"          taxonomy_classification as string,",
+						"          taxonomy_specialization as string,",
+						"          provider_license_number as string,",
+						"          provider_license_number_state_code as string,",
+						"          healthcare_provider_primary_taxonomy_switch as string,",
+						"          healthcare_provider_group_taxonomy as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> StCmsNppesProviderTaxonomy3",
+						"StCmsNppesProviderTaxonomy3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          current_flag as string,",
+						"          data_month as integer,",
+						"          npi as string,",
+						"          {entity type code} as string,",
+						"          {entity type} as string,",
+						"          {active flag} as string,",
+						"          healthcare_provider_taxonomy_code as string,",
+						"          taxonomy_grouping as string,",
+						"          taxonomy_classification as string,",
+						"          taxonomy_specialization as string,",
+						"          provider_license_number as string,",
+						"          provider_license_number_state_code as string,",
+						"          healthcare_provider_primary_taxonomy_switch as string,",
+						"          healthcare_provider_group_taxonomy as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> ProdNPPESProviderTaxonomy"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_3_st_cms_nppes_provider_taxonomy')]",
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NPPES_PROVIDER_TAXONOMY')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DF_4_MtP_NPPES_Other_Provider_Identifier')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "PUF_3_Move_to_Prod_NPPES"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "PUF_DS_3_st_cms_nppes_other_provider_id",
+								"type": "DatasetReference"
+							},
+							"name": "StCmsNppesOtherProviderID3"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "PUF_DS_PROD_NPPES_OTHER_PROVIDER_ID",
+								"type": "DatasetReference"
+							},
+							"name": "ProdNPPESOtherProviderIdentifier"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          current_flag as string,",
+						"          data_month as integer,",
+						"          npi as string,",
+						"          {entity type code} as string,",
+						"          {entity type} as string,",
+						"          {active flag} as string,",
+						"          other_provider_identifier as string,",
+						"          other_provider_identifier_type_code as string,",
+						"          other_provider_identifier_state as string,",
+						"          other_provider_identifier_issuer as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> StCmsNppesOtherProviderID3",
+						"StCmsNppesOtherProviderID3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          current_flag as string,",
+						"          data_month as integer,",
+						"          npi as string,",
+						"          {entity type code} as string,",
+						"          {entity type} as string,",
+						"          {active flag} as string,",
+						"          other_provider_identifier as string,",
+						"          other_provider_identifier_type_code as string,",
+						"          other_provider_identifier_state as string,",
+						"          other_provider_identifier_issuer as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> ProdNPPESOtherProviderIdentifier"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_3_st_cms_nppes_other_provider_id')]",
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NPPES_OTHER_PROVIDER_ID')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Move_to_Prod')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Email_Successful_Pipeline",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "NPPES_Main",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NPPES_Provider_Taxonomy",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "NPPES_Other_Provider_ID",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-19.eastus2.logic.azure.com:443/workflows/c0dbe0ef6af14d8389b9723475d9d61d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GXLOylKVKZwbhRg4sascQL6I6efKXy_yK-CSbN6lF8Y",
+							"connectVia": {
+								"referenceName": "integrationRuntime1-Test3",
+								"type": "IntegrationRuntimeReference"
+							},
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE RUN FINISHED!\",\n\"message\": \"DEMO-PIPELINE FINISHED RUNNING SUCCESSFULLY!\",\n\"color\": \"Green\",\n\"dataFactoryName\":\"@{pipeline().DataFactory}\",\n\"pipelineName\":\"@{pipeline().Pipeline}\",\n\"pipelineRunId\":\"@{pipeline().RunId}\",\n\"time\":\"@{utcnow()}\"\n}",
+								"type": "Expression"
+							},
+							"datasets": [
+								{
+									"referenceName": "PUF_DS_PROD_NUCC_TAXONOMY",
+									"type": "DatasetReference",
+									"parameters": {}
+								}
+							]
+						}
+					},
+					{
+						"name": "Email_Fail_Pipeline",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "NPPES_Main",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "NPPES_Provider_Taxonomy",
+								"dependencyConditions": [
+									"Failed"
+								]
+							},
+							{
+								"activity": "NPPES_Other_Provider_ID",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-19.eastus2.logic.azure.com:443/workflows/c0dbe0ef6af14d8389b9723475d9d61d/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=GXLOylKVKZwbhRg4sascQL6I6efKXy_yK-CSbN6lF8Y",
+							"connectVia": {
+								"referenceName": "integrationRuntime1-Test3",
+								"type": "IntegrationRuntimeReference"
+							},
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"title\": \"PIPELINE FAILED!\",\n\"message\": \"DEMO-PIPELINE FAILED RUNNING!\",\n\"color\": \"Red\",\n\"dataFactoryName\":\"@{pipeline().DataFactory}\",\n\"pipelineName\":\"@{pipeline().Pipeline}\",\n\"pipelineRunId\":\"@{pipeline().RunId}\",\n\"time\":\"@{utcnow()}\"\n}",
+								"type": "Expression"
+							},
+							"datasets": [
+								{
+									"referenceName": "PUF_DS_PROD_NUCC_TAXONOMY",
+									"type": "DatasetReference",
+									"parameters": {}
+								}
+							]
+						}
+					},
+					{
+						"name": "NPPES_Main",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_4_MtP_NPPES_Main",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain3": {},
+									"ProdNPPESMain": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "NPPES_Provider_Taxonomy",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_4_MtP_NPPES_Provider_Taxonomy",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesProviderTaxonomy3": {},
+									"ProdNPPESProviderTaxonomy": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "NPPES_Other_Provider_ID",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_4_MtP_NPPES_Other_Provider_Identifier",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesOtherProviderID3": {},
+									"ProdNPPESOtherProviderIdentifier": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "PUF_NPPES"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-06-18T01:28:04Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NUCC_TAXONOMY')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1-Test3')]",
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_4_MtP_NPPES_Main')]",
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_4_MtP_NPPES_Provider_Taxonomy')]",
+				"[concat(variables('factoryId'), '/dataflows/PUF_DF_4_MtP_NPPES_Other_Provider_Identifier')]"
+			]
 		}
 	]
 }

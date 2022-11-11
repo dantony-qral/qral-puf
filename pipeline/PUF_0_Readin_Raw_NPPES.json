@@ -93,7 +93,7 @@
 			},
 			"inp_file_name": {
 				"type": "string",
-				"defaultValue": "npidata_pfile_20050523-20220911.csv"
+				"defaultValue": "npidata_pfile_20050523-20221009.csv"
 			},
 			"out_schema": {
 				"type": "string",
@@ -105,7 +105,7 @@
 			},
 			"data_month_year": {
 				"type": "string",
-				"defaultValue": "202209"
+				"defaultValue": "202210"
 			}
 		},
 		"folder": {

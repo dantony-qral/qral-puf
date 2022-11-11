@@ -1,0 +1,71 @@
+{
+	"name": "PUF_DF_4_MtP_NPPES_Other_Provider_Identifier",
+	"properties": {
+		"folder": {
+			"name": "PUF_3_Move_to_Prod_NPPES"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "PUF_DS_3_st_cms_nppes_other_provider_id",
+						"type": "DatasetReference"
+					},
+					"name": "StCmsNppesOtherProviderID3"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "PUF_DS_PROD_NPPES_OTHER_PROVIDER_ID",
+						"type": "DatasetReference"
+					},
+					"name": "ProdNPPESOtherProviderIdentifier"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          current_flag as string,",
+				"          data_month as integer,",
+				"          npi as string,",
+				"          {entity type code} as string,",
+				"          {entity type} as string,",
+				"          {active flag} as string,",
+				"          other_provider_identifier as string,",
+				"          other_provider_identifier_type_code as string,",
+				"          other_provider_identifier_state as string,",
+				"          other_provider_identifier_issuer as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> StCmsNppesOtherProviderID3",
+				"StCmsNppesOtherProviderID3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          current_flag as string,",
+				"          data_month as integer,",
+				"          npi as string,",
+				"          {entity type code} as string,",
+				"          {entity type} as string,",
+				"          {active flag} as string,",
+				"          other_provider_identifier as string,",
+				"          other_provider_identifier_type_code as string,",
+				"          other_provider_identifier_state as string,",
+				"          other_provider_identifier_issuer as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     truncate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> ProdNPPESOtherProviderIdentifier"
+			]
+		}
+	}
+}

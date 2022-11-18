@@ -443,6 +443,81 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_NPPES_Monthly_Update_Process_Jobrun_copy1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PUF_DF_3_Stage_NPPES_Provider_Taxonomy",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"StCmsNppesMain": {},
+									"ProdCmsNppesProvTaxonomy": {},
+									"StCMSNPPESProvTaxonomy": {},
+									"sink1": {},
+									"TestAggrError": {
+										"schemaName": "temp",
+										"tableName": "ProvTax_TestAggrError"
+									},
+									"TestCompareKey": {
+										"schemaName": "temp",
+										"tableName": "ProvTax_TestCompareKeyWithMain"
+									},
+									"TestBothOldOnly": {
+										"schemaName": "temp",
+										"tableName": "ProvTax_TestBothOldOnly"
+									},
+									"TestBothNewIDOnly": {
+										"schemaName": "temp",
+										"tableName": "ProvTax_TestBothNewIDOnly"
+									},
+									"TestOldProvTaxonomy": {
+										"schemaName": "temp",
+										"tableName": "ProvTax_TestOldProvTaxonomy"
+									},
+									"TestOldActive": {
+										"schemaName": "temp",
+										"tableName": "ProvTax_TestOldActive"
+									}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "integrationRuntime1-Test4-16cores",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "PUF_NPPES"
+				},
+				"annotations": [],
+				"lastPublishTime": "2021-06-21T03:52:53Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DQM_Test_Main_Jobrun')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -660,7 +735,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "PUF_NPPES_Monthly_Update_Process_Jobrun",
+								"referenceName": "PUF_NPPES_Monthly_Update_Process_Jobrun_copy1",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -678,7 +753,9 @@
 				"annotations": [],
 				"lastPublishTime": "2021-06-18T01:28:04Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Monthly_Update_Process_Jobrun_copy1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/NPPES_Trigger_Test')]",

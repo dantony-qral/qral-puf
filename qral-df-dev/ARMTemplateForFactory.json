@@ -2300,7 +2300,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "PUF_NPPES_Monthly_Update_Process_Jobrun_copy1",
+								"referenceName": "PUF_NPPES_Monthly_Update_Process_Jobrun",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -2321,7 +2321,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/PUF_DS_PROD_NUCC_TAXONOMY')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1-Test3')]",
-				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Monthly_Update_Process_Jobrun_copy1')]"
+				"[concat(variables('factoryId'), '/pipelines/PUF_NPPES_Monthly_Update_Process_Jobrun')]"
 			]
 		},
 		{

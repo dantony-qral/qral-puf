@@ -85,7 +85,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "PUF_NPPES_Monthly_Update_Process_Jobrun_copy1",
+						"referenceName": "PUF_NPPES_Monthly_Update_Process_Jobrun",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true

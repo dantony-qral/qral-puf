@@ -1,0 +1,65 @@
+{
+	"name": "PUF_DS_0_raw_cms_nppes_provider_location",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/PUF_0_RAW"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "NPI",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Provider Secondary Practice Location Address- Address Line 1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Provider Secondary Practice Location Address-  Address Line 2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Provider Secondary Practice Location Address - City Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Provider Secondary Practice Location Address - State Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Provider Secondary Practice Location Address - Postal Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Provider Secondary Practice Location Address - Country Code (If outside U.S.)",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Provider Secondary Practice Location Address - Telephone Number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Provider Secondary Practice Location Address - Telephone Extension",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Provider Practice Location Address - Fax Number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "data_month",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "nppes",
+			"table": "0_raw_cms_nppes_provider_location"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

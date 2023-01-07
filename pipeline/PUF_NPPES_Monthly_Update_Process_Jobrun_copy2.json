@@ -1,0 +1,37 @@
+{
+	"name": "PUF_NPPES_Monthly_Update_Process_Jobrun_copy2",
+	"properties": {
+		"activities": [
+			{
+				"name": "PUF_DF_1_Load_NPPES_Month",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "1.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "PUF_DF_1_Load_NPPES_Month",
+						"type": "DataFlowReference"
+					},
+					"integrationRuntime": {
+						"referenceName": "integrationRuntime1-Test4-16cores",
+						"type": "IntegrationRuntimeReference"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "PUF_NPPES"
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-06-21T03:52:53Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

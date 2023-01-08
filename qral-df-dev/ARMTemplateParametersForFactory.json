@@ -6,7 +6,7 @@
 			"value": "qral-df-dev"
 		},
 		"Azure_Qral_Dev_connectionString": {
-			"value": ""
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=qral-dev.database.windows.net;Initial Catalog=dev"
 		},
 		"Azure_Qral_Dev_servicePrincipalKey": {
 			"value": ""

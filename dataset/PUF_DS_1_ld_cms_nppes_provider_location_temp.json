@@ -12,7 +12,7 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "current_flag",
+				"name": "npi",
 				"type": "nvarchar"
 			},
 			{
@@ -21,23 +21,15 @@
 				"precision": 10
 			},
 			{
+				"name": "active flag",
+				"type": "nvarchar"
+			},
+			{
 				"name": "entity type code",
 				"type": "nvarchar"
 			},
 			{
 				"name": "entity type",
-				"type": "nvarchar"
-			},
-			{
-				"name": "active flag",
-				"type": "nvarchar"
-			},
-			{
-				"name": "address_type",
-				"type": "nvarchar"
-			},
-			{
-				"name": "npi",
 				"type": "nvarchar"
 			},
 			{
@@ -69,11 +61,19 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "telephone_ext",
+				"name": "fax_number",
 				"type": "nvarchar"
 			},
 			{
-				"name": "fax_number",
+				"name": "current_flag",
+				"type": "nvarchar"
+			},
+			{
+				"name": "address_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "telephone_ext",
 				"type": "nvarchar"
 			}
 		],

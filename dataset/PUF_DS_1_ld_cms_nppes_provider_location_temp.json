@@ -1,0 +1,86 @@
+{
+	"name": "PUF_DS_1_ld_cms_nppes_provider_location_temp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/PUF_1_LOAD/NPPES"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "current_flag",
+				"type": "nvarchar"
+			},
+			{
+				"name": "data_month",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "entity type code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "entity type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "active flag",
+				"type": "nvarchar"
+			},
+			{
+				"name": "address_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "npi",
+				"type": "nvarchar"
+			},
+			{
+				"name": "address_line_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "address_line_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "city",
+				"type": "nvarchar"
+			},
+			{
+				"name": "state",
+				"type": "nvarchar"
+			},
+			{
+				"name": "postal_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "country_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "telephone_number",
+				"type": "nvarchar"
+			},
+			{
+				"name": "telephone_ext",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fax_number",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "nppes",
+			"table": "1_ld_cms_nppes_provider_locations"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

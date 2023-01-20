@@ -13,6 +13,70 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_other_provider_id')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "QRAL_AZURE_PUF/PUF_2_STAGE/NPPES"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "current_flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "data_month",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "npi",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "entity type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "active flag",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier_type_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier_state",
+						"type": "nvarchar"
+					},
+					{
+						"name": "other_provider_identifier_issuer",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "nppes",
+					"table": "3_st_cms_nppes_other_provider_identifiers"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PUF_DS_3_st_cms_nppes_provider_taxonomy')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1266,7 +1330,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PUF_DS_1_ld_cms_nppes_provider_location_temp')]",
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_0_raw_cw_iso_country')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1275,445 +1339,82 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "QRAL_AZURE_PUF/PUF_1_LOAD/NPPES"
+					"name": "QRAL_AZURE_PUF/PUF_0_RAW"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [
 					{
-						"name": "current_flag",
+						"name": "country_name",
 						"type": "nvarchar"
 					},
 					{
-						"name": "fax_number",
+						"name": "official_state_name",
 						"type": "nvarchar"
 					},
 					{
-						"name": "postal_code",
+						"name": "sovereignty",
 						"type": "nvarchar"
 					},
 					{
-						"name": "address_type",
+						"name": "alpha_2_code",
 						"type": "nvarchar"
 					},
 					{
-						"name": "active flag",
+						"name": "alpha_3_code",
 						"type": "nvarchar"
 					},
 					{
-						"name": "country_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "telephone_ext",
-						"type": "nvarchar"
-					},
-					{
-						"name": "city",
-						"type": "nvarchar"
-					},
-					{
-						"name": "address_line_2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "npi",
-						"type": "nvarchar"
-					},
-					{
-						"name": "entity type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "telephone_number",
-						"type": "nvarchar"
-					},
-					{
-						"name": "state",
-						"type": "nvarchar"
-					},
-					{
-						"name": "address_line_1",
-						"type": "nvarchar"
-					},
-					{
-						"name": "data_month",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "combinedfields",
-						"type": "nvarchar"
-					},
-					{
-						"name": "test_combinedfields",
-						"type": "int",
-						"precision": 10
+						"name": "numeric_code",
+						"type": "float",
+						"precision": 15
 					}
 				],
 				"typeProperties": {
-					"schema": "nppes",
-					"table": "1_ld_cms_nppes_provider_locations_temp"
+					"schema": "crosswalk",
+					"table": "cw_iso_country"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_Country_Correction')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/PUF_DS_0_raw_cw_iso_usstate')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Readin_Country_Correction",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureFileStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": {
-									"value": "@{concat('DROP TABLE [',pipeline().parameters.out_schema,'].[',pipeline().parameters.out_table_country,']')}",
-									"type": "Expression"
-								},
-								"tableOption": "autoCreate",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "PUF_FS_XLSX_Country_Correction",
-								"type": "DatasetReference",
-								"parameters": {
-									"Data_Month": {
-										"value": "@pipeline().parameters.data_month",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "QRAL_AZURE_SQL_DEV",
-								"type": "DatasetReference",
-								"parameters": {
-									"schema_name": {
-										"value": "@pipeline().parameters.out_schema",
-										"type": "Expression"
-									},
-									"table_name": {
-										"value": "@pipeline().parameters.out_table_country",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"parameters": {
-					"out_schema": {
-						"type": "string",
-						"defaultValue": "nppes"
-					},
-					"out_table_country": {
-						"type": "string",
-						"defaultValue": "0_raw_country_correction"
-					},
-					"out_table_state": {
-						"type": "string",
-						"defaultValue": "0_raw_state_correction"
-					},
-					"data_month": {
-						"type": "string",
-						"defaultValue": "202209"
-					}
+				"linkedServiceName": {
+					"referenceName": "Azure_Qral_Dev",
+					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "PUF_NPPES"
+					"name": "QRAL_AZURE_PUF/PUF_0_RAW"
 				},
 				"annotations": [],
-				"lastPublishTime": "2021-06-23T05:51:15Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/QRAL_AZURE_SQL_DEV')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PUF_0_Readin_DQM_QC_Tables_List')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
+				"type": "AzureSqlTable",
+				"schema": [
 					{
-						"name": "Readin_Raw_QC_Tables",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "DELETE FROM DQM.QC_TABLES;",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "PUF_BLOB_XLSX_DQM_QC_Tables",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "PUF_QC_Tables",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "country_code",
+						"type": "nvarchar"
 					},
 					{
-						"name": "Readin_Raw_QC_List",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							},
-							"sink": {
-								"type": "AzureSqlSink",
-								"preCopyScript": "DELETE FROM DQM.QC_LIST;",
-								"disableMetricsCollection": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "qc_id",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "qc_id",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "pipeline_name",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "pipeline_name",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "table_schema",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "table_schema",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "table_name",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "table_name",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "column_metric_name",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "column_metric_name",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "sql_query",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "sql_query",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "qc_type_code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "qc_type_code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "alert_code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "alert_code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "active_flag",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "active_flag",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "notes",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "notes",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "PUF_BLOB_XLSX_DQM_QC_List",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "PUF_QC_List",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
+						"name": "us_state_code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "us_state_name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "subdivision_category",
+						"type": "nvarchar"
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "DA_Test"
-				},
-				"annotations": []
+				"typeProperties": {
+					"schema": "crosswalk",
+					"table": "cw_iso_usstate"
+				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/PUF_QC_Tables')]",
-				"[concat(variables('factoryId'), '/datasets/PUF_QC_List')]"
-			]
+			"dependsOn": []
 		}
 	]
 }

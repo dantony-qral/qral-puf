@@ -1,0 +1,37 @@
+{
+	"name": "PUF_DS_0_raw_cw_iso_usstate",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure_Qral_Dev",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "QRAL_AZURE_PUF/PUF_0_RAW"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "country_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "us_state_code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "us_state_name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "subdivision_category",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "crosswalk",
+			"table": "cw_iso_usstate"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

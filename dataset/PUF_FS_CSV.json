@@ -18,7 +18,8 @@
 			"encodingName": "ISO-8859-1",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
-			"quoteChar": "\""
+			"quoteChar": "\"",
+			"MaxRowSize": 2000000
 		},
 		"schema": [
 			{
